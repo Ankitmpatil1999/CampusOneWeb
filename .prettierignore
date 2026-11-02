@@ -1,0 +1,16 @@
+node_modules
+dist
+.angular
+coverage
+out-tsc
+test-results
+playwright-report
+package-lock.json
+src/theme/tokens.css
+*.md
+src/theme/campusone.css
+src/theme/campusone-ocean.css
+src/theme/portal.css
+src/theme/web.css
+src/theme/fonts.css
+src/components/Utils/icons.ts

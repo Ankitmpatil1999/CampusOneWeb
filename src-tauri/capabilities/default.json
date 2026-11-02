@@ -1,0 +1,6 @@
+{
+  "identifier": "default",
+  "description": "The status window of CampusOne Card Reader (its own page only).",
+  "permissions": ["core:default"],
+  "windows": ["main"]
+}

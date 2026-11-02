@@ -1,0 +1,25 @@
+# dependencies
+node_modules/
+
+# build and test output
+dist/
+out-tsc/
+.angular/
+coverage/
+test-results/
+playwright-report/
+__screenshots__/
+*.tsbuildinfo
+
+# environment
+.env
+# development HTTPS certificate (npm start; see scripts/serve.mjs)
+certs/
+.env.*
+
+# logs
+*.log
+
+# temporary local scripts
+zz-*.mjs
+

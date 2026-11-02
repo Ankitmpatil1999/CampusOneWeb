@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CampusOne Card Reader</title>
+    <style>
+      :root {
+        --brand: #0b5d6b;
+        --ink: #17212b;
+        --muted: #5b6673;
+        --line: #dfe3e8;
+        --ok: #1f7a4d;
+        --bad: #b42318;
+        --warn: #9a6700;
+        --bg: #f6f7f9;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        color: var(--ink);
+        background: var(--bg);
+        font-size: 14px;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 18px;
+        background: var(--brand);
+        color: #fff;
+      }
+      header img { width: 34px; height: 34px; border-radius: 8px; background: #fff; }
+      header b { display: block; font-size: 16px; }
+      header small { opacity: 0.8; }
+      main { padding: 14px 18px; display: grid; gap: 10px; }
+      .row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 10px 12px;
+      }
+      .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--muted); flex: none; }
+      .ok .dot { background: var(--ok); }
+      .bad .dot { background: var(--bad); }
+      .warn .dot { background: var(--warn); }
+      .k { color: var(--muted); font-size: 12px; display: block; }
+      .grow { flex: 1; min-width: 0; }
+      .mono { font-family: Consolas, monospace; }
+      button {
+        font: inherit;
+        font-weight: 600;
+        border: 0;
+        border-radius: 8px;
+        padding: 9px 14px;
+        background: var(--brand);
+        color: #fff;
+        cursor: pointer;
+      }
+      button:disabled { opacity: 0.6; cursor: default; }
+      p.fine { color: var(--muted); font-size: 12px; margin: 2px 2px 0; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <img src="campusone_logo.png" alt="" />
+      <div>
+        <b>CampusOne Card Reader</b>
+        <small>Keep this open while you use CampusOne in the browser</small>
+      </div>
+    </header>
+    <main>
+      <div class="row" id="svc">
+        <span class="dot"></span>
+        <div class="grow">
+          <span class="k">Service for the CampusOne pages</span>
+          <span id="svc-t">Starting…</span>
+        </div>
+      </div>
+      <div class="row" id="rdr">
+        <span class="dot"></span>
+        <div class="grow">
+          <span class="k">Reader</span>
+          <span id="rdr-t">Looking for a reader…</span>
+        </div>
+      </div>
+      <div class="row" id="card">
+        <span class="dot"></span>
+        <div class="grow">
+          <span class="k">Card</span>
+          <span id="card-t">Place a card on the reader: it is read as soon as it is placed.</span>
+        </div>
+        <button type="button" id="test">Test read</button>
+      </div>
+      <p class="fine">
+        Open CampusOne in your browser as usual. Its card pages (issue a card, readers, POS) use this
+        reader while this window is open. You can minimise it.
+      </p>
+    </main>
+    <script>
+      const BASE = 'http://127.0.0.1:47821';
+      const $ = (id) => document.getElementById(id);
+      const tone = (id, t) => ($(id).className = 'row ' + t);
+      async function call(path) {
+        const r = await fetch(BASE + path, { cache: 'no-store' });
+        const body = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(body.error || 'The reader did not answer');
+        return body;
+      }
+      async function status() {
+        try {
+          const s = await call('/status');
+          tone('svc', 'ok');
+          $('svc-t').textContent = 'Running at ' + BASE.replace('http://', '');
+          if (s.readers.length) {
+            tone('rdr', 'ok');
+            $('rdr-t').textContent = s.readers[0];
+          } else {
+            tone('rdr', 'bad');
+            $('rdr-t').textContent = 'No reader found. Plug in the USB NFC reader.';
+          }
+        } catch {
+          tone('svc', 'bad');
+          $('svc-t').textContent = 'Not running. Close this window and start it again.';
+        }
+      }
+      function decode(b64) {
+        try {
+          const text = atob(b64).replace(/\0+$/, '').trim().toUpperCase();
+          return /^[A-Z0-9]{4,40}$/.test(text) ? text : '';
+        } catch {
+          return '';
+        }
+      }
+      /** What a card holds, in words; null when its data area could not be read. */
+      function cardText(uid, token, error) {
+        if (!uid) {
+          tone('card', 'bad');
+          $('card-t').textContent = /Connect error|RemovedCard|NoSmartcard/.test(error || '')
+            ? 'No card on the reader.'
+            : error || 'The card could not be read.';
+          return;
+        }
+        let what;
+        if (token !== null) {
+          const t = decode(token);
+          what = t
+            ? 'CampusOne card ' + t.slice(0, 3) + '••••' + t.slice(-4)
+            : 'Card from another system (issue it in CampusOne first)';
+          tone('card', t ? 'ok' : 'warn');
+        } else {
+          what = /No token/.test(error || '')
+            ? 'Blank card (ready to be issued)'
+            : 'Serial read; the data area could not be opened';
+          tone('card', 'warn');
+        }
+        $('card-t').innerHTML = '';
+        $('card-t').append(what + ' · serial ');
+        const s = document.createElement('span');
+        s.className = 'mono';
+        s.textContent = uid;
+        $('card-t').append(s);
+      }
+      $('test').addEventListener('click', async () => {
+        $('test').disabled = true;
+        $('card-t').textContent = 'Reading…';
+        try {
+          const { uid } = await call('/uid');
+          try {
+            cardText(uid, (await call('/token')).token, null);
+          } catch (e) {
+            cardText(uid, null, e.message);
+          }
+        } catch (e) {
+          cardText(null, null, e.message);
+        } finally {
+          $('test').disabled = false;
+        }
+      });
+      // Client 2026-10-22: each card placed is read once by the helper; the last one shows here
+      // without choosing Test read.
+      let lastSeq = 0;
+      async function lastCard() {
+        try {
+          const c = await call('/card');
+          if (!c.seq || c.seq === lastSeq) return;
+          lastSeq = c.seq;
+          cardText(c.uid, c.token, c.error);
+        } catch {
+          // Shown by the status row.
+        }
+      }
+      status();
+      setInterval(status, 3000);
+      setInterval(lastCard, 700);
+    </script>
+  </body>
+</html>
