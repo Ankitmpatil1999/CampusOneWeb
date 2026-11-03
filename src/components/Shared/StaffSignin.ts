@@ -105,86 +105,70 @@ const DIGITS = 4;
                 class="cp-hero-img"
               />
               <div class="cp-hero-pill">
-                <rp-icon name="grad" [size]="15" />
-                <span>Next-Gen Smart Campus ERP</span>
+                <rp-icon name="grad" [size]="14" />
+                <span>Smart Campus ERP</span>
               </div>
             </div>
 
             <div class="cp-ab-mid">
               <h2>Run your whole school from one unified portal.</h2>
-              <p class="cp-ab-desc">
-                Everything you need to automate student records, biometric attendance, fees, academics, and transport safety.
-              </p>
 
               <div class="cp-feat-grid">
                 <!-- 1. Student & Staff Lifecycle -->
                 <div class="cp-feat-card card-students">
-                  <div class="cp-feat-head">
-                    <span class="cp-feat-badge">
-                      <rp-icon name="users" [size]="18" />
-                    </span>
-                    <span class="cp-feat-tag">RFID & Biometrics</span>
+                  <span class="cp-feat-badge">
+                    <rp-icon name="users" [size]="18" />
+                  </span>
+                  <div class="cp-feat-info">
+                    <h4 class="cp-feat-title">Student & Staff Lifecycle</h4>
+                    <p class="cp-feat-desc">Admissions, biometric RFID attendance & profiles</p>
                   </div>
-                  <h4 class="cp-feat-title">Student & Staff Lifecycle</h4>
-                  <p class="cp-feat-desc">Admissions, biometric RFID attendance & profiles</p>
                 </div>
 
                 <!-- 2. Fee Collections & Invoicing -->
                 <div class="cp-feat-card card-fees">
-                  <div class="cp-feat-head">
-                    <span class="cp-feat-badge">
-                      <rp-icon name="receipt" [size]="18" />
-                    </span>
-                    <span class="cp-feat-tag">Instant Receipts</span>
+                  <span class="cp-feat-badge">
+                    <rp-icon name="receipt" [size]="18" />
+                  </span>
+                  <div class="cp-feat-info">
+                    <h4 class="cp-feat-title">Fee Collections & Invoicing</h4>
+                    <p class="cp-feat-desc">Instant receipts, online payment gateways & ledger</p>
                   </div>
-                  <h4 class="cp-feat-title">Fee Collections & Invoicing</h4>
-                  <p class="cp-feat-desc">Instant receipts, online payment gateways & ledger</p>
                 </div>
 
                 <!-- 3. Academics & Timetables -->
                 <div class="cp-feat-card card-academics">
-                  <div class="cp-feat-head">
-                    <span class="cp-feat-badge">
-                      <rp-icon name="book" [size]="18" />
-                    </span>
-                    <span class="cp-feat-tag">Exams & Classes</span>
+                  <span class="cp-feat-badge">
+                    <rp-icon name="book" [size]="18" />
+                  </span>
+                  <div class="cp-feat-info">
+                    <h4 class="cp-feat-title">Academics & Timetables</h4>
+                    <p class="cp-feat-desc">Class scheduling, homework, exams & report cards</p>
                   </div>
-                  <h4 class="cp-feat-title">Academics & Timetables</h4>
-                  <p class="cp-feat-desc">Class scheduling, homework, exams & report cards</p>
                 </div>
 
                 <!-- 4. Fleet & Transport Safety -->
                 <div class="cp-feat-card card-transport">
-                  <div class="cp-feat-head">
-                    <span class="cp-feat-badge">
-                      <rp-icon name="bus" [size]="18" />
-                    </span>
-                    <span class="cp-feat-tag">Live GPS Tracking</span>
+                  <span class="cp-feat-badge">
+                    <rp-icon name="bus" [size]="18" />
+                  </span>
+                  <div class="cp-feat-info">
+                    <h4 class="cp-feat-title">Fleet & Transport Safety</h4>
+                    <p class="cp-feat-desc">Live GPS bus tracking, student boarding logs & routes</p>
                   </div>
-                  <h4 class="cp-feat-title">Fleet & Transport Safety</h4>
-                  <p class="cp-feat-desc">Live GPS bus tracking, student boarding logs & routes</p>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="cp-ab-foot">
-            <rp-icon name="shieldck" [size]="16" />
+            <rp-icon name="shieldck" [size]="14" />
             <span>Secure 256-bit encrypted school console · Session protected</span>
           </div>
         }
       </aside>
       <main class="cp-am">
-        <div class="row" style="justify-content: flex-end; margin-bottom: 12px; gap: 8px">
-          <button
-            type="button"
-            class="btn btn-ghost btn-sm cp-theme-toggle"
-            [title]="isDark() ? 'Switch to Light theme' : 'Switch to Dark theme'"
-            (click)="toggleTheme()"
-          >
-            <rp-icon [name]="isDark() ? 'sun' : 'moon'" [size]="15" />
-            <span>{{ isDark() ? 'Light' : 'Dark' }}</span>
-          </button>
+        <div class="row" style="justify-content: flex-end; margin-bottom: 8px">
           <rp-lang-menu />
         </div>
         <div class="cp-af">
