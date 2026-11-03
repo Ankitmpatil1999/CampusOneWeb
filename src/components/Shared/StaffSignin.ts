@@ -117,33 +117,52 @@ const DIGITS = 4;
               </p>
 
               <div class="cp-feat-grid">
-                <div class="cp-feat-item">
-                  <span class="cp-feat-ic"><rp-icon name="users" [size]="16" /></span>
-                  <div>
-                    <b>Student & Staff Lifecycle</b>
-                    <small>Admissions, biometric RFID attendance & profiles</small>
+                <!-- 1. Student & Staff Lifecycle -->
+                <div class="cp-feat-card card-students">
+                  <div class="cp-feat-head">
+                    <span class="cp-feat-badge">
+                      <rp-icon name="users" [size]="18" />
+                    </span>
+                    <span class="cp-feat-tag">RFID & Biometrics</span>
                   </div>
+                  <h4 class="cp-feat-title">Student & Staff Lifecycle</h4>
+                  <p class="cp-feat-desc">Admissions, biometric RFID attendance & profiles</p>
                 </div>
-                <div class="cp-feat-item">
-                  <span class="cp-feat-ic"><rp-icon name="receipt" [size]="16" /></span>
-                  <div>
-                    <b>Fee Collections & Invoicing</b>
-                    <small>Instant receipts, online payment gateways & ledger</small>
+
+                <!-- 2. Fee Collections & Invoicing -->
+                <div class="cp-feat-card card-fees">
+                  <div class="cp-feat-head">
+                    <span class="cp-feat-badge">
+                      <rp-icon name="receipt" [size]="18" />
+                    </span>
+                    <span class="cp-feat-tag">Instant Receipts</span>
                   </div>
+                  <h4 class="cp-feat-title">Fee Collections & Invoicing</h4>
+                  <p class="cp-feat-desc">Instant receipts, online payment gateways & ledger</p>
                 </div>
-                <div class="cp-feat-item">
-                  <span class="cp-feat-ic"><rp-icon name="book" [size]="16" /></span>
-                  <div>
-                    <b>Academics & Timetables</b>
-                    <small>Class scheduling, homework, exams & report cards</small>
+
+                <!-- 3. Academics & Timetables -->
+                <div class="cp-feat-card card-academics">
+                  <div class="cp-feat-head">
+                    <span class="cp-feat-badge">
+                      <rp-icon name="book" [size]="18" />
+                    </span>
+                    <span class="cp-feat-tag">Exams & Classes</span>
                   </div>
+                  <h4 class="cp-feat-title">Academics & Timetables</h4>
+                  <p class="cp-feat-desc">Class scheduling, homework, exams & report cards</p>
                 </div>
-                <div class="cp-feat-item">
-                  <span class="cp-feat-ic"><rp-icon name="bus" [size]="16" /></span>
-                  <div>
-                    <b>Fleet & Transport Safety</b>
-                    <small>Live GPS bus tracking, student boarding logs & routes</small>
+
+                <!-- 4. Fleet & Transport Safety -->
+                <div class="cp-feat-card card-transport">
+                  <div class="cp-feat-head">
+                    <span class="cp-feat-badge">
+                      <rp-icon name="bus" [size]="18" />
+                    </span>
+                    <span class="cp-feat-tag">Live GPS Tracking</span>
                   </div>
+                  <h4 class="cp-feat-title">Fleet & Transport Safety</h4>
+                  <p class="cp-feat-desc">Live GPS bus tracking, student boarding logs & routes</p>
                 </div>
               </div>
             </div>
