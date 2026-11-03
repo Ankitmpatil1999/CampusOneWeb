@@ -10,10 +10,10 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   host: { style: 'display: contents' },
   template: `<img
     class="mk"
-    src="campusone-mark.png"
+    src="campusone-mark.svg"
     [attr.width]="size()"
     [attr.height]="size()"
-    alt=""
+    alt="CampusOne"
     aria-hidden="true"
     draggable="false"
   />`,

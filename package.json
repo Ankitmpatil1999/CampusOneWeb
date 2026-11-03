@@ -11,7 +11,7 @@
     "npm": ">=11"
   },
   "scripts": {
-    "start": "node scripts/serve.mjs",
+    "start": "ng serve",
     "start:http": "ng serve",
     "start:lan": "node scripts/serve.mjs",
     "build": "ng build",

@@ -17,8 +17,7 @@ export const appRoutes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    title: 'CampusOne',
-    loadComponent: () => import('./components/Dashboard/Dashboard').then((m) => m.Dashboard),
+    redirectTo: '/console/signin',
   },
   // A teacher's way in (Phase 10): the console sign-in, then the teaching pages.
   { path: 'teacher', pathMatch: 'full', redirectTo: '/console/teaching' },

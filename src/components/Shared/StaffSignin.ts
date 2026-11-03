@@ -82,38 +82,75 @@ const DIGITS = 4;
         } @else {
           <div class="cp-ab-top">
             @if (school(); as s) {
-              <rp-av [name]="s.name" [sq]="true" [px]="40" color="#0C6F7D" />
+              <rp-av [name]="s.name" [sq]="true" [px]="44" color="#0C6F7D" />
               <div>
-                <b>{{ s.name }}</b
-                ><small>Institution console{{ s.city ? ' · ' + s.city : '' }}</small>
+                <b style="font-size: 18px">{{ s.name }}</b>
+                <small style="opacity: 0.85">School Console{{ s.city ? ' · ' + s.city : '' }}</small>
               </div>
             } @else {
-              <rp-mark [size]="40" />
-              <div><b>CampusOne</b><small>Institution console</small></div>
+              <rp-mark [size]="44" />
+              <div>
+                <b style="font-size: 20px">CampusOne</b>
+                <small style="opacity: 0.85">Smart School Management System</small>
+              </div>
             }
           </div>
-          <div class="cp-ab-mid">
-            <h2>Run the whole campus from one place.</h2>
-            <ul>
-              <li>
-                <rp-icon name="users" [size]="17" /><span
-                  >Members, NFC cards and attendance readers</span
-                >
-              </li>
-              <li>
-                <rp-icon name="receipt" [size]="17" /><span>Fees, collections and settlements</span>
-              </li>
-              <li>
-                <rp-icon name="shieldck" [size]="17" /><span
-                  >Two-step sign-in: your password, then a one-time code</span
-                >
-              </li>
-            </ul>
+
+          <div class="cp-school-showcase">
+            <div class="cp-hero-frame">
+              <img
+                src="images/school-campus-hero.png"
+                alt="CampusOne School Campus"
+                class="cp-hero-img"
+              />
+              <div class="cp-hero-pill">
+                <rp-icon name="grad" [size]="15" />
+                <span>Next-Gen Smart Campus ERP</span>
+              </div>
+            </div>
+
+            <div class="cp-ab-mid">
+              <h2>Run your whole school from one unified portal.</h2>
+              <p class="cp-ab-desc">
+                Everything you need to automate student records, biometric attendance, fees, academics, and transport safety.
+              </p>
+
+              <div class="cp-feat-grid">
+                <div class="cp-feat-item">
+                  <span class="cp-feat-ic"><rp-icon name="users" [size]="16" /></span>
+                  <div>
+                    <b>Student & Staff Lifecycle</b>
+                    <small>Admissions, biometric RFID attendance & profiles</small>
+                  </div>
+                </div>
+                <div class="cp-feat-item">
+                  <span class="cp-feat-ic"><rp-icon name="receipt" [size]="16" /></span>
+                  <div>
+                    <b>Fee Collections & Invoicing</b>
+                    <small>Instant receipts, online payment gateways & ledger</small>
+                  </div>
+                </div>
+                <div class="cp-feat-item">
+                  <span class="cp-feat-ic"><rp-icon name="book" [size]="16" /></span>
+                  <div>
+                    <b>Academics & Timetables</b>
+                    <small>Class scheduling, homework, exams & report cards</small>
+                  </div>
+                </div>
+                <div class="cp-feat-item">
+                  <span class="cp-feat-ic"><rp-icon name="bus" [size]="16" /></span>
+                  <div>
+                    <b>Fleet & Transport Safety</b>
+                    <small>Live GPS bus tracking, student boarding logs & routes</small>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+
           <div class="cp-ab-foot">
-            <rp-mark [size]="18" /><span
-              >Powered by CampusOne · console sessions end 24 hours after sign-in</span
-            >
+            <rp-icon name="shieldck" [size]="16" />
+            <span>Secure 256-bit encrypted school console · Session protected</span>
           </div>
         }
       </aside>
@@ -125,17 +162,39 @@ const DIGITS = 4;
           @switch (step()) {
             @case ('cred') {
               <div class="cp-af-h">
-                <h1>{{ isOps() ? 'Back office sign-in' : 'Sign in' }}</h1>
+                @if (!isOps()) {
+                  <div class="cp-school-badge">
+                    <rp-mark [size]="26" />
+                    <span>School Administration Portal</span>
+                  </div>
+                }
+                <h1>{{ isOps() ? 'Back office sign-in' : 'Sign in to Console' }}</h1>
                 <p>
                   {{
                     isOps()
                       ? 'CampusOne platform operator'
                       : school()
-                        ? school()!.name + ' · institution console'
-                        : 'Institution console'
+                        ? school()!.name + ' · School Portal'
+                        : 'Access student records, daily attendance, fees, and campus operations.'
                   }}
                 </p>
               </div>
+
+              @if (!isOps()) {
+                <div class="cp-demo-banner">
+                  <div class="cp-demo-content">
+                    <span class="cp-demo-tag">Demo Admin</span>
+                    <span class="cp-demo-txt">prakash.shetty@tvps.example.in</span>
+                  </div>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-sec cp-demo-btn"
+                    (click)="fillDemo('admin')"
+                  >
+                    <span>Auto-Fill</span>
+                  </button>
+                </div>
+              }
               @if (flash(); as f) {
                 <div class="note" [class]="'tone-' + f.tone" role="alert">
                   <rp-icon [name]="f.tone === 'ok' ? 'checkc' : 'alert'" [size]="17" />
@@ -224,6 +283,15 @@ const DIGITS = 4;
                   <b>{{ challenge()?.sentTo }}</b
                   >. It's valid for {{ validMinutes() }} minutes.
                 </p>
+                @if (challenge()?.testCode; as testOtp) {
+                  <div class="cp-test-code-card" (click)="fillOtp(testOtp)">
+                    <rp-icon name="checkc" [size]="16" />
+                    <div>
+                      <span>Verification Code: <b>{{ testOtp }}</b></span>
+                      <small>Click to auto-fill & verify</small>
+                    </div>
+                  </div>
+                }
               </div>
               <div class="stack g8">
                 <div
@@ -842,5 +910,25 @@ export class StaffSignin implements OnInit {
     this.email.set('');
     this.password.set('');
     this.back();
+  }
+
+  protected fillDemo(who: 'admin' | 'accounts') {
+    if (who === 'admin') {
+      this.email.set('prakash.shetty@tvps.example.in');
+      this.password.set('Tvps@2026');
+    }
+    this.emailError.set('');
+    this.passwordError.set('');
+  }
+
+  protected fillOtp(otp: string) {
+    const cleaned = otp.trim().slice(0, DIGITS);
+    const chars = cleaned.split('');
+    while (chars.length < DIGITS) chars.push('');
+    this.code.set(chars);
+    this.codeError.set('');
+    if (cleaned.length === DIGITS) {
+      setTimeout(() => void this.verify(), 80);
+    }
   }
 }
