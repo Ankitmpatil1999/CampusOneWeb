@@ -28,9 +28,9 @@ export class ThemeService {
   private read(): ThemeChoice {
     try {
       const v = localStorage.getItem(STORAGE_KEY);
-      return v === 'light' || v === 'dark' ? v : 'system';
+      return v === 'dark' ? 'dark' : 'light';
     } catch {
-      return 'system';
+      return 'light';
     }
   }
 

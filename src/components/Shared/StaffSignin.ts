@@ -18,6 +18,7 @@ import {
   type InstitutionChoice,
   type StaffChallenge,
 } from '../../Context/SessionContext';
+import { ThemeService } from '../../Context/ThemeContext';
 import type { StaffSurface } from '../Utils/navigation';
 import { ApiProblem } from '../Utils/problem';
 import { translate } from '../Utils/translate';
@@ -155,7 +156,16 @@ const DIGITS = 4;
         }
       </aside>
       <main class="cp-am">
-        <div class="row" style="justify-content: flex-end; margin-bottom: 12px">
+        <div class="row" style="justify-content: flex-end; margin-bottom: 12px; gap: 8px">
+          <button
+            type="button"
+            class="btn btn-ghost btn-sm cp-theme-toggle"
+            [title]="isDark() ? 'Switch to Light theme' : 'Switch to Dark theme'"
+            (click)="toggleTheme()"
+          >
+            <rp-icon [name]="isDark() ? 'sun' : 'moon'" [size]="15" />
+            <span>{{ isDark() ? 'Light' : 'Dark' }}</span>
+          </button>
           <rp-lang-menu />
         </div>
         <div class="cp-af">
@@ -180,21 +190,6 @@ const DIGITS = 4;
                 </p>
               </div>
 
-              @if (!isOps()) {
-                <div class="cp-demo-banner">
-                  <div class="cp-demo-content">
-                    <span class="cp-demo-tag">Demo Admin</span>
-                    <span class="cp-demo-txt">prakash.shetty@tvps.example.in</span>
-                  </div>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-sec cp-demo-btn"
-                    (click)="fillDemo('admin')"
-                  >
-                    <span>Auto-Fill</span>
-                  </button>
-                </div>
-              }
               @if (flash(); as f) {
                 <div class="note" [class]="'tone-' + f.tone" role="alert">
                   <rp-icon [name]="f.tone === 'ok' ? 'checkc' : 'alert'" [size]="17" />
@@ -535,6 +530,13 @@ export class StaffSignin implements OnInit {
   private readonly sessions = inject(SessionContext);
   private readonly router = inject(Router);
   private readonly overlays = inject(Overlays);
+  private readonly theme = inject(ThemeService);
+  protected readonly isDark = computed(() => this.theme.choice() === 'dark');
+
+  protected toggleTheme() {
+    this.theme.set(this.isDark() ? 'light' : 'dark');
+  }
+
   readonly surface = input.required<StaffSurface>();
   /** 'reset' opens the page of the e-mailed link (IDN-083). */
   readonly mode = input<'signin' | 'reset'>('signin');
@@ -910,15 +912,6 @@ export class StaffSignin implements OnInit {
     this.email.set('');
     this.password.set('');
     this.back();
-  }
-
-  protected fillDemo(who: 'admin' | 'accounts') {
-    if (who === 'admin') {
-      this.email.set('prakash.shetty@tvps.example.in');
-      this.password.set('Tvps@2026');
-    }
-    this.emailError.set('');
-    this.passwordError.set('');
   }
 
   protected fillOtp(otp: string) {
