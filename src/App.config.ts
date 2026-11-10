@@ -13,11 +13,13 @@ import { I18n } from './components/Utils/i18n';
 import { installMotionFx } from './components/Utils/motion-fx';
 import { provideCampusOneCore } from './components/Utils/provide';
 import { Theme } from './components/Utils/theme';
+import { REQUIRE_TAB_SESSION } from './components/Utils/web-session';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(appRoutes),
+    { provide: REQUIRE_TAB_SESSION, useValue: true },
     // Same-origin API: the ingress routes /api and /health; the dev server proxies them.
     provideCampusOneCore(WEB_CONFIG),
     // Which areas this host serves (public/runtime-config.json, per environment).

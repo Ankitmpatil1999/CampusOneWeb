@@ -96,10 +96,48 @@ const ACTION_TEXT: Record<
 const shownStatus = (status: string, subscription: string | null): Shown =>
   status === 'ACTIVE' && subscription === 'TRIAL' ? 'Trial' : (LABEL[status] ?? 'Active');
 
+export interface InstTypeOption {
+  readonly key: 'SCHOOL' | 'COLLEGE' | 'PU_COLLEGE' | 'INSTITUTE';
+  readonly label: string;
+  readonly sub: string;
+  readonly icon: IconName;
+}
+
+export const INST_TYPES: readonly InstTypeOption[] = [
+  { key: 'SCHOOL', label: 'School', sub: 'Pre-Primary, Primary & High School', icon: 'school' },
+  { key: 'COLLEGE', label: 'Degree College / University', sub: 'B.Tech, B.Com, Science, MBA', icon: 'grad' },
+  { key: 'PU_COLLEGE', label: 'Junior / PU College', sub: '11th & 12th / Intermediate', icon: 'building' },
+  { key: 'INSTITUTE', label: 'Coaching / Academy', sub: 'Competitive Exams & Training', icon: 'bookopen' },
+];
+
+export const AFFILIATION_CONFIG: Record<string, { label: string; placeholder: string; options: readonly string[] }> = {
+  SCHOOL: {
+    label: 'School Board',
+    placeholder: 'Select School Board',
+    options: ['State Board', 'CBSE', 'ICSE', 'IB', 'Cambridge', 'Other'],
+  },
+  COLLEGE: {
+    label: 'University / Affiliation',
+    placeholder: 'Select University Affiliation',
+    options: ['State University', 'Central University', 'Autonomous', 'Deemed University', 'Technical Board / DTE', 'Private University', 'Other'],
+  },
+  PU_COLLEGE: {
+    label: 'State PU / Intermediate Board',
+    placeholder: 'Select PU Board',
+    options: ['State PU Board', 'State Board (HSC)', 'CBSE (XI-XII)', 'ISC (XI-XII)', 'Other'],
+  },
+  INSTITUTE: {
+    label: 'Accreditation / Type',
+    placeholder: 'Select Institute Type',
+    options: ['Private / Autonomous', 'Govt. Recognized', 'Certification Partner', 'Other'],
+  },
+};
+
 interface RegisterForm {
   name: string;
   address: string;
   city: string;
+  institutionType: 'SCHOOL' | 'COLLEGE' | 'PU_COLLEGE' | 'INSTITUTE';
   board: string;
   pn: string;
   pe: string;
@@ -119,7 +157,8 @@ const EMPTY_FORM: RegisterForm = {
   name: '',
   address: '',
   city: '',
-  board: 'CBSE',
+  institutionType: 'SCHOOL',
+  board: 'State Board',
   pn: '',
   pe: '',
   pp: '',
@@ -240,7 +279,10 @@ const EMPTY_FORM: RegisterForm = {
                     <div class="cell-main">
                       <rp-av [name]="i.name" size="sm" [sq]="true" />
                       <div class="stack" style="gap: 1px; min-width: 0">
-                        <span class="cell-t t-clip">{{ i.name }}</span>
+                        <div class="row g6" style="align-items: center">
+                          <span class="cell-t t-clip">{{ i.name }}</span>
+                          <span class="chip dot tone-info" style="font-size: 10.5px; padding: 1px 7px">{{ typeLabel(i.institutionType) }}</span>
+                        </div>
                         <span class="cell-s t-mono">{{ i.identifier }}</span>
                       </div>
                     </div>
@@ -357,6 +399,10 @@ const EMPTY_FORM: RegisterForm = {
             <span class="chip dot" [class]="'tone-' + tone(detailStatus(d))">{{
               detailStatus(d)
             }}</span>
+            <span class="chip tone-accent">{{ typeLabel(d.institutionType) }}</span>
+            @if (d.affiliation || d.board) {
+              <span class="tag"><rp-icon name="award" [size]="12" />{{ d.affiliation ?? d.board }}</span>
+            }
             <span class="tag"
               ><rp-icon name="layers" [size]="12" />{{ d.plan?.name ?? 'No plan yet' }}</span
             >
@@ -689,15 +735,34 @@ const EMPTY_FORM: RegisterForm = {
       >
         <div class="stack g16">
           <div class="c-form">
+            <div class="fld full">
+              <label class="fld-l">Institution type<span class="req">*</span></label>
+              <div class="inst-type-grid">
+                @for (it of instTypes; track it.key) {
+                  <button
+                    type="button"
+                    class="inst-type-card"
+                    [class.on]="form().institutionType === it.key"
+                    (click)="setType(it.key)"
+                  >
+                    <span class="it-ic"><rp-icon [name]="it.icon" [size]="20" /></span>
+                    <div style="min-width: 0">
+                      <div class="it-title">{{ it.label }}</div>
+                      <div class="it-sub">{{ it.sub }}</div>
+                    </div>
+                  </button>
+                }
+              </div>
+            </div>
             <div class="fld full" [class.invalid]="err('name')">
               <label class="fld-l" for="ob-n-name"
-                >Institution name<span class="req">*</span></label
+                >{{ form().institutionType === 'COLLEGE' ? 'College / University name' : form().institutionType === 'PU_COLLEGE' ? 'Junior College name' : form().institutionType === 'INSTITUTE' ? 'Institute / Academy name' : 'School name' }}<span class="req">*</span></label
               >
               <div class="fld-in">
                 <input
                   id="ob-n-name"
                   maxlength="80"
-                  placeholder="e.g. Hosanagara Public School"
+                  [placeholder]="namePlaceholder()"
                   [value]="form().name"
                   (input)="set('name', $event)"
                 />
@@ -726,7 +791,7 @@ const EMPTY_FORM: RegisterForm = {
               <div class="fld-in">
                 <input
                   id="ob-n-city"
-                  placeholder="e.g. Hosanagara"
+                  placeholder="e.g. Nagpur"
                   [value]="form().city"
                   (input)="set('city', $event)"
                 />
@@ -736,10 +801,10 @@ const EMPTY_FORM: RegisterForm = {
               </div>
             </div>
             <div class="fld">
-              <label class="fld-l" for="ob-n-board">Board</label>
+              <label class="fld-l" for="ob-n-board">{{ currentAffiliationConfig().label }}</label>
               <div class="fld-in">
                 <select id="ob-n-board" (change)="set('board', $event)">
-                  @for (b of boards; track b) {
+                  @for (b of currentAffiliationConfig().options; track b) {
                     <option [value]="b" [selected]="form().board === b">{{ b }}</option>
                   }
                 </select>
@@ -1051,6 +1116,33 @@ export class BackofficeInstitutions {
 
   protected readonly statusOrder = STATUS_ORDER;
   protected readonly boards = BOARDS;
+  protected readonly instTypes = INST_TYPES;
+  protected readonly affiliationConfig = AFFILIATION_CONFIG;
+
+  protected setType(type: 'SCHOOL' | 'COLLEGE' | 'PU_COLLEGE' | 'INSTITUTE') {
+    const config = AFFILIATION_CONFIG[type] ?? AFFILIATION_CONFIG['SCHOOL']!;
+    const defaultBoard = config.options[0] ?? 'State Board';
+    this.form.set({ ...this.form(), institutionType: type, board: defaultBoard });
+  }
+
+  protected currentAffiliationConfig() {
+    return AFFILIATION_CONFIG[this.form().institutionType] ?? AFFILIATION_CONFIG['SCHOOL']!;
+  }
+
+  protected namePlaceholder() {
+    const t = this.form().institutionType;
+    if (t === 'COLLEGE') return 'e.g. St. Xavier’s College of Engineering & Technology';
+    if (t === 'PU_COLLEGE') return 'e.g. Sunrise Junior College of Science & Commerce';
+    if (t === 'INSTITUTE') return 'e.g. Apex Academy for Competitive Exams';
+    return 'e.g. Hosanagara Public School';
+  }
+
+  protected typeLabel(t?: string) {
+    if (t === 'COLLEGE') return 'College / University';
+    if (t === 'PU_COLLEGE') return 'Junior / PU College';
+    if (t === 'INSTITUTE') return 'Institute';
+    return 'School';
+  }
   protected readonly actionUi = ACTION_UI;
   protected readonly noTask =
     'Your role doesn’t hold this sub-task. Ask a Platform Administrator in Roles & tasks.';
@@ -1635,7 +1727,9 @@ export class BackofficeInstitutions {
         name: f.name.trim(),
         address: f.address.trim(),
         city: f.city.trim(),
+        institutionType: f.institutionType,
         board: f.board,
+        affiliation: f.board,
         primaryContact: { name: f.pn.trim(), email: f.pe.trim(), mobile: f.pp.trim() },
         ...secondary,
         adminEmail: f.adm.trim(),

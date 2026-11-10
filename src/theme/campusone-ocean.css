@@ -99,6 +99,8 @@
   --tb-line:#18506F;
   --tb-on:#021A28;
 }
+/* Disable dark OS override in ocean */
+/*
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
   --ok:#34D399;
   --ok-soft:#0B2A20;
@@ -128,6 +130,8 @@
   --accent:#FF9B7D;
   --accent-2:#FFB39C;
   --accent-soft:#3A1A10;
+}}
+*/
   --accent-ink:#FFC2AE;
   --bg:#03111A;
   --bg-2:#051720;
@@ -608,6 +612,8 @@ button.li:hover .li-chev,.li[data-go]:hover .li-chev,.li[data-act]:hover .li-che
   --sb-on-bg:#FFFFFF; --sb-on-ink:#1D4ED8; --sb-on-tile:#E3ECFF;
   --mixw:0%;
 }
+/* Disable console dark OS override */
+/*
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
   --brand:#8AB8FF; --brand-2:#6EA8FE; --brand-3:#93C2FF; --brand-soft:#0F2147; --brand-soft-2:#14295A; --brand-line:#23427F; --on-brand:#06122B;
   --bg:#060E1C; --bg-2:#08122A; --surface:#0B1628; --surface-2:#0F1C31; --surface-3:#14233B;
@@ -625,6 +631,9 @@ button.li:hover .li-chev,.li[data-go]:hover .li-chev,.li[data-act]:hover .li-che
   --sb-on-bg:#E8F0FF; --sb-on-ink:#1E40AF;
   --mixw:45%;
 }}
+*/
+/* Disable dark ocean override */
+/*
 :root[data-theme="dark"]{
   --brand:#8AB8FF; --brand-2:#6EA8FE; --brand-3:#93C2FF; --brand-soft:#0F2147; --brand-soft-2:#14295A; --brand-line:#23427F; --on-brand:#06122B;
   --bg:#060E1C; --bg-2:#08122A; --surface:#0B1628; --surface-2:#0F1C31; --surface-3:#14233B;
@@ -642,6 +651,7 @@ button.li:hover .li-chev,.li[data-go]:hover .li-chev,.li[data-act]:hover .li-che
   --sb-on-bg:#E8F0FF; --sb-on-ink:#1E40AF;
   --mixw:45%;
 }
+*/
 
 /* ---------- console + back office: canvas and type scale ---------- */
 .c-app{--sb-w:288px;--t-xs:12px;--t-sm:13.5px;--t-md:15px;--t-lg:17px;--t-xl:20px;--t-2xl:25px;--t-3xl:32px;

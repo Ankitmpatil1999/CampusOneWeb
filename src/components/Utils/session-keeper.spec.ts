@@ -1,10 +1,22 @@
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { provideRouter, Router } from '@angular/router';
+import { RouterTestingHarness } from '@angular/router/testing';
+import { CAMPUSONE_WEB_CONFIG, WEB_CONFIG } from '../../Config';
+import { appRoutes } from '../../App.routes';
+import { apiInterceptor } from './api';
 import { renewalDue, sessionLapsed } from './session-keeper';
 import {
+  clearTabSession,
   forgetSession,
+  hasTabSession,
+  markTabSession,
   noteRenewal,
   onSessionEnded,
   refreshSession,
   renewSession,
+  REQUIRE_TAB_SESSION,
   sessionEnded,
   sessionTiming,
 } from './web-session';
@@ -195,5 +207,140 @@ describe('refreshSession', () => {
     sessionEnded('console');
     off();
     expect(seen).toEqual(['AUTH.SIGNED_IN_ELSEWHERE', undefined]);
+  });
+
+  it('tracks tab-scoped sessions separately per surface and clears on forgetSession', () => {
+    clearTabSession('console');
+    clearTabSession('ops');
+    clearTabSession('portal');
+    expect(hasTabSession('console')).toBe(false);
+    markTabSession('console');
+    expect(hasTabSession('console')).toBe(true);
+    expect(hasTabSession('ops')).toBe(false);
+    forgetSession('console');
+    expect(hasTabSession('console')).toBe(false);
+  });
+
+  it('sends a new tab without active tab session to /signin even if server has cookies, while keeping F5 refresh signed in', async () => {
+    const tick = () => new Promise((r) => setTimeout(r, 0));
+    const request = async (url: string, method = 'GET') => {
+      const ctl = TestBed.inject(HttpTestingController);
+      for (let i = 0; i < 60; i++) {
+        const found = ctl.match((r) => r.url === url && r.method === method);
+        if (found[0]) return found[0];
+        await tick();
+      }
+      throw new Error(`no ${method} ${url}`);
+    };
+
+    clearTabSession('console');
+    clearTabSession('portal');
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: CAMPUSONE_WEB_CONFIG, useValue: WEB_CONFIG },
+        { provide: REQUIRE_TAB_SESSION, useValue: true },
+        provideRouter(appRoutes),
+        provideHttpClient(withInterceptors([apiInterceptor])),
+        provideHttpClientTesting(),
+      ],
+    });
+    const httpMock = TestBed.inject(HttpTestingController);
+    const harness = await RouterTestingHarness.create();
+
+    // Closed tab / fresh browser open to /console -> must land on /signin without entering dashboard
+    await harness.navigateByUrl('/console');
+    expect(TestBed.inject(Router).url).toBe('/signin');
+    expect(httpMock.match('/api/v1/console/session')).toHaveLength(0);
+
+    // Closed tab / fresh browser open to /portal/account -> must land on /portal/signin
+    await harness.navigateByUrl('/portal/account');
+    expect(TestBed.inject(Router).url).toBe('/portal/signin');
+    expect(httpMock.match('/api/v1/portal/session')).toHaveLength(0);
+
+    // Active tab after login (F5 reload retains sessionStorage) -> loads /console session normally
+    markTabSession('console');
+    const nav = harness.navigateByUrl('/console');
+    const req = await request('/api/v1/console/session');
+    req.flush({
+      name: 'ARVIND DESHMUKH',
+      email: 'arvind.dean@gmail.com',
+      institution: { id: 'i-5', name: 'NIET', shortName: 'NIET', city: 'Nagpur' },
+      roles: [{ code: 'DEAN', name: 'Dean', readOnly: false }],
+      subTasks: ['home.view', 'task.home'],
+      preferredLang: 'en',
+    });
+    await nav;
+    expect(TestBed.inject(Router).url).toBe('/console');
+
+    // Visiting /signin never auto-redirects straight to dashboard even when logged in
+    await harness.navigateByUrl('/signin');
+    await tick();
+    expect(TestBed.inject(Router).url).toBe('/signin');
+  });
+
+  it('uses unified /api/v1/auth/staff/signin once per click without double-hitting ops and renders 1-min lock countdown', async () => {
+    const tick = () => new Promise((r) => setTimeout(r, 0));
+    const request = async (url: string, method = 'GET') => {
+      const ctl = TestBed.inject(HttpTestingController);
+      for (let i = 0; i < 60; i++) {
+        const found = ctl.match((r) => r.url === url && r.method === method);
+        if (found[0]) return found[0];
+        await tick();
+      }
+      throw new Error(`no ${method} ${url}`);
+    };
+
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: CAMPUSONE_WEB_CONFIG, useValue: WEB_CONFIG },
+        provideRouter(appRoutes),
+        provideHttpClient(withInterceptors([apiInterceptor])),
+        provideHttpClientTesting(),
+      ],
+    });
+    const httpMock = TestBed.inject(HttpTestingController);
+    const harness = await RouterTestingHarness.create('/signin');
+    const el = () => harness.routeNativeElement as HTMLElement;
+
+    const type = (sel: string, v: string) => {
+      const i = el().querySelector<HTMLInputElement>(sel)!;
+      i.value = v;
+      i.dispatchEvent(new Event('input'));
+    };
+
+    type('#cp-au-email', 'geeta@gmail.com');
+    type('#cp-au-pw', 'Geeta@1976');
+    el().querySelector<HTMLFormElement>('form')!.dispatchEvent(new Event('submit'));
+
+    const first = await request('/api/v1/auth/staff/signin', 'POST');
+    expect(first.request.body).toEqual({ email: 'geeta@gmail.com', password: 'Geeta@1976' });
+    first.flush(
+      { type: 'about:blank', code: 'IDN.CONSOLE_SIGNIN_REFUSED', detail: 'bad' },
+      { status: 401, statusText: 'Unauthorized' },
+    );
+    await tick();
+    harness.detectChanges();
+
+    // Never falls back to a second /ops/auth/signin call on 401 (no 2x failure increment)
+    expect(httpMock.match('/api/v1/auth/console/signin')).toHaveLength(0);
+    expect(httpMock.match('/api/v1/ops/auth/signin')).toHaveLength(0);
+
+    // 429 lockout with 1 minute renders locked state
+    type('#cp-au-pw', 'Geeta@1976');
+    el().querySelector<HTMLFormElement>('form')!.dispatchEvent(new Event('submit'));
+    const lockedReq = await request('/api/v1/auth/staff/signin', 'POST');
+    lockedReq.flush(
+      {
+        type: 'about:blank',
+        code: 'IDN.SIGNIN_LOCKED',
+        detail: 'Too many wrong attempts. Please try again after 1 minutes.',
+        params: { minutes: 1 },
+      },
+      { status: 429, statusText: 'Too Many Requests' },
+    );
+    await tick();
+    harness.detectChanges();
+    expect(el().querySelector('.cp-lock h1')?.textContent?.trim()).toBe('Account locked');
+    expect(el().querySelector('.cp-lock p')?.textContent).toContain('1 minutes');
   });
 });

@@ -2,7 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { type CanActivateFn, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { CSRF_HEADER, SURFACE_HEADER, csrfToken } from '../components/Utils/web-session';
+import {
+  CSRF_HEADER,
+  REQUIRE_TAB_SESSION,
+  SURFACE_HEADER,
+  clearTabSession,
+  csrfToken,
+  hasTabSession,
+  markTabSession,
+} from '../components/Utils/web-session';
 import type { PasswordPolicy } from '../components/Utils/patterns';
 import { DEFAULT_PASSWORD_POLICY, type StaffChallenge } from './SessionContext';
 
@@ -35,6 +43,7 @@ const AUTH = '/api/v1/portal/auth';
 @Injectable({ providedIn: 'root' })
 export class PortalContext {
   private readonly http = inject(HttpClient);
+  private readonly requireTabSession = inject(REQUIRE_TAB_SESSION);
   readonly session = signal<PortalSession | null>(null);
   /** Bumped after a change that the frame (status, menu counts) shows; the frame reloads then. */
   readonly changes = signal(0);
@@ -58,6 +67,7 @@ export class PortalContext {
    */
   async loadQuietly(): Promise<boolean> {
     if (this.session()) return true;
+    if (this.requireTabSession && !hasTabSession('portal')) return false;
     if (!csrfToken('portal')) return false;
     return this.load();
   }
@@ -87,6 +97,7 @@ export class PortalContext {
       ),
     );
     if (r.passwordChangeRequired && r.resetToken) return { resetToken: r.resetToken };
+    markTabSession('portal');
     await this.load();
     return {};
   }
@@ -117,6 +128,7 @@ export class PortalContext {
 
   /** After sign-up the server has set the portal cookies: read the new session. */
   async signedUp(): Promise<void> {
+    markTabSession('portal');
     await this.load();
   }
 
@@ -130,14 +142,19 @@ export class PortalContext {
         }),
       );
     } finally {
+      clearTabSession('portal');
       this.session.set(null);
     }
   }
 }
 
-/** Signed-in portal pages: a signed-out visitor goes to the portal's sign-in page. */
+/** Signed-in portal pages: a signed-out visitor (or new tab without active sign-in) goes to portal sign-in. */
 export const portalSession: CanActivateFn = async () => {
   const ctx = inject(PortalContext);
   const router = inject(Router);
+  const requireTab = inject(REQUIRE_TAB_SESSION);
+  if (requireTab && !hasTabSession('portal')) {
+    return router.createUrlTree(['/portal/signin']);
+  }
   return (await ctx.load()) ? true : router.createUrlTree(['/portal/signin']);
 };

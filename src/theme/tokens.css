@@ -79,6 +79,8 @@
   color-scheme: light;
 }
 
+/* Disable auto dark mode override so the app always stays clean and light */
+/*
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #060E1C;
@@ -136,59 +138,62 @@
     color-scheme: dark;
   }
 }
+*/
 
 :root[data-theme="dark"] {
-  --bg: #060E1C;
-  --bg-2: #08122A;
-  --surface: #0B1628;
-  --surface-2: #0F1C31;
-  --surface-3: #14233B;
-  --surface-inv: #E6EEFB;
-  --line: #1C2C47;
-  --line-2: #263A5C;
-  --line-3: #3E5680;
-  --ink: #E6EEFB;
-  --ink-2: #B5C5DE;
-  --ink-3: #8498B9;
-  --ink-4: #5A6E91;
-  --ink-inv: #06122B;
-  --brand: #8AB8FF;
-  --brand-2: #6EA8FE;
-  --brand-3: #93C2FF;
-  --brand-soft: #0F2147;
-  --brand-soft-2: #14295A;
-  --brand-line: #23427F;
-  --on-brand: #06122B;
-  --accent: #FF9B7D;
-  --accent-2: #FFB39C;
-  --accent-soft: #3A1A10;
-  --accent-ink: #FFC2AE;
-  --on-accent: #241500;
-  --ok: #34D399;
-  --ok-soft: #0B2A20;
-  --ok-line: #1D4A30;
-  --warn: #F5B54E;
-  --warn-soft: #2E2412;
-  --warn-line: #56421D;
-  --bad: #F87171;
-  --bad-soft: #341515;
-  --bad-line: #5E2B2A;
-  --info: #7EA8FA;
-  --info-soft: #14213D;
-  --info-line: #26406B;
-  --violet: #C4B5FD;
-  --violet-soft: #241A44;
-  --violet-line: #3D3063;
-  --neutral: #8498B9;
-  --neutral-soft: #14233B;
-  --neutral-line: #263A5C;
-  --card-grad-a: #1D4ED8;
-  --card-grad-b: #172F6E;
-  --card-ring: rgba(255,255,255,.08);
-  --scrim: rgba(0,0,0,.58);
-  --shadow-1: 0 1px 2px rgba(0,0,0,.45);
-  --shadow-2: 0 6px 16px -4px rgba(0,0,0,.55),0 2px 5px rgba(0,0,0,.35);
-  --shadow-3: 0 24px 48px -12px rgba(0,0,0,.7),0 8px 18px -6px rgba(0,0,0,.45);
-  --focus: 0 0 0 3px rgba(110,168,254,.32);
+  --bg: #F8FAFC;
+  --bg-2: #F1F5F9;
+  --surface: #FFFFFF;
+  --surface-2: #F8FAFC;
+  --surface-3: #F1F5F9;
+  --surface-inv: #0F172A;
+  --line: #E2E8F0;
+  --line-2: #CBD5E1;
+  --line-3: #94A3B8;
+  --ink: #0F172A;
+  --ink-2: #334155;
+  --ink-3: #64748B;
+  --ink-4: #94A3B8;
+  --ink-inv: #FFFFFF;
+  --brand: #2563EB;
+  --brand-2: #1D4ED8;
+  --brand-3: #3B82F6;
+  --brand-soft: #EFF6FF;
+  --brand-soft-2: #DBEAFE;
+  --brand-line: #BFDBFE;
+  --on-brand: #FFFFFF;
+  --accent: #EA580C;
+  --accent-2: #C2410C;
+  --accent-soft: #FFF7ED;
+  --accent-ink: #9A3412;
+  --on-accent: #FFFFFF;
+  --ok: #16A34A;
+  --ok-soft: #ECFDF5;
+  --ok-line: #A7F3D0;
+  --warn: #D97706;
+  --warn-soft: #FFFBEB;
+  --warn-line: #FDE68A;
+  --bad: #DC2626;
+  --bad-soft: #FEF2F2;
+  --bad-line: #FECACA;
+  --info: #2563EB;
+  --info-soft: #EFF6FF;
+  --info-line: #BFDBFE;
+  --violet: #7C3AED;
+  --violet-soft: #F5F3FF;
+  --violet-line: #DDD6FE;
+  --neutral: #64748B;
+  --neutral-soft: #F1F5F9;
+  --neutral-line: #E2E8F0;
+  --card-grad-a: #2563EB;
+  --card-grad-b: #1D4ED8;
+  --card-ring: rgba(0,0,0,.06);
+  --scrim: rgba(15,23,42,.4);
+  --shadow-1: 0 1px 3px rgba(0,0,0,.04);
+  --shadow-2: 0 4px 14px -2px rgba(15,23,42,.06);
+  --shadow-3: 0 16px 32px -8px rgba(15,23,42,.08);
+  --focus: 0 0 0 3px rgba(37,99,235,.25);
+  color-scheme: light;
+}
   color-scheme: dark;
 }

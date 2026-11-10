@@ -8,6 +8,17 @@
  * after a 401 comes too late: the refresh cookie is gone by then. While someone is using a page
  * the session is therefore renewed ahead of time (SessionKeeper).
  */
+import { InjectionToken } from '@angular/core';
+
+/**
+ * In the live browser app (`App.config.ts`), protected routes require an active per-tab sign-in
+ * marker (`sessionStorage`) so closing the browser/tab and reopening requires logging in again
+ * while normal in-tab refreshes (`F5`) stay signed in. Defaults to `false` for unit test harnesses.
+ */
+export const REQUIRE_TAB_SESSION = new InjectionToken<boolean>('REQUIRE_TAB_SESSION', {
+  factory: () => false,
+});
+
 export type CookieSurface = 'console' | 'ops' | 'portal';
 
 export const SURFACE_HEADER = 'X-CampusOne-Surface';
@@ -82,10 +93,37 @@ export function noteRenewal(
 
 export function forgetSession(surface: CookieSurface): void {
   timings.delete(surface);
+  clearTabSession(surface);
   try {
     localStorage.removeItem(TIMING_KEY(surface));
   } catch {
     /* nothing stored */
+  }
+}
+
+const TAB_KEY = (s: CookieSurface) => `rp.tab.${s}`;
+
+export function markTabSession(surface: CookieSurface): void {
+  try {
+    globalThis.sessionStorage?.setItem(TAB_KEY(surface), '1');
+  } catch {
+    /* storage unavailable */
+  }
+}
+
+export function clearTabSession(surface: CookieSurface): void {
+  try {
+    globalThis.sessionStorage?.removeItem(TAB_KEY(surface));
+  } catch {
+    /* storage unavailable */
+  }
+}
+
+export function hasTabSession(surface: CookieSurface): boolean {
+  try {
+    return globalThis.sessionStorage?.getItem(TAB_KEY(surface)) === '1';
+  } catch {
+    return false;
   }
 }
 

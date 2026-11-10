@@ -9,10 +9,13 @@ import { ApiProblem } from '../components/Utils/problem';
 import { translate } from '../components/Utils/translate';
 import {
   CSRF_HEADER,
+  REQUIRE_TAB_SESSION,
   SURFACE_HEADER,
   type CookieSurface,
   csrfToken,
   forgetSession,
+  hasTabSession,
+  markTabSession,
   noteRenewal,
   onSessionEnded,
   refreshSession,
@@ -154,6 +157,16 @@ export class SessionContext {
     );
   }
 
+  /** Unified sign-in: checks password once server-side and returns the eligible staff surface. */
+  signInAuto(email: string, password: string) {
+    return firstValueFrom(
+      this.http.post<StaffChallenge & { readonly surface: 'console' | 'ops' }>(
+        '/api/v1/auth/staff/signin',
+        { email, password },
+      ),
+    );
+  }
+
   resend(surface: StaffSurface, challengeId: string, channel?: 'EMAIL') {
     return firstValueFrom(
       this.http.post<StaffChallenge>(`${AUTH[surface]}/otp/resend`, {
@@ -183,6 +196,7 @@ export class SessionContext {
     );
     const r = res.body ?? { name: '' };
     if (r.passwordChangeRequired && r.resetToken) return { resetToken: r.resetToken };
+    markTabSession(surface);
     noteRenewal(surface, r, res.headers.get('Date'));
     await this.load(surface);
     return { institutions: r.institutions ?? [] };
@@ -213,6 +227,7 @@ export class SessionContext {
     if (!(await refreshSession('console', this.apiBase))) {
       throw new ApiProblem(0, 'GEN.UNAVAILABLE', translate('GEN.UNAVAILABLE'), null);
     }
+    markTabSession('console');
   }
 
   /**
@@ -274,12 +289,9 @@ export class SessionContext {
   private ended(surface: CookieSurface, reason?: string) {
     if (surface === 'portal' || !(surface === 'console' ? this.console() : this.ops())) return;
     this.clear(surface);
-    void this.router.navigateByUrl(
-      surface === 'console' ? '/console/signin' : '/backoffice/signin',
-      {
-        state: { sessionEnded: true, ...(reason ? { reason } : {}) },
-      },
-    );
+    void this.router.navigateByUrl('/signin', {
+      state: { sessionEnded: true, ...(reason ? { reason } : {}) },
+    });
   }
 
   private clear(surface: StaffSurface) {
@@ -288,13 +300,15 @@ export class SessionContext {
   }
 }
 
-/** Area guard: a signed-out visitor goes to the area's sign-in page. */
+/** Area guard: a signed-out visitor (or new tab without active sign-in) goes to sign-in. */
 export const staffSession =
   (surface: StaffSurface): CanActivateFn =>
   async () => {
     const sessions = inject(SessionContext);
     const router = inject(Router);
-    return (await sessions.load(surface))
-      ? true
-      : router.createUrlTree([surface === 'console' ? '/console/signin' : '/backoffice/signin']);
+    const requireTab = inject(REQUIRE_TAB_SESSION);
+    if (requireTab && !hasTabSession(surface)) {
+      return router.createUrlTree(['/signin']);
+    }
+    return (await sessions.load(surface)) ? true : router.createUrlTree(['/signin']);
   };

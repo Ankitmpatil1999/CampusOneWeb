@@ -175,20 +175,18 @@ const DIGITS = 4;
           @switch (step()) {
             @case ('cred') {
               <div class="cp-af-h">
-                @if (!isOps()) {
-                  <div class="cp-school-badge">
-                    <rp-mark [size]="26" />
-                    <span>School Administration Portal</span>
-                  </div>
-                }
-                <h1>{{ isOps() ? 'Back office sign-in' : 'Sign in to Console' }}</h1>
+                <div class="cp-school-badge">
+                  <rp-mark [size]="26" />
+                  <span>{{ isOps() ? 'Platform Operations' : 'CampusOne Portal' }}</span>
+                </div>
+                <h1>{{ isOps() ? 'Platform Operator Sign-in' : 'Sign in to CampusOne' }}</h1>
                 <p>
                   {{
                     isOps()
-                      ? 'CampusOne platform operator'
+                      ? 'CampusOne platform operator back-office'
                       : school()
                         ? school()!.name + ' · School Portal'
-                        : 'Access student records, daily attendance, fees, and campus operations.'
+                        : 'Single sign-in for School Console (Management, Staff) and Platform Back-Office.'
                   }}
                 </p>
               </div>
@@ -209,7 +207,7 @@ const DIGITS = 4;
                       id="cp-au-email"
                       name="email"
                       type="email"
-                      placeholder="name@school.example.in"
+                      placeholder="name@school.example.in or name@campusone.example"
                       autocomplete="username"
                       aria-describedby="cp-au-email-e"
                       [value]="email()"
@@ -227,7 +225,7 @@ const DIGITS = 4;
                       id="cp-au-pw"
                       name="password"
                       [type]="showPassword() ? 'text' : 'password'"
-                      placeholder="Your console password"
+                      placeholder="Your account password"
                       autocomplete="current-password"
                       aria-describedby="cp-au-pw-e"
                       [value]="password()"
@@ -518,6 +516,11 @@ const DIGITS = 4;
                   </div>
                 </div>
               }
+              @if (lockLeft() === 0) {
+                <button type="button" class="btn btn-pri btn-lg btn-block" (click)="back()">
+                  <span>Back to sign-in</span>
+                </button>
+              }
               <button type="button" class="btn btn-sec btn-block" (click)="other()">
                 <span>Try a different account</span>
               </button>
@@ -540,10 +543,13 @@ export class StaffSignin implements OnInit {
     this.theme.set(this.isDark() ? 'light' : 'dark');
   }
 
-  readonly surface = input.required<StaffSurface>();
+  readonly surface = input<StaffSurface | 'auto'>('auto');
   /** 'reset' opens the page of the e-mailed link (IDN-083). */
   readonly mode = input<'signin' | 'reset'>('signin');
-  protected readonly isOps = computed(() => this.surface() === 'ops');
+  protected readonly activeSurface = signal<StaffSurface>('console');
+  protected readonly isOps = computed(() =>
+    this.surface() === 'auto' ? this.activeSurface() === 'ops' : this.surface() === 'ops',
+  );
   /** The school last signed in on this browser (console only). */
   protected readonly school = signal(rememberedSchool());
   protected readonly digits = DIGITS;
@@ -624,8 +630,14 @@ export class StaffSignin implements OnInit {
     inject(DestroyRef).onDestroy(() => clearInterval(timer));
   }
 
-  ngOnInit() {
-    if (this.mode() !== 'reset') return;
+  async ngOnInit() {
+    if (this.surface() !== 'auto') {
+      this.activeSurface.set(this.surface() as StaffSurface);
+    }
+    if (this.mode() !== 'reset') {
+      // Always land on the Sign-In page at startup instead of auto-redirecting straight to Dashboard.
+      return;
+    }
     // The token arrives in the fragment (never sent to a server log); drop it from the address bar.
     const m = /(?:^#|&)token=([^&]+)/.exec(globalThis.location?.hash ?? '');
     this.resetToken = m?.[1] ? decodeURIComponent(m[1]) : '';
@@ -689,7 +701,9 @@ export class StaffSignin implements OnInit {
   protected toSignIn() {
     this.step.set('cred');
     this.flash.set(null);
-    void this.router.navigateByUrl(this.isOps() ? '/backoffice/signin' : '/console/signin');
+    void this.router.navigateByUrl(
+      this.surface() === 'auto' ? '/signin' : this.isOps() ? '/backoffice/signin' : '/console/signin',
+    );
   }
 
   protected asValue(e: Event) {
@@ -711,7 +725,7 @@ export class StaffSignin implements OnInit {
     this.busy.set(true);
     this.flash.set(null);
     try {
-      await this.sessions.forgotPassword(this.surface(), email);
+      await this.sessions.forgotPassword(this.activeSurface(), email);
       this.overlays.toast('Password reset link sent', {
         sub: `If ${email} has a ${this.isOps() ? 'back-office' : 'console'} account, a reset link is on its way.`,
         tone: 'ok',
@@ -741,9 +755,20 @@ export class StaffSignin implements OnInit {
     if (this.emailError() || this.passwordError()) return;
     this.busy.set(true);
     this.flash.set(null);
+
+    const targetSurface = this.surface();
     try {
-      this.started(await this.sessions.signIn(this.surface(), email, this.password()));
-      this.password.set('');
+      if (targetSurface === 'auto') {
+        const c = await this.sessions.signInAuto(email, this.password());
+        this.activeSurface.set(c.surface);
+        this.started(c);
+        this.password.set('');
+      } else {
+        const c = await this.sessions.signIn(targetSurface, email, this.password());
+        this.activeSurface.set(targetSurface);
+        this.started(c);
+        this.password.set('');
+      }
     } catch (e) {
       this.refused(e);
     } finally {
@@ -817,7 +842,8 @@ export class StaffSignin implements OnInit {
     }
     this.busy.set(true);
     try {
-      const r = await this.sessions.verify(this.surface(), c.challengeId, otp);
+      const surfaceToUse = this.activeSurface();
+      const r = await this.sessions.verify(surfaceToUse, c.challengeId, otp);
       if (r.resetToken) {
         // A temporary password: choose one before the first session (OI-IDN-20).
         this.resetToken = r.resetToken;
@@ -830,13 +856,13 @@ export class StaffSignin implements OnInit {
         return;
       }
       // Several institutions: which one to open, before the console (client 2026-10-27).
-      if (!this.isOps() && (r.institutions?.length ?? 0) > 1) {
+      if (surfaceToUse !== 'ops' && (r.institutions?.length ?? 0) > 1) {
         this.institutions.set(r.institutions!);
         this.flash.set(null);
         this.step.set('pick');
         return;
       }
-      await this.router.navigateByUrl(this.isOps() ? '/backoffice' : '/console');
+      await this.router.navigateByUrl(surfaceToUse === 'ops' ? '/backoffice' : '/console');
     } catch (e) {
       if (
         e instanceof ApiProblem &&
@@ -887,7 +913,7 @@ export class StaffSignin implements OnInit {
     const c = this.challenge();
     if (!c) return;
     try {
-      const next = await this.sessions.resend(this.surface(), c.challengeId);
+      const next = await this.sessions.resend(this.activeSurface(), c.challengeId);
       this.challenge.set({ ...next, emailFallback: next.emailFallback ?? c.emailFallback });
       this.resent.set(true);
     } catch (e) {
@@ -899,7 +925,7 @@ export class StaffSignin implements OnInit {
     const c = this.challenge();
     if (!c) return;
     try {
-      this.started(await this.sessions.resend(this.surface(), c.challengeId, 'EMAIL'));
+      this.started(await this.sessions.resend(this.activeSurface(), c.challengeId, 'EMAIL'));
     } catch (e) {
       this.codeFailed(e instanceof ApiProblem ? e.detail : translate('GEN.UNAVAILABLE'));
     }

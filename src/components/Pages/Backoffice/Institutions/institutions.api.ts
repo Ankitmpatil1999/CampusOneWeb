@@ -56,6 +56,8 @@ export interface InstitutionRow {
   readonly identifier: string;
   readonly name: string;
   readonly shortName: string;
+  readonly institutionType?: string;
+  readonly affiliation?: string | null;
   readonly city: string;
   readonly status: InstitutionStatus;
   readonly statusSince: string | null;
@@ -89,6 +91,8 @@ export interface InstitutionDetail {
   readonly identifier: string;
   readonly name: string;
   readonly shortName: string;
+  readonly institutionType?: string;
+  readonly affiliation?: string | null;
   readonly city: string;
   readonly address: string;
   readonly pinCode: string | null;
@@ -190,7 +194,9 @@ export interface RegisterInput {
   readonly name: string;
   readonly address: string;
   readonly city: string;
+  readonly institutionType?: string;
   readonly board?: string;
+  readonly affiliation?: string;
   readonly primaryContact: ContactInput;
   readonly secondaryContact?: ContactInput;
   readonly adminEmail: string;

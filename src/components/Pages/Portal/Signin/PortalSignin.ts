@@ -306,17 +306,6 @@ export class PortalSignin implements OnInit {
   constructor() {
     const timer = setInterval(() => this.now.set(Date.now()), 1000);
     inject(DestroyRef).onDestroy(() => clearInterval(timer));
-    // Already signed in (prototype guard): straight to the account.
-    if (!this.mode) {
-      void this.ctx.loadQuietly().then((on) => {
-        const s = this.ctx.session();
-        if (on && s) {
-          void this.router.navigateByUrl(
-            s.institution.status === 'PENDING_ACTIVATION' ? '/portal/onboard' : '/portal/account',
-          );
-        }
-      });
-    }
   }
 
   ngOnInit() {

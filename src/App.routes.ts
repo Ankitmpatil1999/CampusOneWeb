@@ -17,16 +17,20 @@ export const appRoutes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: '/console/signin',
+    redirectTo: '/signin',
+  },
+  {
+    path: 'signin',
+    title: 'CampusOne — Sign in',
+    loadComponent: () =>
+      import('./components/Shared/StaffSignin').then((m) => m.StaffSignin),
   },
   // A teacher's way in (Phase 10): the console sign-in, then the teaching pages.
   { path: 'teacher', pathMatch: 'full', redirectTo: '/console/teaching' },
   {
     path: 'console/signin',
-    canMatch: [areaAvailable(AREAS.console.path)],
-    title: 'CampusOne — Sign in to the console',
-    loadComponent: () =>
-      import('./components/Pages/Console/Signin/ConsoleSignin').then((m) => m.ConsoleSignin),
+    pathMatch: 'full',
+    redirectTo: '/signin',
   },
   {
     path: 'console/reset-password',
@@ -624,12 +628,8 @@ export const appRoutes: Routes = [
   },
   {
     path: 'backoffice/signin',
-    canMatch: [areaAvailable(AREAS.backoffice.path)],
-    title: 'CampusOne — Sign in to the back office',
-    loadComponent: () =>
-      import('./components/Pages/Backoffice/Signin/BackofficeSignin').then(
-        (m) => m.BackofficeSignin,
-      ),
+    pathMatch: 'full',
+    redirectTo: '/signin',
   },
   {
     path: 'backoffice/reset-password',

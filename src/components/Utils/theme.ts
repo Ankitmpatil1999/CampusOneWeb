@@ -15,9 +15,13 @@ const ORDER: readonly ThemeMode[] = ['system', 'light', 'dark'];
 function stored(): ThemeMode {
   try {
     const v = localStorage.getItem(KEY);
-    return v === 'light' || v === 'dark' ? v : 'system';
+    if (v === 'dark' || v === 'system' || !v) {
+      localStorage.setItem(KEY, 'light');
+      return 'light';
+    }
+    return 'light';
   } catch {
-    return 'system';
+    return 'light';
   }
 }
 
@@ -27,15 +31,14 @@ export class Theme {
   readonly mode = signal<ThemeMode>(stored());
   /** The prototype's icon for each: a monitor (system), a sun (light), a moon (dark). */
   readonly icon = computed<IconName>(() =>
-    this.mode() === 'dark' ? 'moon' : this.mode() === 'light' ? 'sun' : 'monitor',
+    this.mode() === 'dark' ? 'moon' : this.mode() === 'light' ? 'sun' : 'sun',
   );
 
   /** Puts the chosen theme on the page (before the first page renders, and on each change). */
   apply(): void {
     const root = this.doc.documentElement;
     const mode = this.mode();
-    if (mode === 'system') delete root.dataset['theme'];
-    else root.dataset['theme'] = mode;
+    root.dataset['theme'] = mode || 'light';
   }
 
   /** The next theme in turn (RP.act "shell.theme"). */
