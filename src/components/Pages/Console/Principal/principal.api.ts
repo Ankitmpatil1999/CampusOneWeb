@@ -34,11 +34,20 @@ export interface DayCount {
   readonly percentage: number | null;
 }
 
+export interface DepartmentSummary {
+  readonly id: number;
+  readonly name: string;
+  readonly students: number;
+  readonly faculty: number;
+}
+
 export interface Overview {
   readonly year: Year;
   readonly date: string;
   readonly principal: { readonly name: string };
+  readonly role?: string;
   readonly people: { readonly students: number; readonly teachers: number; readonly staff: number };
+  readonly departments?: readonly DepartmentSummary[];
   readonly attendanceToday: {
     readonly students: DayCount;
     readonly teachers: DayCount;

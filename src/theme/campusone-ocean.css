@@ -130,8 +130,6 @@
   --accent:#FF9B7D;
   --accent-2:#FFB39C;
   --accent-soft:#3A1A10;
-}}
-*/
   --accent-ink:#FFC2AE;
   --bg:#03111A;
   --bg-2:#051720;
@@ -166,6 +164,7 @@
   --g-canvas-c:linear-gradient(160deg,#04151E 0%,#061428 60%,#1A110E 100%);
   --g-title:linear-gradient(90deg,#67E8F9 0%,#7DD3FC 50%,#FFA48A 100%);
 }}
+*/
 :root[data-theme="dark"]{
   --ok:#34D399;
   --ok-soft:#0B2A20;

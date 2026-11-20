@@ -305,7 +305,8 @@ export class HomeCollections implements OnInit {
           let p = 0;
           let n = 0;
           for (const r of rows) {
-            if (r['status'] !== 'SUCCESS') continue;
+            const st = String(r['status'] ?? '').toUpperCase();
+            if (st !== 'SUCCESS') continue;
             const count = Number(r['count'] ?? 0);
             p += paise(r['amount'] as { amount: string; currency: string });
             n += count;

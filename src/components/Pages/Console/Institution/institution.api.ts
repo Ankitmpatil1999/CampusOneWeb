@@ -60,6 +60,8 @@ export type UserTypeCategory =
   | 'MERCHANT'
   | 'PRINCIPAL'
   | 'MANAGEMENT'
+  | 'DEAN'
+  | 'COORDINATOR'
   | 'CREW'
   | 'OTHER';
 

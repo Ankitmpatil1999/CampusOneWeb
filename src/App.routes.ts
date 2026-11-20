@@ -25,6 +25,17 @@ export const appRoutes: Routes = [
     loadComponent: () =>
       import('./components/Shared/StaffSignin').then((m) => m.StaffSignin),
   },
+  {
+    path: 'student',
+    title: 'CampusOne — Student Portal',
+    loadComponent: () =>
+      import('./components/Pages/Student/StudentPortal').then((m) => m.StudentPortal),
+  },
+  {
+    path: 'student/signin',
+    pathMatch: 'full',
+    redirectTo: '/signin',
+  },
   // A teacher's way in (Phase 10): the console sign-in, then the teaching pages.
   { path: 'teacher', pathMatch: 'full', redirectTo: '/console/teaching' },
   {

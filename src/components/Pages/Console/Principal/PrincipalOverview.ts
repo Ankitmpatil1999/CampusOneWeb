@@ -2,6 +2,7 @@
  * The principal's school overview on the web (client 2026-10-13; the app's principal home, ACA-060):
  * the people of the school, today's attendance of students, teachers and staff, the leave waiting for
  * a decision and how the classes are doing — each opening its own page.
+ * Enhanced for Dean (Academics & Student Affairs) with dedicated branch & department breakdown.
  */
 import {
   ChangeDetectionStrategy,
@@ -28,19 +29,14 @@ import { PrincipalApi, type DayCount, type Overview } from './principal.api';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div class="c-page">
     <rp-page-head
-      [title]="home() ? greeting(session()?.name ?? '') : 'School overview'"
-      [sub]="
-        (home() ? 'School overview · ' : '') +
-        (data()
-          ? formatDate(data()!.date) + ' · academic year ' + data()!.year.label
-          : 'Today at the school.')
-      "
+      [title]="pageTitle()"
+      [sub]="pageSub()"
     >
       <button type="button" class="btn btn-sec" [disabled]="loading()" (click)="load()">
         <rp-icon name="refresh" [size]="17" /><span>Refresh</span>
       </button>
     </rp-page-head>
-    <!-- The principal's dashboard (client 2026-10-27): the task cards under the greeting. -->
+    <!-- The principal / dean's dashboard: the task cards under the greeting. -->
     @if (home()) {
       <rp-task-launcher surface="console" />
     }
@@ -56,28 +52,28 @@ import { PrincipalApi, type DayCount, type Overview } from './principal.api';
     } @else if (data(); as d) {
       <div class="c-grid k4" id="po-kpis">
         <rp-kpi
-          label="Students"
+          [label]="isDean() ? 'Total Students' : 'Students'"
           [value]="num(d.people.students)"
           icon="grad"
           [delta]="present(d.attendanceToday.students)"
-          link="/console/principal-people"
+          link="/console/principal-students"
         />
         <rp-kpi
-          label="Teachers"
+          [label]="isDean() ? 'Total Faculty' : 'Teachers'"
           [value]="num(d.people.teachers)"
           icon="briefcase"
           [delta]="present(d.attendanceToday.teachers)"
-          link="/console/principal-attendance"
+          link="/console/principal-teachers"
         />
         <rp-kpi
-          label="Staff"
+          [label]="isDean() ? 'College Staff' : 'Staff'"
           [value]="num(d.people.staff)"
           icon="users"
           [delta]="present(d.attendanceToday.staff)"
           link="/console/principal-attendance"
         />
         <rp-kpi
-          label="Leave awaiting you"
+          [label]="isDean() ? 'Pending Approvals' : 'Leave awaiting you'"
           [value]="num(d.approvals.teacherLeaveAwaitingYou)"
           icon="plane"
           [tone]="d.approvals.teacherLeaveAwaitingYou ? 'warn' : null"
@@ -143,7 +139,7 @@ import { PrincipalApi, type DayCount, type Overview } from './principal.api';
               >
             </div>
           </rp-card>
-          <rp-card title="Academics" icon="award">
+          <rp-card title="Academic Performance" icon="award">
             <dl class="kv" id="po-academics">
               <dt>Class sections</dt>
               <dd class="t-num">{{ num(d.academics.sections) }}</dd>
@@ -162,6 +158,49 @@ import { PrincipalApi, type DayCount, type Overview } from './principal.api';
           </rp-card>
         </div>
       </div>
+
+      @if (academicDepartments().length > 0) {
+        <div style="margin-top: 20px">
+          <rp-card title="Assigned Academic Departments & Branches" icon="building">
+            <div style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center">
+              <span class="t-sm t-muted">Overview of engineering branches, student enrolments and faculty assignments</span>
+              <span class="t-xs t-muted t-mono">{{ academicDepartments().length }} departments</span>
+            </div>
+            <div class="tbl-wrap">
+              <table class="tbl" id="po-departments-table">
+                <thead>
+                  <tr>
+                    <th>Department / Branch</th>
+                    <th class="t-num">Enrolled Students</th>
+                    <th class="t-num">Faculty</th>
+                    <th class="r">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (dept of academicDepartments(); track dept.id) {
+                    <tr>
+                      <td>
+                        <b class="t-sb">{{ dept.name }}</b>
+                      </td>
+                      <td class="t-num">
+                        <b>{{ num(dept.students) }}</b> <span class="t-xs t-muted">students</span>
+                      </td>
+                      <td class="t-num">
+                        <b>{{ num(dept.faculty) }}</b> <span class="t-xs t-muted">faculty</span>
+                      </td>
+                      <td class="r">
+                        <a class="btn btn-ghost btn-sm" routerLink="/console/principal-students">
+                          <rp-icon name="right" [size]="14" /><span>Students</span>
+                        </a>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </rp-card>
+        </div>
+      }
     }
   </div>`,
 })
@@ -171,11 +210,47 @@ export class PrincipalOverview implements OnInit {
   protected readonly num = num;
   protected readonly formatDate = formatDate;
   protected readonly greeting = greeting;
+
+  protected readonly isDean = computed(
+    () =>
+      this.session()?.roles?.some(
+        (r) => r.code === 'DEAN' || r.name.toLowerCase().includes('dean'),
+      ) ?? false,
+  );
+
   /** The principal's own dashboard (no institution home): the greeting, then the task cards. */
-  protected readonly home = computed(() => ownHome(this.session()?.subTasks ?? []) === 'principal');
+  protected readonly home = computed(
+    () => ownHome(this.session()?.subTasks ?? []) === 'principal' || this.isDean(),
+  );
+
+  protected readonly pageTitle = computed(() => {
+    if (this.isDean()) {
+      return this.home()
+        ? `${greeting(this.session()?.name ?? '')} (Dean Office)`
+        : 'Dean Academic Overview';
+    }
+    return this.home() ? greeting(this.session()?.name ?? '') : 'School overview';
+  });
+
+  protected readonly pageSub = computed(() => {
+    const d = this.data();
+    const inst = this.session()?.institution?.name;
+    const dateStr = d
+      ? `${formatDate(d.date)} · Academic year ${d.year.label}`
+      : 'Today at the campus.';
+    if (this.isDean()) {
+      return `${inst ? inst + ' · ' : ''}Dean (Academics & Student Affairs) · ${dateStr}`;
+    }
+    return (this.home() ? 'School overview · ' : '') + dateStr;
+  });
+
   protected readonly data = signal<Overview | null>(null);
   protected readonly loading = signal(false);
   protected readonly error = signal('');
+
+  protected readonly academicDepartments = computed(() => {
+    return (this.data()?.departments ?? []).filter((d) => d.students > 0);
+  });
 
   ngOnInit() {
     void this.load();
@@ -196,8 +271,8 @@ export class PrincipalOverview implements OnInit {
   protected rows(d: Overview): { label: string; day: DayCount }[] {
     return [
       { label: 'Students', day: d.attendanceToday.students },
-      { label: 'Teachers', day: d.attendanceToday.teachers },
-      { label: 'Staff', day: d.attendanceToday.staff },
+      { label: this.isDean() ? 'Faculty & Professors' : 'Teachers', day: d.attendanceToday.teachers },
+      { label: 'College Staff', day: d.attendanceToday.staff },
     ];
   }
 

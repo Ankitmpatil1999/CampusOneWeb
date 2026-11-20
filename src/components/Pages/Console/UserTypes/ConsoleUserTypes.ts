@@ -18,9 +18,11 @@ const KINDS: readonly { v: UserTypeCategory; l: string }[] = [
   { v: 'PARENT', l: 'Parent' },
   { v: 'TEACHER', l: 'Teacher' },
   { v: 'STAFF', l: 'Staff' },
-  { v: 'MERCHANT', l: 'Merchant' },
+  { v: 'DEAN', l: 'Dean (Academics & Student Affairs)' },
+  { v: 'COORDINATOR', l: 'Academic Coordinator' },
   { v: 'PRINCIPAL', l: 'Principal' },
   { v: 'MANAGEMENT', l: 'Management' },
+  { v: 'MERCHANT', l: 'Merchant' },
   { v: 'CREW', l: 'Transport crew' },
   { v: 'OTHER', l: 'Other' },
 ];
@@ -31,6 +33,8 @@ const guessKind = (name: string): UserTypeCategory => {
   if (/student|pupil/.test(n)) return 'STUDENT';
   if (/parent|guardian/.test(n)) return 'PARENT';
   if (/teacher|faculty|lecturer/.test(n)) return 'TEACHER';
+  if (/dean/.test(n)) return 'DEAN';
+  if (/coordinator/.test(n)) return 'COORDINATOR';
   if (/merchant|vendor|canteen|shop/.test(n)) return 'MERCHANT';
   if (/principal|head/.test(n)) return 'PRINCIPAL';
   if (/management|trustee|chair/.test(n)) return 'MANAGEMENT';

@@ -50,6 +50,8 @@ export function roleFits(
   switch (role.code) {
     case 'PRINCIPAL':
       return a.category === 'PRINCIPAL' || a.category === 'MANAGEMENT';
+    case 'DEAN':
+      return a.category === 'DEAN' || a.category === 'MANAGEMENT' || a.category === 'STAFF';
     case 'MERCHANT':
       return a.category === 'MERCHANT' && a.merchantType === 'REGULAR';
     case 'VENDOR_MERCHANT':

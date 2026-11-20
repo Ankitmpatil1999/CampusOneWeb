@@ -106,7 +106,7 @@ const MAX_SHEET_BYTES = 2 * 1024 * 1024;
         [text]="t('ui.web.tch.marks.emptyText')"
       />
     } @else {
-      <div class="card pad stack g12">
+      <div class="card pad stack g12" style="overflow: visible; position: relative; z-index: 20">
         <div class="fld" style="max-width: 560px">
           <label class="fld-l" for="tm-exam-b">{{ t('ui.web.tch.marks.exam') }}</label>
           <rp-dd

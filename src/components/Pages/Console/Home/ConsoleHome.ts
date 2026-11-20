@@ -212,7 +212,14 @@ export class ConsoleHome implements OnInit {
 
   ngOnInit() {
     // A teacher with only the Teaching role lands on their own pages (Phase 10); the principal on
-    // the school overview, a merchant on the counter (client 2026-10-13).
+    // the school overview, a merchant on the counter (client 2026-10-13); Dean lands on Dean Overview.
+    const isDean = this.session()?.roles?.some(
+      (r) => r.code === 'DEAN' || r.name.toLowerCase().includes('dean'),
+    );
+    if (isDean) {
+      void this.router.navigate(['/console', 'principal'], { replaceUrl: true });
+      return;
+    }
     const own = ownHome(this.session()?.subTasks ?? []);
     if (own) {
       void this.router.navigate(['/console', own], { replaceUrl: true });

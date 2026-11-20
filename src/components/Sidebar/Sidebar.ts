@@ -25,6 +25,7 @@ import { translate } from '../Utils/translate';
 import { t as tr } from '../Utils/t';
 import { NavUi } from '../Utils/nav-ui';
 import {
+  ownHome,
   pathOf,
   visibleNav,
   type NavGroup,
@@ -233,6 +234,13 @@ export class Sidebar {
     if (this.surface() === 'ops') return this.sessions.ops()?.role.name ?? '';
     return (this.sessions.console()?.roles ?? []).map((r) => r.name).join(', ');
   });
+  protected readonly isDean = computed(
+    () =>
+      this.surface() === 'console' &&
+      (this.sessions.console()?.roles?.some(
+        (r) => r.code === 'DEAN' || r.name.toLowerCase().includes('dean'),
+      ) ?? false),
+  );
   protected readonly groups = computed(() =>
     visibleNav(this.surface(), this.session()?.subTasks ?? []),
   );
@@ -291,6 +299,9 @@ export class Sidebar {
   }
 
   protected label(g: NavGroup) {
+    if (g.k === 'principal' && this.isDean()) {
+      return 'Academic Leadership (Dean)';
+    }
     return g.key ? tr(g.key) : g.group;
   }
 
@@ -336,6 +347,11 @@ export class Sidebar {
   protected link(id: string) {
     const area = this.surface() === 'ops' ? '/backoffice' : '/console';
     const path = pathOf(id);
+    if (path === 'home') {
+      if (this.isDean()) return [area, 'principal'];
+      const own = ownHome(this.session()?.subTasks ?? []);
+      if (own) return [area, own];
+    }
     return path === 'home' ? [area] : [area, path];
   }
 
