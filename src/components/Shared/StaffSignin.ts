@@ -23,7 +23,6 @@ import type { StaffSurface } from '../Utils/navigation';
 import { ApiProblem } from '../Utils/problem';
 import { translate } from '../Utils/translate';
 import { PATTERNS, isValidPassword } from '../Utils/patterns';
-import { Avatar } from './Avatar';
 import { Countdown } from './Countdown';
 import { Icon } from './Icon';
 import { InstitutionList } from './InstitutionList';
@@ -47,7 +46,7 @@ const DIGITS = 4;
  */
 @Component({
   selector: 'rp-staff-signin',
-  imports: [Avatar, Countdown, Icon, InstitutionList, Mark, OverlayHost, LanguageMenu],
+  imports: [Countdown, Icon, InstitutionList, Mark, OverlayHost, LanguageMenu],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { style: 'display:block;height:100vh;height:100dvh' },
   template: `
@@ -83,36 +82,29 @@ const DIGITS = 4;
           </div>
         } @else {
           <div class="cp-ab-top">
-            @if (school(); as s) {
-              <rp-av [name]="s.name" [sq]="true" [px]="44" color="#0C6F7D" />
-              <div>
-                <b style="font-size: 18px">{{ s.name }}</b>
-                <small style="opacity: 0.85">School Console{{ s.city ? ' · ' + s.city : '' }}</small>
-              </div>
-            } @else {
-              <rp-mark [size]="44" />
-              <div>
-                <b style="font-size: 20px">CampusOne</b>
-                <small style="opacity: 0.85">Smart School Management System</small>
-              </div>
-            }
+            <rp-mark [size]="46" />
+            <div>
+              <b style="font-size: 22px; letter-spacing: -0.02em">CampusOne</b>
+              <small style="opacity: 0.88; font-size: 12px">Enterprise Campus & Institution OS</small>
+            </div>
           </div>
 
           <div class="cp-school-showcase">
             <div class="cp-hero-frame">
               <img
                 src="images/school-campus-hero.png"
-                alt="CampusOne School Campus"
+                alt="CampusOne Smart Campus"
                 class="cp-hero-img"
               />
               <div class="cp-hero-pill">
-                <rp-icon name="grad" [size]="14" />
-                <span>Smart Campus ERP</span>
+                <rp-icon name="sparkles" [size]="14" />
+                <span>Next-Gen Campus Platform</span>
               </div>
             </div>
 
             <div class="cp-ab-mid">
-              <h2>Run your whole school from one unified portal.</h2>
+              <h2>One platform for your entire institution.</h2>
+              <p class="cp-ab-sub">Everything from admissions and academics to fee collections and student lifecycles in one unified cloud system.</p>
 
               <div class="cp-feat-grid">
                 <!-- 1. Student & Staff Lifecycle -->
@@ -121,8 +113,8 @@ const DIGITS = 4;
                     <rp-icon name="users" [size]="18" />
                   </span>
                   <div class="cp-feat-info">
-                    <h4 class="cp-feat-title">Student & Staff Lifecycle</h4>
-                    <p class="cp-feat-desc">Admissions, biometric RFID attendance & profiles</p>
+                    <h4 class="cp-feat-title">Student & Staff Hub</h4>
+                    <p class="cp-feat-desc">Admissions, RFID attendance & profiles</p>
                   </div>
                 </div>
 
@@ -132,8 +124,8 @@ const DIGITS = 4;
                     <rp-icon name="receipt" [size]="18" />
                   </span>
                   <div class="cp-feat-info">
-                    <h4 class="cp-feat-title">Fee Collections & Invoicing</h4>
-                    <p class="cp-feat-desc">Instant receipts, online payment gateways & ledger</p>
+                    <h4 class="cp-feat-title">Collections & Finance</h4>
+                    <p class="cp-feat-desc">Digital invoicing, fees & instant receipts</p>
                   </div>
                 </div>
 
@@ -143,8 +135,8 @@ const DIGITS = 4;
                     <rp-icon name="book" [size]="18" />
                   </span>
                   <div class="cp-feat-info">
-                    <h4 class="cp-feat-title">Academics & Timetables</h4>
-                    <p class="cp-feat-desc">Class scheduling, homework, exams & report cards</p>
+                    <h4 class="cp-feat-title">Academics & Exams</h4>
+                    <p class="cp-feat-desc">Class schedules, marks & report cards</p>
                   </div>
                 </div>
 
@@ -154,8 +146,8 @@ const DIGITS = 4;
                     <rp-icon name="bus" [size]="18" />
                   </span>
                   <div class="cp-feat-info">
-                    <h4 class="cp-feat-title">Fleet & Transport Safety</h4>
-                    <p class="cp-feat-desc">Live GPS bus tracking, student boarding logs & routes</p>
+                    <h4 class="cp-feat-title">Transport & Safety</h4>
+                    <p class="cp-feat-desc">Live GPS tracking & parent notifications</p>
                   </div>
                 </div>
               </div>
@@ -163,13 +155,22 @@ const DIGITS = 4;
           </div>
 
           <div class="cp-ab-foot">
-            <rp-icon name="shieldck" [size]="14" />
-            <span>Secure 256-bit encrypted school console · Session protected</span>
+            <rp-icon name="shieldck" [size]="15" />
+            <span>Secure 256-bit SSL encrypted · Enterprise multi-tenant platform</span>
           </div>
         }
       </aside>
       <main class="cp-am">
-        <div class="row" style="justify-content: flex-end; margin-bottom: 8px">
+        <div class="cp-top-bar">
+          <button
+            type="button"
+            class="cp-theme-toggle"
+            (click)="toggleTheme()"
+            [attr.aria-label]="isDark() ? 'Switch to light mode' : 'Switch to dark mode'"
+          >
+            <rp-icon [name]="isDark() ? 'sun' : 'moon'" [size]="15" />
+            <span>{{ isDark() ? 'Light' : 'Dark' }}</span>
+          </button>
           <rp-lang-menu />
         </div>
         <div class="cp-af">
@@ -177,7 +178,7 @@ const DIGITS = 4;
             @case ('cred') {
               <div class="cp-af-h">
                 <div class="cp-school-badge">
-                  <rp-mark [size]="26" />
+                  <rp-mark [size]="22" />
                   <span>{{ isOps() ? 'Platform Operations' : 'CampusOne Portal' }}</span>
                 </div>
                 <h1>{{ isOps() ? 'Platform Operator Sign-in' : 'Sign in to CampusOne' }}</h1>
@@ -185,9 +186,7 @@ const DIGITS = 4;
                   {{
                     isOps()
                       ? 'CampusOne platform operator back-office'
-                      : school()
-                        ? school()!.name + ' · Unified Portal'
-                        : 'Single sign-in for Students, Faculty, Management & Operations.'
+                      : 'Enter your credentials to access your designated portal.'
                   }}
                 </p>
               </div>
@@ -532,7 +531,56 @@ const DIGITS = 4;
     </div>
     <rp-overlays />
   `,
-  styles: [``],
+  styles: [`
+    .cp-top-bar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      width: min(430px, 100%);
+    }
+    .cp-theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid #CBD5E1;
+      background: #FFFFFF;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+    .cp-theme-toggle:hover {
+      background: #F1F5F9;
+      color: #0F172A;
+      border-color: #94A3B8;
+    }
+    .cp-school-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #EFF6FF;
+      color: #1D4ED8;
+      border: 1px solid #BFDBFE;
+      padding: 4px 11px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 650;
+      margin-bottom: 10px;
+      width: fit-content;
+    }
+    .cp-ab-sub {
+      font-size: 13px;
+      line-height: 1.45;
+      color: rgba(255, 255, 255, 0.88);
+      margin: 0 0 14px;
+    }
+  `],
 })
 export class StaffSignin implements OnInit {
   private readonly sessions = inject(SessionContext);
@@ -553,8 +601,8 @@ export class StaffSignin implements OnInit {
   protected readonly isOps = computed(() =>
     this.surface() === 'auto' ? this.activeSurface() === 'ops' : this.surface() === 'ops',
   );
-  /** The school last signed in on this browser (console only). */
-  protected readonly school = signal(rememberedSchool());
+  /** Universal portal sign-in: school is null on universal login so brand is always pure CampusOne. */
+  protected readonly school = signal<any>(null);
   protected readonly digits = DIGITS;
   protected readonly digitSlots = Array.from({ length: DIGITS }, (_, i) => i);
   private readonly digitInputs = viewChildren<ElementRef<HTMLInputElement>>('digit');
@@ -636,6 +684,12 @@ export class StaffSignin implements OnInit {
   async ngOnInit() {
     if (this.surface() !== 'auto') {
       this.activeSurface.set(this.surface() as StaffSurface);
+    } else {
+      try {
+        localStorage.removeItem('campusone_school');
+      } catch {
+        /* storage unavailable */
+      }
     }
     if (this.mode() !== 'reset') {
       // Always land on the Sign-In page at startup instead of auto-redirecting straight to Dashboard.
