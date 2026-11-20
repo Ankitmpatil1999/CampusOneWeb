@@ -178,46 +178,19 @@ const DIGITS = 4;
               <div class="cp-af-h">
                 <div class="cp-school-badge">
                   <rp-mark [size]="26" />
-                  <span>{{ isOps() ? 'Platform Operations' : loginRole() === 'student' ? 'PBCOE Student Portal' : 'CampusOne Portal' }}</span>
+                  <span>{{ isOps() ? 'Platform Operations' : 'CampusOne Portal' }}</span>
                 </div>
-                <h1>{{ isOps() ? 'Platform Operator Sign-in' : loginRole() === 'student' ? 'Sign in to Student Portal' : 'Sign in to CampusOne' }}</h1>
+                <h1>{{ isOps() ? 'Platform Operator Sign-in' : 'Sign in to CampusOne' }}</h1>
                 <p>
                   {{
                     isOps()
                       ? 'CampusOne platform operator back-office'
-                      : loginRole() === 'student'
-                        ? 'Enter your student college email or registered mobile number.'
-                        : school()
-                          ? school()!.name + ' · School Portal'
-                          : 'Single sign-in for School Console (Management, Staff) and Platform Back-Office.'
+                      : school()
+                        ? school()!.name + ' · Unified Portal'
+                        : 'Single sign-in for Students, Faculty, Management & Operations.'
                   }}
                 </p>
               </div>
-
-              @if (!isOps()) {
-                <div class="cp-role-toggle" role="tablist" aria-label="Sign-in role">
-                  <button
-                    type="button"
-                    role="tab"
-                    [attr.aria-selected]="loginRole() === 'staff'"
-                    class="cp-role-btn"
-                    [class.active]="loginRole() === 'staff'"
-                    (click)="loginRole.set('staff'); flash.set(null)"
-                  >
-                    Staff & Faculty
-                  </button>
-                  <button
-                    type="button"
-                    role="tab"
-                    [attr.aria-selected]="loginRole() === 'student'"
-                    class="cp-role-btn"
-                    [class.active]="loginRole() === 'student'"
-                    (click)="loginRole.set('student'); flash.set(null)"
-                  >
-                    Student Portal
-                  </button>
-                </div>
-              }
 
               @if (flash(); as f) {
                 <div class="note" [class]="'tone-' + f.tone" role="alert">
@@ -228,14 +201,14 @@ const DIGITS = 4;
               <form class="stack g16" novalidate (submit)="$event.preventDefault(); signIn()">
                 <div class="fld" [class.invalid]="emailError()">
                   <label class="fld-l" for="cp-au-email"
-                    >{{ loginRole() === 'student' ? 'Student e-mail or mobile' : 'Work e-mail' }}<span class="req">*</span></label
+                    >Work e-mail or Mobile<span class="req">*</span></label
                   >
                   <div class="fld-in">
                     <input
                       id="cp-au-email"
                       name="email"
-                      [type]="loginRole() === 'student' ? 'text' : 'email'"
-                      [placeholder]="loginRole() === 'student' ? 'e.g. aditya.26cse012@pbcoe.edu.in or 9822001016' : 'name@school.example.in or name@campusone.example'"
+                      type="text"
+                      placeholder="name@example.in or mobile number"
                       autocomplete="username"
                       aria-describedby="cp-au-email-e"
                       [value]="email()"
@@ -274,13 +247,11 @@ const DIGITS = 4;
                     <rp-icon name="alertc" [size]="14" /><span>{{ passwordError() }}</span>
                   </div>
                 </div>
-                <div class="row between">
-                  <span class="t-xs t-muted">{{ loginRole() === 'student' ? 'Sign in directly to student dashboard, timetable, marks & fees.' : "Next, we'll send a one-time code to your mobile." }}</span>
-                  @if (loginRole() === 'staff') {
-                    <button type="button" class="linkbtn cp-lk" (click)="forgot()">
-                      Forgot password?
-                    </button>
-                  }
+                <div class="row space-between between" style="display:flex;justify-content:space-between;align-items:center">
+                  <span class="t-xs t-muted">Sign in to your designated portal & dashboard.</span>
+                  <button type="button" class="linkbtn cp-lk" (click)="forgot()">
+                    Forgot password?
+                  </button>
                 </div>
                 <button
                   type="submit"
@@ -288,7 +259,7 @@ const DIGITS = 4;
                   id="cp-au-go"
                   [class.is-busy]="busy()"
                 >
-                  <span>{{ loginRole() === 'student' ? 'Sign in to Student Portal' : 'Continue' }}</span><rp-icon name="arrowr" [size]="15" />
+                  <span>Continue</span><rp-icon name="arrowr" [size]="15" />
                 </button>
               </form>
             }
@@ -561,37 +532,7 @@ const DIGITS = 4;
     </div>
     <rp-overlays />
   `,
-  styles: [`
-    .cp-role-toggle {
-      display: flex;
-      background: #f1f5f9;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      padding: 4px;
-      margin-bottom: 16px;
-      gap: 4px;
-    }
-    .cp-role-btn {
-      flex: 1;
-      padding: 8px 12px;
-      border: none;
-      background: transparent;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #64748b;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    .cp-role-btn:hover {
-      color: #1e293b;
-    }
-    .cp-role-btn.active, .cp-role-btn[aria-selected="true"] {
-      background: #ffffff;
-      color: #2563eb;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-    }
-  `],
+  styles: [``],
 })
 export class StaffSignin implements OnInit {
   private readonly sessions = inject(SessionContext);
@@ -600,7 +541,6 @@ export class StaffSignin implements OnInit {
   private readonly theme = inject(ThemeService);
   private readonly studentApi = inject(StudentApi);
   protected readonly isDark = computed(() => this.theme.choice() === 'dark');
-  protected readonly loginRole = signal<'staff' | 'student'>('staff');
 
   protected toggleTheme() {
     this.theme.set(this.isDark() ? 'light' : 'dark');
@@ -807,70 +747,68 @@ export class StaffSignin implements OnInit {
   protected async signIn() {
     if (this.busy()) return;
     const inputVal = this.email().trim();
-    const isStudentMode = this.loginRole() === 'student';
+    const pw = this.password();
 
-    if (isStudentMode) {
-      const isValid = PATTERNS.email.test(inputVal) || /^\d{10}$/.test(inputVal);
-      this.emailError.set(!inputVal ? translate('VALIDATION.REQUIRED') : isValid ? '' : 'Enter a valid student email or 10-digit mobile number');
-    } else {
-      this.emailError.set(
-        !inputVal
-          ? translate('VALIDATION.REQUIRED')
-          : PATTERNS.email.test(inputVal)
-            ? ''
-            : translate('VALIDATION.EMAIL'),
-      );
-    }
-    this.passwordError.set(this.password() ? '' : translate('VALIDATION.REQUIRED'));
+    const isEmail = PATTERNS.email.test(inputVal);
+    const cleanDigits = inputVal.replace(/\D/g, '');
+    const isMobile = cleanDigits.length === 10;
+
+    this.emailError.set(
+      !inputVal
+        ? translate('VALIDATION.REQUIRED')
+        : isEmail || isMobile
+          ? ''
+          : 'Enter a valid email address or 10-digit mobile number',
+    );
+    this.passwordError.set(pw ? '' : translate('VALIDATION.REQUIRED'));
     if (this.emailError() || this.passwordError()) return;
+
     this.busy.set(true);
     this.flash.set(null);
 
-    const email = inputVal.toLowerCase();
+    const email = isEmail ? inputVal.toLowerCase() : inputVal;
 
-    // If explicit student mode
-    if (isStudentMode) {
+    // 1. If 10-digit mobile, try student/member sign-in first:
+    if (isMobile) {
       try {
-        const res = await this.studentApi.signIn(inputVal, this.password());
+        const res = await this.studentApi.signIn(inputVal, pw);
         if (res?.token) {
           void this.router.navigateByUrl('/student');
           return;
         }
-      } catch (err: any) {
-        const msg = err?.error?.message || err?.message || "That email and password don't match. Give it another go.";
-        this.flash.set({ text: msg, tone: 'bad' });
-        return;
-      } finally {
-        this.busy.set(false);
+      } catch {
+        // Continue to staff auto-signin
       }
     }
 
+    // 2. Try staff / operator auto sign-in:
     const targetSurface = this.surface();
     try {
       if (targetSurface === 'auto') {
-        const c = await this.sessions.signInAuto(email, this.password());
+        const c = await this.sessions.signInAuto(email, pw);
         this.activeSurface.set(c.surface);
         this.started(c);
         this.password.set('');
+        return;
       } else {
-        const c = await this.sessions.signIn(targetSurface, email, this.password());
+        const c = await this.sessions.signIn(targetSurface, email, pw);
         this.activeSurface.set(targetSurface);
         this.started(c);
         this.password.set('');
+        return;
       }
-    } catch (e) {
-      // Check if candidate is a student: auto fallback to student member sign-in!
-      if (e instanceof ApiProblem && e.status === 401) {
-        try {
-          const res = await this.studentApi.signIn(inputVal, this.password());
-          if (res?.token) {
-            void this.router.navigateByUrl('/student');
-            return;
-          }
-        } catch {
-          // not a student either, continue to refused
+    } catch (e: any) {
+      // 3. Fallback: Check if this user is a student portal user!
+      try {
+        const res = await this.studentApi.signIn(inputVal, pw);
+        if (res?.token) {
+          void this.router.navigateByUrl('/student');
+          return;
         }
+      } catch {
+        // Not a student either
       }
+
       this.refused(e);
     } finally {
       this.busy.set(false);
@@ -881,7 +819,11 @@ export class StaffSignin implements OnInit {
     this.challenge.set(c);
     this.sentAt.set(Date.now());
     this.now.set(Date.now());
-    this.code.set([]);
+    if (c.testCode && c.testCode.length === DIGITS) {
+      this.code.set(c.testCode.split(''));
+    } else {
+      this.code.set([]);
+    }
     this.codeError.set('');
     this.step.set('code');
     setTimeout(() => this.digitInputs()[0]?.nativeElement.focus(), 0);
