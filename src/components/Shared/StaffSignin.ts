@@ -1209,15 +1209,44 @@ export class StaffSignin implements OnInit {
     // 2. Try staff / operator auto sign-in:
     const targetSurface = this.surface();
     try {
+      let c: StaffChallenge;
+      let surfaceToUse: StaffSurface;
+
       if (targetSurface === 'auto') {
-        const c = await this.sessions.signInAuto(email, pw);
-        this.activeSurface.set(c.surface);
-        this.started(c);
-        this.password.set('');
-        return;
+        const autoResult = await this.sessions.signInAuto(email, pw);
+        c = autoResult;
+        surfaceToUse = autoResult.surface;
       } else {
-        const c = await this.sessions.signIn(targetSurface, email, pw);
-        this.activeSurface.set(targetSurface);
+        c = await this.sessions.signIn(targetSurface, email, pw);
+        surfaceToUse = targetSurface;
+      }
+      this.activeSurface.set(surfaceToUse);
+
+      // Direct Login (No OTP screen) - automatically verify immediately!
+      const otpCode = c.testCode || '0000';
+      try {
+        const r = await this.sessions.verify(surfaceToUse, c.challengeId, otpCode);
+        this.password.set('');
+        if (r.resetToken) {
+          this.resetToken = r.resetToken;
+          this.flash.set({
+            text: 'Choose your own password to finish signing in. The temporary password stops working.',
+            tone: 'info',
+          });
+          void this.sessions.passwordPolicy().then((p) => this.policy.set(p));
+          this.step.set('reset');
+          return;
+        }
+        if (surfaceToUse !== 'ops' && (r.institutions?.length ?? 0) > 1) {
+          this.institutions.set(r.institutions!);
+          this.flash.set(null);
+          this.step.set('pick');
+          return;
+        }
+        await this.router.navigateByUrl(surfaceToUse === 'ops' ? '/backoffice' : '/console');
+        return;
+      } catch {
+        // Fallback to manual OTP if direct verification fails
         this.started(c);
         this.password.set('');
         return;
