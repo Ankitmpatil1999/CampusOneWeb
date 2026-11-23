@@ -28,6 +28,12 @@ export type DocType =
   | 'REPORT'
   | 'TC'
   | 'OTHER'
+  | 'ELECTRIC_BILL'
+  | 'JEE'
+  | 'MHTCET'
+  | 'MARKSHEET_10'
+  | 'MARKSHEET_12'
+  | 'CASTE'
   // The Aadhaar and PAN cards, front and back: the student's, each parent's and the local
   // guardian's (client 2026-10-13).
   | `${CardOwner}_${'AADHAAR' | 'PAN'}_${'FRONT' | 'BACK'}`;

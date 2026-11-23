@@ -67,7 +67,7 @@ const opts = (xs: readonly string[]): DropdownOption[] =>
       <div class="pa-g2">
         <rp-pa-fld
           fid="pa-class"
-          label="Class sought"
+          label="Course / Class sought"
           labelFor="pa-class-b"
           [req]="true"
           [bare]="true"
@@ -78,7 +78,7 @@ const opts = (xs: readonly string[]): DropdownOption[] =>
             inputId="pa-class"
             [options]="classOpts()"
             [value]="d.classId"
-            placeholder="Choose a class"
+            placeholder="Choose course / class"
             (changed)="f().put('classId', $event, 'pa-class')"
           />
         </rp-pa-fld>
@@ -293,11 +293,11 @@ export class StepClass {
         <rp-pa-fld
           fid="pa-aadhaar"
           label="Aadhaar number"
-          [opt]="true"
+          [req]="true"
           [hint]="
             d.kept.aadhaar
               ? 'Saved: ' + d.kept.aadhaar + ' — type the number again to change it'
-              : 'The 12 digits on the Aadhaar card, if the student has one'
+              : 'Mandatory: 12 digits on the student’s Aadhaar card'
           "
           [error]="f().err('pa-aadhaar')"
         >
@@ -317,11 +317,11 @@ export class StepClass {
         <rp-pa-fld
           fid="pa-pan"
           label="PAN"
-          [opt]="true"
+          [req]="true"
           [hint]="
             d.kept.pan
               ? 'Saved: ' + d.kept.pan + ' — type it again to change it'
-              : 'Only if the student has one'
+              : 'Mandatory: 10-character PAN of the student'
           "
           [error]="f().err('pa-pan')"
         >
@@ -498,13 +498,14 @@ export class StepClass {
           (removed)="f().remove('pa-photo', 'PHOTO', clearPhoto)"
         />
       </div>
-      <!-- The student's cards, optional like the numbers (client 2026-10-13). -->
+      <!-- The student's cards, now mandatory with star mark. -->
       <rp-pa-cards
         [f]="f()"
         [slots]="cards"
+        [required]="true"
         fsId="pa-sc"
         title="Student's Aadhaar and PAN cards"
-        note="Optional — both sides of each card the student has, as clear scans or photos."
+        note="Mandatory — both sides of the student's Aadhaar card and PAN card as clear scans or photos."
       />
     </div>`,
 })

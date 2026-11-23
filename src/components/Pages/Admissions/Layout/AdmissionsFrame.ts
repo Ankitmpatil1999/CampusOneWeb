@@ -55,36 +55,59 @@ import { AdmissionsContext, crest } from '../admissions.store';
     <div class="pub" id="pubroot">
       <header class="pub-top">
         @if (inst(); as i) {
-          <!-- The school's own logo, else its initials (client 2026-10-15). -->
-          @if (logo(); as src) {
-            <img
-              class="crest"
-              id="pa-logo"
-              [src]="src"
-              [alt]="i.name + ' logo'"
-              style="object-fit: contain; background: #fff"
-              (error)="logoFailed.set(true)"
-            />
-          } @else {
-            <span class="crest" aria-hidden="true">{{ crestOf(i.name) }}</span>
-          }
-          <div class="grow">
-            <b>{{ i.name }}</b
-            ><small>Admissions{{ i.city ? ' · ' + i.city : '' }}</small>
+          <div class="pub-brand-wrap">
+            @if (logo(); as src) {
+              <img
+                class="crest"
+                id="pa-logo"
+                [src]="src"
+                [alt]="i.name + ' logo'"
+                style="object-fit: contain; background: #fff"
+                (error)="logoFailed.set(true)"
+              />
+            } @else {
+              <span class="crest" aria-hidden="true">{{ crestOf(i.name) }}</span>
+            }
+            <div class="pub-inst-info">
+              <div class="pub-inst-title-row">
+                <b class="pub-inst-name">{{ i.name }}</b>
+                <span class="pub-status-pill"><span class="pub-pulse-dot"></span>Admissions Open</span>
+              </div>
+              <small class="pub-inst-sub">Autonomous Engineering Institution · Approved by AICTE, Affiliated to RTMNU{{ i.city ? ' · ' + i.city : '' }}</small>
+            </div>
           </div>
         } @else {
-          <rp-mark [size]="42" />
-          <div class="grow"><b>Admissions</b><small>School admissions on CampusOne</small></div>
+          <div class="pub-brand-wrap">
+            <rp-mark [size]="42" />
+            <div class="pub-inst-info">
+              <b class="pub-inst-name">College Admissions</b>
+              <small class="pub-inst-sub">Centralized Online Admission Portal</small>
+            </div>
+          </div>
         }
-        <span class="t-xs t-muted row g6"
-          ><rp-icon name="lock" [size]="13" /> Secure form · powered by CampusOne</span
-        >
+        <div class="pub-top-trust">
+          <span class="pub-trust-pill">
+            <rp-icon name="lock" [size]="13" /> 256-Bit SSL Encrypted
+          </span>
+          <span class="pub-trust-pill secondary">
+            <rp-icon name="sparkles" [size]="12" /> NexCoreGen Secured
+          </span>
+        </div>
       </header>
+
       <main class="pub-main"><router-outlet /></main>
+
       <footer class="pub-foot">
-        <rp-mark [size]="16" /> Applications are processed by
-        {{ inst()?.shortName || inst()?.name || 'the school' }}. Only the details this form asks for
-        are shared with the school.
+        <div class="pub-foot-inner">
+          <div class="pub-foot-meta">
+            <b>{{ inst()?.name || 'Priyadarshini Bhagwati College of Engineering' }}</b>
+            <p>Campus Admissions Cell: Harpur Nagar, Umred Road, Nagpur, Maharashtra 440009 · Helpline: +91 (0712) 2712345 / 9876543210</p>
+          </div>
+          <div class="pub-foot-legal">
+            <span>© 2026 NexCoreGen Technology Pvt Ltd · Certified Educational SaaS Platform</span>
+            <span>All submissions are securely encrypted & directly processed by the college admissions cell.</span>
+          </div>
+        </div>
       </footer>
     </div>
     <rp-overlays [fixed]="true" />

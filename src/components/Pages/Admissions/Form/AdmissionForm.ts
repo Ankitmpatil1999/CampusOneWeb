@@ -46,8 +46,8 @@ export class AdmissionForm extends AdmissionWizard {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
-  protected readonly crumb = 'Admissions';
-  protected readonly backLabel = 'Back to admissions';
+  protected override readonly crumb = '';
+  protected override readonly backLabel = '';
   protected readonly helpTitle = 'Need help?';
   private readonly link = this.route.snapshot.paramMap.get('linkToken') ?? '';
 

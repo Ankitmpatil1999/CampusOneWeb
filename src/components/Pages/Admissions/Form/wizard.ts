@@ -116,99 +116,146 @@ export const WIZARD_TEMPLATE = `
       @let d = f.d();
       @let S = steps[d.step]!;
       <div class="pa-form">
-        <div class="pa-fhead">
-          <div class="grow">
-            <button type="button" class="linkbtn pa-crumb" (click)="home()">
-              <rp-icon name="arrowl" [size]="14" /> {{ crumb }}
-            </button>
-            <h1>Application for admission</h1>
-            <div class="pa-fchips">
-              @if (f.year(); as y) {
-                <span class="chip tone-brand">{{ yl(y.label) }}</span>
-              }
+        <!-- Modern Executive Admission Form Banner -->
+        <div class="pa-hero-banner">
+          <div class="pa-hero-top-row">
+            <div class="pa-hero-tags">
+              <span class="pa-hero-tag session">
+                <span class="pa-pulse-dot"></span> Session {{ yl(f.year()?.label ?? '2026-2027') }}
+              </span>
               @if (f.cls(); as c) {
-                <span class="chip tone-neutral">{{ c.name }}</span>
+                <span class="pa-hero-tag course">{{ c.name }}</span>
               }
               @if (f.mid()) {
-                <span class="chip tone-accent dot">Mid-term admission</span>
+                <span class="pa-hero-tag spot">Spot / Direct Admission</span>
               }
               @if (d.appNo) {
-                <span class="pa-muted t-xs">Draft {{ d.appNo }}</span>
+                <span class="pa-hero-tag draft">Draft #{{ d.appNo }}</span>
               }
             </div>
+            <div class="pa-hero-autosave">
+              <span class="pa-save-indicator" [class.saved]="!!d.saved">
+                @if (d.saved) {
+                  <rp-icon name="checkc" [size]="14" /> Auto-Saved {{ saved(d.saved) }}
+                } @else {
+                  <rp-icon name="cloud" [size]="14" /> Auto-Save Active
+                }
+              </span>
+              <button
+                type="button"
+                class="btn btn-sec btn-sm pa-save-btn"
+                [class.is-busy]="busy() === 'save'"
+                (click)="save()"
+              >
+                <span>Save Draft</span>
+              </button>
+            </div>
           </div>
-          <div class="pa-fhead-a">
-            <span class="pa-saved">
-              @if (d.saved) {
-                <rp-icon name="checkc" [size]="13" /> Saved {{ saved(d.saved) }}
-              } @else {
-                <rp-icon name="cloud" [size]="13" /> Not saved yet
-              }
-            </span>
-            <button
-              type="button"
-              class="btn btn-sec"
-              [class.is-busy]="busy() === 'save'"
-              (click)="save()"
-            >
-              <span>Save draft</span>
-            </button>
+
+          <div class="pa-hero-main">
+            <h1 class="pa-hero-h1">College Admission Application</h1>
+            <p class="pa-hero-sub">Priyadarshini Bhagwati College of Engineering — Under-Graduate & Post-Graduate Degree Programmes</p>
           </div>
         </div>
+
+        <!-- High-Impact Responsive Stepper (Mobile & Tablet) -->
         <div class="pa-mprog">
-          <div class="pa-mprog-t">
-            <b>Step {{ d.step + 1 }} of {{ steps.length }} · {{ S.t }}</b
-            ><span>{{ pct() }}%</span>
+          <div class="pa-mprog-top">
+            <div class="pa-mprog-badge">STEP {{ d.step + 1 }} OF {{ steps.length }}</div>
+            <div class="pa-mprog-pct"><b>{{ pct() }}%</b> Completed</div>
           </div>
-          <div class="steps">
+          <div class="pa-mprog-title-row">
+            <span class="pa-mprog-active-step">{{ S.t }}</span>
+            @if (d.step < steps.length - 1) {
+              <span class="pa-mprog-next-step">Next: {{ steps[d.step + 1]!.t }}</span>
+            }
+          </div>
+          <div class="pa-mprog-track">
+            <div class="pa-mprog-fill" [style.width.%]="pct()"></div>
+          </div>
+
+          <!-- Horizontal Touch-Scrollable Step Pills for Mobile -->
+          <div class="pa-mprog-pills-bar">
             @for (s of steps; track $index; let i = $index) {
-              <span class="st" [class.done]="i < d.step" [class.on]="i === d.step"></span>
+              <button
+                type="button"
+                class="pa-mini-step-pill"
+                [class.on]="i === d.step"
+                [class.done]="isDone(i)"
+                [disabled]="i > d.maxStep"
+                (click)="goto(i)"
+              >
+                <span class="mini-pill-num">
+                  @if (isDone(i)) {
+                    <rp-icon name="check" [size]="10" [stroke]="3" />
+                  } @else {
+                    {{ i + 1 }}
+                  }
+                </span>
+                <span class="mini-pill-text">{{ s.t }}</span>
+              </button>
             }
           </div>
         </div>
+
+        <!-- Main Form Grid: Desktop Sidebar + Form Card -->
         <div class="pa-grid">
+          <!-- Desktop Vertical Stepper Sidebar -->
           <aside class="pa-side">
             <nav class="stepper-v pa-stepper" aria-label="Application steps">
-              @for (s of steps; track $index; let i = $index) {
-                <button
-                  type="button"
-                  class="sv"
-                  [class.on]="i === d.step"
-                  [class.done]="isDone(i)"
-                  [disabled]="i > d.maxStep"
-                  [attr.aria-current]="i === d.step ? 'step' : 'false'"
-                  (click)="goto(i)"
-                >
-                  <span class="n">
-                    @if (isDone(i)) {
-                      <rp-icon name="check" [size]="12" [stroke]="3" />
-                    } @else {
-                      {{ i + 1 }}
-                    }
-                  </span>
-                  <span class="grow">{{ s.t }}</span>
-                  @if (i === 5 && f.mid()) {
-                    <span class="pa-need-dot" title="Needed for mid-term">•</span>
-                  }
-                </button>
-              }
+              <div class="pa-stepper-header">
+                <b>Application Steps</b>
+                <span class="pa-stepper-pct">{{ pct() }}% Done</span>
+              </div>
+              <div class="pa-stepper-list">
+                @for (s of steps; track $index; let i = $index) {
+                  <button
+                    type="button"
+                    class="sv pa-step-item"
+                    [class.on]="i === d.step"
+                    [class.done]="isDone(i)"
+                    [disabled]="i > d.maxStep"
+                    [attr.aria-current]="i === d.step ? 'step' : 'false'"
+                    (click)="goto(i)"
+                  >
+                    <span class="n pa-step-num">
+                      @if (isDone(i)) {
+                        <rp-icon name="check" [size]="13" [stroke]="3" />
+                      } @else {
+                        {{ i + 1 }}
+                      }
+                    </span>
+                    <div class="pa-step-info">
+                      <span class="pa-step-title">{{ s.t }}</span>
+                      <span class="pa-step-hint">{{ s.hint }}</span>
+                    </div>
+                  </button>
+                }
+              </div>
             </nav>
-            <div class="pa-help">
-              <rp-icon name="help" [size]="16" />
-              <div>
-                <b>{{ helpTitle }}</b><span>{{ helpText() }}</span>
+
+            <div class="pa-help-card">
+              <div class="pa-help-icon"><rp-icon name="help" [size]="20" /></div>
+              <div class="pa-help-body">
+                <b>Admissions Helpline</b>
+                <p>Have questions regarding branches, fees or documents?</p>
+                <span class="pa-help-phone">📞 0712-2712345</span>
+                <small class="pa-help-hours">Mon–Sat · 9:30 AM to 5:30 PM</small>
               </div>
             </div>
           </aside>
+
+          <!-- Active Step Form Card -->
           <section class="card pa-card" id="pa-card">
             <div class="pa-card-h">
-              <span class="pa-sic"><rp-icon [name]="icon(S.icon)" [size]="20" /></span>
+              <span class="pa-sic"><rp-icon [name]="icon(S.icon)" [size]="22" /></span>
               <div class="grow">
-                <div class="eyebrow">Step {{ d.step + 1 }} of {{ steps.length }}</div>
+                <div class="eyebrow pa-step-counter">STEP {{ d.step + 1 }} OF {{ steps.length }}</div>
                 <h2>{{ S.t }}</h2>
                 <p>{{ S.hint }}</p>
               </div>
             </div>
+
             @for (k of [d.step]; track k) {
               <div class="pa-card-b" id="pa-body">
                 @switch (k) {
@@ -239,13 +286,14 @@ export const WIZARD_TEMPLATE = `
                 }
               </div>
             }
+
             <div class="pa-card-f">
               @if (d.step) {
-                <button type="button" class="btn btn-ghost btn-lg" (click)="back()">
-                  <rp-icon name="arrowl" [size]="17" /><span>Back</span>
+                <button type="button" class="btn btn-ghost btn-lg pa-btn-back" (click)="back()">
+                  <rp-icon name="arrowl" [size]="17" /><span>Previous Step</span>
                 </button>
-              } @else {
-                <button type="button" class="btn btn-ghost btn-lg" (click)="home()">
+              } @else if (crumb) {
+                <button type="button" class="btn btn-ghost btn-lg pa-btn-back" (click)="home()">
                   <span>Cancel</span>
                 </button>
               }
@@ -256,31 +304,31 @@ export const WIZARD_TEMPLATE = `
                 [class.is-busy]="busy() === 'save'"
                 (click)="save()"
               >
-                <span>Save draft</span>
+                <span>Save Draft</span>
               </button>
               @if (d.step === steps.length - 1) {
-                <!-- Not before the primary contact's mobile is verified (client 2026-10-27). -->
                 <button
                   type="button"
-                  class="btn btn-pri btn-lg"
+                  class="btn btn-pri btn-lg pa-btn-primary"
                   id="pa-next"
                   [class.is-busy]="busy() === 'next'"
                   [disabled]="!f.contactVerified()"
                   [attr.title]="f.contactVerified() ? null : 'Verify the primary contact’s mobile first'"
                   (click)="submit()"
                 >
-                  <span>{{ submitLabel() }}</span
-                  ><rp-icon [name]="mandatory() || withAdmission() ? 'lock' : 'send'" [size]="15" />
+                  <span>{{ submitLabel() }}</span>
+                  <rp-icon [name]="mandatory() || withAdmission() ? 'lock' : 'send'" [size]="16" />
                 </button>
               } @else {
                 <button
                   type="button"
-                  class="btn btn-pri btn-lg"
+                  class="btn btn-pri btn-lg pa-btn-primary"
                   id="pa-next"
                   [class.is-busy]="busy() === 'next'"
                   (click)="next()"
                 >
-                  <span>Continue</span><rp-icon name="arrowr" [size]="15" />
+                  <span>Continue to {{ d.step < steps.length - 1 ? steps[d.step + 1]!.t : 'Review' }}</span>
+                  <rp-icon name="arrowr" [size]="16" />
                 </button>
               }
             </div>

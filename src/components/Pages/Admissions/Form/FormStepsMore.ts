@@ -236,9 +236,8 @@ export class PersonFields {
       <div class="note tone-info">
         <rp-icon name="users" [size]="17" />
         <div class="grow">
-          The father's and the mother's names, mobile numbers, Aadhaar numbers and PANs are
-          required, with both sides of each card, and the primary contact's e-mail. Add a guardian
-          too if there is one.
+          The father's and the mother's names, mobile numbers, and the primary contact's e-mail are
+          required. Add a guardian too if there is one.
         </div>
       </div>
       <rp-pa-person
@@ -246,7 +245,7 @@ export class PersonFields {
         k="father"
         title="Father"
         [required]="true"
-        [ids]="true"
+        [ids]="false"
         [emailRequired]="primary() === 'father'"
       />
       <rp-pa-person
@@ -254,7 +253,7 @@ export class PersonFields {
         k="mother"
         title="Mother"
         [required]="true"
-        [ids]="true"
+        [ids]="false"
         [emailRequired]="primary() === 'mother'"
       />
       <!-- A guardian's Aadhaar, PAN and cards when they are the primary contact (2026-10-13). -->
@@ -819,46 +818,103 @@ export class StepRefs {
   host: { style: 'display: contents' },
   template: `@let d = f().d();
     <div class="stack g20">
+      <div class="pa-docs-header">
+        <h3 class="t-h3" style="margin-bottom: 4px">Academic & Verification Documents</h3>
+        <p class="t-sm t-muted">Please upload clean scans or photos of original certificates. Supported formats: {{ formats() }}</p>
+      </div>
       <div class="pa-g2">
         <rp-pa-upl
-          fid="pa-dbirth"
-          label="Birth certificate"
+          fid="pa-dtc"
+          label="School / College Leaving Certificate (TC / LC)"
           [req]="true"
-          [file]="d.docs.birth"
-          [progress]="f().pct('pa-dbirth')"
-          [error]="f().err('pa-dbirth')"
+          hint="Original TC from previous junior college or high school"
+          [file]="d.docs.tc"
+          [progress]="f().pct('pa-dtc')"
+          [error]="f().err('pa-dtc')"
           [formats]="formats()"
-          (picked)="f().upload('pa-dbirth', 'BIRTH', $event, setBirth)"
-          (viewed)="f().open('BIRTH')"
-          (removed)="f().remove('pa-dbirth', 'BIRTH', clearBirth)"
+          (picked)="f().upload('pa-dtc', 'TC', $event, setTc)"
+          (viewed)="f().open('TC')"
+          (removed)="f().remove('pa-dtc', 'TC', clearTc)"
         />
         <rp-pa-upl
-          fid="pa-daddr"
-          label="Address proof"
+          fid="pa-delec"
+          label="Electricity Bill (Light Bill / Address Proof)"
           [req]="true"
-          hint="Utility bill, rent agreement or passport"
-          [file]="d.docs.addr"
-          [progress]="f().pct('pa-daddr')"
-          [error]="f().err('pa-daddr')"
+          hint="Recent electricity bill (last 3 months) showing residential address"
+          [file]="d.docs.electricBill || d.docs.addr"
+          [progress]="f().pct('pa-delec')"
+          [error]="f().err('pa-delec')"
           [formats]="formats()"
-          (picked)="f().upload('pa-daddr', 'ADDRESS', $event, setAddr)"
-          (viewed)="f().open('ADDRESS')"
-          (removed)="f().remove('pa-daddr', 'ADDRESS', clearAddr)"
+          (picked)="f().upload('pa-delec', 'ELECTRIC_BILL', $event, setElec)"
+          (viewed)="f().open('ELECTRIC_BILL')"
+          (removed)="f().remove('pa-delec', 'ELECTRIC_BILL', clearElec)"
         />
-        @if (f().order() >= 3) {
-          <rp-pa-upl
-            fid="pa-dreport"
-            label="Last report card"
-            [req]="true"
-            [file]="d.docs.report"
-            [progress]="f().pct('pa-dreport')"
-            [error]="f().err('pa-dreport')"
-            [formats]="formats()"
-            (picked)="f().upload('pa-dreport', 'REPORT', $event, setReport)"
-            (viewed)="f().open('REPORT')"
-            (removed)="f().remove('pa-dreport', 'REPORT', clearReport)"
-          />
-        }
+        <rp-pa-upl
+          fid="pa-dm10"
+          label="10th (SSC) Marksheet"
+          [req]="true"
+          hint="Secondary School Certificate mark sheet & passing certificate"
+          [file]="d.docs.marksheet10 || d.docs.report"
+          [progress]="f().pct('pa-dm10')"
+          [error]="f().err('pa-dm10')"
+          [formats]="formats()"
+          (picked)="f().upload('pa-dm10', 'MARKSHEET_10', $event, setM10)"
+          (viewed)="f().open('MARKSHEET_10')"
+          (removed)="f().remove('pa-dm10', 'MARKSHEET_10', clearM10)"
+        />
+        <rp-pa-upl
+          fid="pa-dm12"
+          label="12th (HSC) Marksheet"
+          [req]="true"
+          hint="Higher Secondary Certificate (PCM / Science) mark sheet"
+          [file]="d.docs.marksheet12"
+          [progress]="f().pct('pa-dm12')"
+          [error]="f().err('pa-dm12')"
+          [formats]="formats()"
+          (picked)="f().upload('pa-dm12', 'MARKSHEET_12', $event, setM12)"
+          (viewed)="f().open('MARKSHEET_12')"
+          (removed)="f().remove('pa-dm12', 'MARKSHEET_12', clearM12)"
+        />
+        <rp-pa-upl
+          fid="pa-djee"
+          label="JEE Main Scorecard"
+          [opt]="true"
+          hint="National Testing Agency (NTA) JEE Scorecard (if appeared)"
+          [file]="d.docs.jee"
+          [progress]="f().pct('pa-djee')"
+          [error]="f().err('pa-djee')"
+          [formats]="formats()"
+          (picked)="f().upload('pa-djee', 'JEE', $event, setJee)"
+          (viewed)="f().open('JEE')"
+          (removed)="f().remove('pa-djee', 'JEE', clearJee)"
+        />
+        <rp-pa-upl
+          fid="pa-dmhtcet"
+          label="MHT-CET Scorecard"
+          [opt]="true"
+          hint="State Common Entrance Test Cell Scorecard (if appeared)"
+          [file]="d.docs.mhtcet"
+          [progress]="f().pct('pa-dmhtcet')"
+          [error]="f().err('pa-dmhtcet')"
+          [formats]="formats()"
+          (picked)="f().upload('pa-dmhtcet', 'MHTCET', $event, setMhtcet)"
+          (viewed)="f().open('MHTCET')"
+          (removed)="f().remove('pa-dmhtcet', 'MHTCET', clearMhtcet)"
+        />
+        <rp-pa-upl
+          fid="pa-dcaste"
+          label="Caste Certificate / Validity"
+          [req]="isReserved()"
+          [opt]="!isReserved()"
+          [hint]="isReserved() ? 'Mandatory for category ' + d.category + ' reservation quota' : 'Optional for General category'"
+          [file]="d.docs.caste"
+          [progress]="f().pct('pa-dcaste')"
+          [error]="f().err('pa-dcaste')"
+          [formats]="formats()"
+          (picked)="f().upload('pa-dcaste', 'CASTE', $event, setCaste)"
+          (viewed)="f().open('CASTE')"
+          (removed)="f().remove('pa-dcaste', 'CASTE', clearCaste)"
+        />
       </div>
       <div class="note tone-info">
         <rp-icon name="upload" [size]="17" />
@@ -980,6 +1036,23 @@ export class StepDocs {
   protected readonly max = computed(() =>
     fileSize(this.f().landing()?.rules.documents.maxBytes ?? 2 * 1024 * 1024).replace('.0 ', ' '),
   );
+  protected readonly isReserved = computed(() =>
+    ['SC', 'ST', 'OBC', 'Other'].includes(this.f().d().category)
+  );
+  protected readonly setTc = (d: Draft, file: PickedFile) => { d.docs.tc = file; };
+  protected readonly clearTc = (d: Draft) => { d.docs.tc = null; };
+  protected readonly setElec = (d: Draft, file: PickedFile) => { d.docs.electricBill = file; };
+  protected readonly clearElec = (d: Draft) => { d.docs.electricBill = null; };
+  protected readonly setM10 = (d: Draft, file: PickedFile) => { d.docs.marksheet10 = file; };
+  protected readonly clearM10 = (d: Draft) => { d.docs.marksheet10 = null; };
+  protected readonly setM12 = (d: Draft, file: PickedFile) => { d.docs.marksheet12 = file; };
+  protected readonly clearM12 = (d: Draft) => { d.docs.marksheet12 = null; };
+  protected readonly setJee = (d: Draft, file: PickedFile) => { d.docs.jee = file; };
+  protected readonly clearJee = (d: Draft) => { d.docs.jee = null; };
+  protected readonly setMhtcet = (d: Draft, file: PickedFile) => { d.docs.mhtcet = file; };
+  protected readonly clearMhtcet = (d: Draft) => { d.docs.mhtcet = null; };
+  protected readonly setCaste = (d: Draft, file: PickedFile) => { d.docs.caste = file; };
+  protected readonly clearCaste = (d: Draft) => { d.docs.caste = null; };
   protected readonly setBirth = (d: Draft, file: PickedFile) => {
     d.docs.birth = file;
   };
@@ -1471,14 +1544,14 @@ export class StepReview {
               doc: c.t,
             })),
           ),
-          { k: 'Birth certificate', file: d.docs.birth, doc: 'BIRTH' },
-          { k: 'Address proof', file: d.docs.addr, doc: 'ADDRESS' },
-          d.docs.report || f.order() >= 3
-            ? { k: 'Report card', file: d.docs.report, doc: 'REPORT' }
-            : null,
-          !d.tcRecorded && (mid ? d.tc.mode === 'tc' : f.order() > 1)
-            ? { k: 'Transfer certificate', file: d.tc.file, doc: 'TC' }
-            : null,
+          d.docs.tc ? { k: 'School / College Leaving Certificate (TC)', file: d.docs.tc, doc: 'TC' } : null,
+          (d.docs.electricBill || d.docs.addr) ? { k: 'Electricity Bill (Address Proof)', file: d.docs.electricBill ?? d.docs.addr, doc: (d.docs.electricBill ? 'ELECTRIC_BILL' : 'ADDRESS') as DocType } : null,
+          (d.docs.marksheet10 || d.docs.report) ? { k: '10th (SSC) Marksheet', file: d.docs.marksheet10 ?? d.docs.report, doc: (d.docs.marksheet10 ? 'MARKSHEET_10' : 'REPORT') as DocType } : null,
+          d.docs.marksheet12 ? { k: '12th (HSC) Marksheet', file: d.docs.marksheet12, doc: 'MARKSHEET_12' as DocType } : null,
+          d.docs.jee ? { k: 'JEE Main Scorecard', file: d.docs.jee, doc: 'JEE' as DocType } : null,
+          d.docs.mhtcet ? { k: 'MHT-CET Scorecard', file: d.docs.mhtcet, doc: 'MHTCET' as DocType } : null,
+          d.docs.caste ? { k: 'Caste Certificate / Validity', file: d.docs.caste, doc: 'CASTE' as DocType } : null,
+          d.docs.birth ? { k: 'Birth certificate', file: d.docs.birth, doc: 'BIRTH' as DocType } : null,
         ]),
       },
       ...(f.landing()?.customFields.length

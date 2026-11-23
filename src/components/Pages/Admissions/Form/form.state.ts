@@ -196,8 +196,6 @@ const noCards = () =>
  */
 export function idHolders(d: Pick<Draft, 'primary' | 'hostel'>): Holder[] {
   return [
-    'father',
-    'mother',
     ...(d.primary === 'guardian' ? (['guardian'] as const) : []),
     ...(d.hostel ? (['lg'] as const) : []),
   ];
@@ -257,7 +255,18 @@ export interface Draft {
   refs: RefDraft[];
   /** The references as last saved, to tell what changed. */
   savedRefs: RefDraft[];
-  docs: { birth: PickedFile | null; addr: PickedFile | null; report: PickedFile | null };
+  docs: {
+    birth: PickedFile | null;
+    addr: PickedFile | null;
+    report: PickedFile | null;
+    tc: PickedFile | null;
+    electricBill: PickedFile | null;
+    jee: PickedFile | null;
+    mhtcet: PickedFile | null;
+    marksheet10: PickedFile | null;
+    marksheet12: PickedFile | null;
+    caste: PickedFile | null;
+  };
   /** The Aadhaar and PAN cards uploaded, front and back (client 2026-10-13). */
   cards: Record<CardType, PickedFile | null>;
   cf: Record<string, string | string[]>;
@@ -390,7 +399,18 @@ export function blank(year: OpenYear | null): Draft {
     lg: { name: '', relation: '', cc: '+91', mobile: '', address: '' },
     refs: [],
     savedRefs: [],
-    docs: { birth: null, addr: null, report: null },
+    docs: {
+      birth: null,
+      addr: null,
+      report: null,
+      tc: null,
+      electricBill: null,
+      jee: null,
+      mhtcet: null,
+      marksheet10: null,
+      marksheet12: null,
+      caste: null,
+    },
     cards: noCards(),
     cf: {},
     declare: false,
@@ -499,7 +519,18 @@ export function fromApp(a: Application): Draft {
     },
     refs,
     savedRefs: refs.map((r) => ({ ...r })),
-    docs: { birth: file(a, 'BIRTH'), addr: file(a, 'ADDRESS'), report: file(a, 'REPORT') },
+    docs: {
+      birth: file(a, 'BIRTH'),
+      addr: file(a, 'ADDRESS'),
+      report: file(a, 'REPORT'),
+      tc: file(a, 'TC'),
+      electricBill: file(a, 'ELECTRIC_BILL') ?? file(a, 'ADDRESS'),
+      jee: file(a, 'JEE'),
+      mhtcet: file(a, 'MHTCET'),
+      marksheet10: file(a, 'MARKSHEET_10') ?? file(a, 'REPORT'),
+      marksheet12: file(a, 'MARKSHEET_12'),
+      caste: file(a, 'CASTE'),
+    },
     cards: cardsOf(a),
     cf: Object.fromEntries(
       Object.entries(a.customFields ?? {})
@@ -797,9 +828,10 @@ export function validateStep(step: number, d: Draft, f: Facts): Record<string, s
               : msg('ADM.AGE_TOO_HIGH', { standard: c.cls.name, n: c.b.max });
         }
       }
-      // The student's Aadhaar and PAN are both optional (client 2026-10-12).
-      aadhaar('pa-aadhaar', d.aadhaar, d.kept.aadhaar, false);
-      pan('pa-pan', d.pan, false);
+      // The student's Aadhaar and PAN are mandatory (client requirement).
+      aadhaar('pa-aadhaar', d.aadhaar, d.kept.aadhaar, true);
+      pan('pa-pan', d.pan, !d.kept.pan);
+      for (const c of STUDENT_CARDS) need(c.fid, !!d.cards[c.t]);
       // The student's own contact, both optional (client 2026-10-23).
       mobile('pa-smob', '+91', d.smobile, false);
       email('pa-semail', d.semail);
@@ -945,9 +977,15 @@ export function validateStep(step: number, d: Draft, f: Facts): Record<string, s
       break;
     }
     case 6: {
-      need('pa-dbirth', !!d.docs.birth);
-      need('pa-daddr', !!d.docs.addr);
-      if (order >= 3) need('pa-dreport', !!d.docs.report);
+      // College Admission Documents
+      need('pa-dtc', !!d.docs.tc);
+      need('pa-delec', !!(d.docs.electricBill || d.docs.addr));
+      need('pa-dm10', !!(d.docs.marksheet10 || d.docs.report));
+      need('pa-dm12', !!d.docs.marksheet12);
+      const isReserved = ['SC', 'ST', 'OBC', 'Other'].includes(d.category);
+      if (isReserved) {
+        need('pa-dcaste', !!d.docs.caste);
+      }
       for (const c of f.landing.customFields) {
         const id = `pa-cf-${c.id}`;
         const v = d.cf[c.id];

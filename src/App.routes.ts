@@ -833,11 +833,9 @@ export const appRoutes: Routes = [
       },
       {
         path: ':linkToken',
-        title: `CampusOne — ${AREAS.admissions.title}`,
+        title: 'CampusOne — Application for admission',
         loadComponent: () =>
-          import('./components/Pages/Admissions/Landing/AdmissionLanding').then(
-            (m) => m.AdmissionLanding,
-          ),
+          import('./components/Pages/Admissions/Form/AdmissionForm').then((m) => m.AdmissionForm),
       },
       {
         path: ':linkToken/apply',
