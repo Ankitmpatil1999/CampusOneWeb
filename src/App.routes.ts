@@ -20,6 +20,11 @@ export const appRoutes: Routes = [
     redirectTo: '/signin',
   },
   {
+    path: 'brochure',
+    pathMatch: 'full',
+    redirectTo: '/admissions/brochure',
+  },
+  {
     path: 'signin',
     title: 'CampusOne — Sign in',
     loadComponent: () =>
@@ -826,10 +831,26 @@ export const appRoutes: Routes = [
           ),
       },
       {
+        path: 'brochure',
+        title: 'PBCOE Nagpur — College Brochure & Courses',
+        loadComponent: () =>
+          import('./components/Pages/Admissions/Brochure/CollegeBrochure').then(
+            (m) => m.CollegeBrochure,
+          ),
+      },
+      {
         path: 'pay/:applicationId',
         title: 'CampusOne — Pay the admission fee',
         loadComponent: () =>
           import('./components/Pages/Admissions/Pay/AdmissionPay').then((m) => m.AdmissionPay),
+      },
+      {
+        path: ':linkToken/brochure',
+        title: 'PBCOE Nagpur — College Brochure & Courses',
+        loadComponent: () =>
+          import('./components/Pages/Admissions/Brochure/CollegeBrochure').then(
+            (m) => m.CollegeBrochure,
+          ),
       },
       {
         path: ':linkToken',

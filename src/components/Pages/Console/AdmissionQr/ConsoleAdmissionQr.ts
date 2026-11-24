@@ -62,91 +62,161 @@ const PNG_PX = 1024;
         } @else {
           <div class="stack g16">
             @if (current(); as q) {
+              <!-- QR Mode Switcher -->
+              <div class="seg" role="radiogroup" aria-label="QR Type" style="margin-bottom: 4px; width: fit-content">
+                <button
+                  type="button"
+                  role="radio"
+                  [class.on]="qrMode() === 'form'"
+                  [attr.aria-checked]="qrMode() === 'form'"
+                  (click)="qrMode.set('form')"
+                >
+                  <rp-icon name="filetext" [size]="14" />
+                  <span style="margin-left: 6px">Admission Form QR</span>
+                </button>
+                <button
+                  type="button"
+                  role="radio"
+                  [class.on]="qrMode() === 'brochure'"
+                  [attr.aria-checked]="qrMode() === 'brochure'"
+                  (click)="qrMode.set('brochure')"
+                >
+                  <rp-icon name="book" [size]="14" />
+                  <span style="margin-left: 6px">College Brochure & Courses QR</span>
+                </button>
+              </div>
+
               <div class="card cp-aq" id="aq-current">
                 <div class="cp-aq-qr">
-                  <div class="qr" [innerHTML]="qr()"></div>
-                  <span class="t-xs t-muted">Scan to apply · {{ shortName() }}</span>
+                  <div class="qr" [innerHTML]="qrMode() === 'brochure' ? brochureQr() : qr()"></div>
+                  <span class="t-xs t-muted">
+                    {{ qrMode() === 'brochure' ? 'Scan for Brochure · ' + shortName() : 'Scan to apply · ' + shortName() }}
+                  </span>
                 </div>
                 <div class="grow stack g12" style="min-width: 0">
-                  <div class="row g8 wrap">
-                    <h3 class="t-h3">{{ q.year ?? 'Every open year' }}</h3>
-                    <span [class]="'chip dot tone-' + kind().tone">{{ kind().l }}</span>
-                  </div>
-                  <p class="t-sm t-muted" style="line-height: 1.5">{{ kind().text }}</p>
-                  @if (q.expired) {
-                    <div class="note tone-warn" id="aq-expired">
-                      <rp-icon name="alert" [size]="17" />
-                      <div class="grow">
-                        This link stopped working on
-                        {{ q.expiresAt ? date(q.expiresAt) : 'its last day' }}; families opening it
-                        are told to ask the school. Replace it to take applications again.
+                  @if (qrMode() === 'brochure') {
+                    <div class="row g8 wrap">
+                      <h3 class="t-h3">College Brochure & Course Prospectus 2026-27</h3>
+                      <span class="chip dot tone-brand">Visitor & Prospectus QR</span>
+                    </div>
+                    <p class="t-sm t-muted" style="line-height: 1.5">
+                      Print on college prospectus, enquiry desk standees, counseling banners, and flyers. Visitors & students scan to explore all 8 B.Tech & MCA engineering courses, seat intakes, eligibility, scholarships, placement stats and can apply online with 1 click.
+                    </p>
+                    <div class="cp-link">
+                      <span class="t-mono t-clip" id="aq-brochure-url">{{ brochureUrl() }}</span>
+                      <button type="button" class="iconbtn" aria-label="Copy brochure link" (click)="copy()">
+                        <rp-icon name="copy" [size]="16" />
+                      </button>
+                    </div>
+                    <div class="cp-aqk" id="aq-brochure-kpis">
+                      <div>
+                        <b>8</b><span>degree programs</span>
+                      </div>
+                      <div>
+                        <b>600+</b><span>intake seats</span>
+                      </div>
+                      <div>
+                        <b>4177</b><span>DTE choice code</span>
+                      </div>
+                      <div>
+                        <b>₹12 LPA</b><span>highest placement</span>
                       </div>
                     </div>
-                  }
-                  <div class="cp-link">
-                    <span class="t-mono t-clip" id="aq-url">{{ q.url }}</span
-                    ><button type="button" class="iconbtn" aria-label="Copy link" (click)="copy()">
-                      <rp-icon name="copy" [size]="16" />
-                    </button>
-                  </div>
-                  <div class="cp-aqk" id="aq-kpis">
-                    <div>
-                      <b>{{ apps().total }}</b
-                      ><span>applications</span>
-                    </div>
-                    <div>
-                      <b>{{ apps().review }}</b
-                      ><span>to review</span>
-                    </div>
-                    <div>
-                      <b>{{ fee().v }}</b
-                      ><span>{{ fee().l }}</span>
-                    </div>
-                    <div>
-                      <b>{{ q.expiresAt ? date(q.expiresAt) : 'No end date' }}</b
-                      ><span>link works until</span>
-                    </div>
-                  </div>
-                  <div class="row g8 wrap">
-                    <button type="button" class="btn btn-sec btn-sm" id="aq-copy" (click)="copy()">
-                      <rp-icon name="copy" [size]="15" /><span>Copy link</span>
-                    </button>
-                    <span class="cp-why" [attr.title]="editWhy() || null"
-                      ><button
+                    <div class="row g8 wrap">
+                      <button type="button" class="btn btn-sec btn-sm" id="aq-copy-brochure" (click)="copy()">
+                        <rp-icon name="copy" [size]="15" /><span>Copy link</span>
+                      </button>
+                      <button type="button" class="btn btn-pri btn-sm" id="aq-open-brochure" (click)="openBrochure()">
+                        <rp-icon name="sparkles" [size]="15" /><span>Open Brochure Preview</span>
+                      </button>
+                      <button
                         type="button"
                         class="btn btn-sec btn-sm"
-                        id="aq-mail"
-                        [disabled]="!!editWhy()"
-                        (click)="mailing.set(true)"
+                        id="aq-png-brochure"
+                        [class.is-busy]="pngBusy()"
+                        [disabled]="pngBusy()"
+                        (click)="png()"
                       >
-                        <rp-icon name="mail" [size]="15" /><span>E-mail link</span>
-                      </button></span
-                    >
-                    <button
-                      type="button"
-                      class="btn btn-sec btn-sm"
-                      id="aq-png"
-                      [class.is-busy]="pngBusy()"
-                      [disabled]="pngBusy()"
-                      (click)="png()"
-                    >
-                      <rp-icon name="download" [size]="15" /><span>Download PNG</span>
-                    </button>
-                    <span class="cp-why" [attr.title]="editWhy() || null"
-                      ><button
+                        <rp-icon name="download" [size]="15" /><span>Download PNG</span>
+                      </button>
+                    </div>
+                  } @else {
+                    <div class="row g8 wrap">
+                      <h3 class="t-h3">{{ q.year ?? 'Every open year' }}</h3>
+                      <span [class]="'chip dot tone-' + kind().tone">{{ kind().l }}</span>
+                    </div>
+                    <p class="t-sm t-muted" style="line-height: 1.5">{{ kind().text }}</p>
+                    @if (q.expired) {
+                      <div class="note tone-warn" id="aq-expired">
+                        <rp-icon name="alert" [size]="17" />
+                        <div class="grow">
+                          This link stopped working on
+                          {{ q.expiresAt ? date(q.expiresAt) : 'its last day' }}; families opening it
+                          are told to ask the school. Replace it to take applications again.
+                        </div>
+                      </div>
+                    }
+                    <div class="cp-link">
+                      <span class="t-mono t-clip" id="aq-url">{{ q.url }}</span>
+                      <button type="button" class="iconbtn" aria-label="Copy link" (click)="copy()">
+                        <rp-icon name="copy" [size]="16" />
+                      </button>
+                    </div>
+                    <div class="cp-aqk" id="aq-kpis">
+                      <div>
+                        <b>{{ apps().total }}</b><span>applications</span>
+                      </div>
+                      <div>
+                        <b>{{ apps().review }}</b><span>to review</span>
+                      </div>
+                      <div>
+                        <b>{{ fee().v }}</b><span>{{ fee().l }}</span>
+                      </div>
+                      <div>
+                        <b>{{ q.expiresAt ? date(q.expiresAt) : 'No end date' }}</b><span>link works until</span>
+                      </div>
+                    </div>
+                    <div class="row g8 wrap">
+                      <button type="button" class="btn btn-sec btn-sm" id="aq-copy" (click)="copy()">
+                        <rp-icon name="copy" [size]="15" /><span>Copy link</span>
+                      </button>
+                      <span class="cp-why" [attr.title]="editWhy() || null">
+                        <button
+                          type="button"
+                          class="btn btn-sec btn-sm"
+                          id="aq-mail"
+                          [disabled]="!!editWhy()"
+                          (click)="mailing.set(true)"
+                        >
+                          <rp-icon name="mail" [size]="15" /><span>E-mail link</span>
+                        </button>
+                      </span>
+                      <button
                         type="button"
-                        class="btn btn-ghost btn-sm"
-                        id="aq-replace"
-                        [disabled]="!!editWhy()"
-                        (click)="replacing.set(true)"
+                        class="btn btn-sec btn-sm"
+                        id="aq-png"
+                        [class.is-busy]="pngBusy()"
+                        [disabled]="pngBusy()"
+                        (click)="png()"
                       >
-                        <rp-icon name="refresh" [size]="15" /><span>Replace link</span>
-                      </button></span
-                    >
-                  </div>
-                  <span class="t-xs t-faint"
-                    >Generated {{ q.createdAt ? when(q.createdAt) : '' }}</span
-                  >
+                        <rp-icon name="download" [size]="15" /><span>Download PNG</span>
+                      </button>
+                      <span class="cp-why" [attr.title]="editWhy() || null">
+                        <button
+                          type="button"
+                          class="btn btn-ghost btn-sm"
+                          id="aq-replace"
+                          [disabled]="!!editWhy()"
+                          (click)="replacing.set(true)"
+                        >
+                          <rp-icon name="refresh" [size]="15" /><span>Replace link</span>
+                        </button>
+                      </span>
+                    </div>
+                  }
+                  <span class="t-xs t-faint">
+                    Generated {{ q.createdAt ? when(q.createdAt) : '' }}
+                  </span>
                 </div>
               </div>
             } @else {
@@ -278,6 +348,7 @@ export class ConsoleAdmissionQr {
   protected readonly years = signal<readonly YearOption[]>([]);
   protected readonly fees = signal<readonly EntryFeesRow[]>([]);
   protected readonly counts = signal<{ total: number; review: number } | null>(null);
+  protected readonly qrMode = signal<'form' | 'brochure'>('form');
   protected readonly mailing = signal(false);
   protected readonly replacing = signal(false);
   protected readonly pngBusy = signal(false);
@@ -321,6 +392,28 @@ export class ConsoleAdmissionQr {
       ),
     );
   });
+  protected readonly brochureUrl = computed(() => {
+    const q = this.current();
+    if (!q?.url) return '';
+    return q.brochureUrl || `${q.url}/brochure`;
+  });
+  protected readonly brochureQr = computed<SafeHtml>(() => {
+    const q = this.current();
+    const svg = q?.brochureQrSvg || q?.qrSvg;
+    if (!svg) return '';
+    return this.sanitizer.bypassSecurityTrustHtml(
+      svg.replace(
+        /^\s*<svg\b/,
+        `<svg width="168" height="168" role="img" aria-label="College Brochure QR for ${this.esc(this.shortName())}"`,
+      ),
+    );
+  });
+  protected openBrochure() {
+    const url = this.brochureUrl();
+    if (url) {
+      window.open(url, '_blank');
+    }
+  }
   protected readonly kind = computed(() => {
     const y = this.year();
     if (!this.current()?.year) {
@@ -441,7 +534,7 @@ export class ConsoleAdmissionQr {
   }
 
   protected async copy() {
-    const url = this.current()?.url;
+    const url = this.qrMode() === 'brochure' ? this.brochureUrl() : this.current()?.url;
     if (!url) return;
     try {
       await copyText(url);
@@ -457,11 +550,14 @@ export class ConsoleAdmissionQr {
   /** The QR as a print-ready PNG, drawn in the browser from the API's SVG. */
   protected async png() {
     const q = this.current();
-    if (!q?.qrSvg) return;
+    const isBrochure = this.qrMode() === 'brochure';
+    const rawSvg = isBrochure ? (q?.brochureQrSvg || q?.qrSvg) : q?.qrSvg;
+    if (!rawSvg) return;
     this.pngBusy.set(true);
-    const name = `${(this.shortName() || 'admissions').toLowerCase().replace(/[^a-z0-9]+/g, '-')}-admissions${q.year ? '-' + q.year.replace(/[^0-9A-Za-z]+/g, '-') : ''}.png`;
+    const suffix = isBrochure ? '-college-brochure' : `-admissions${q?.year ? '-' + q.year.replace(/[^0-9A-Za-z]+/g, '-') : ''}`;
+    const name = `${(this.shortName() || 'pbcoe').toLowerCase().replace(/[^a-z0-9]+/g, '-')}${suffix}.png`;
     try {
-      const svg = q.qrSvg.replace(/^\s*<svg\b/, `<svg width="${PNG_PX}" height="${PNG_PX}"`);
+      const svg = rawSvg.replace(/^\s*<svg\b/, `<svg width="${PNG_PX}" height="${PNG_PX}"`);
       const src = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
       const img = new Image();
       await new Promise<void>((ok, bad) => {

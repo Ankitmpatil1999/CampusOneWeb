@@ -7,7 +7,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
 import { CAMPUSONE_WEB_CONFIG } from '../../../../Config';
 import { Icon } from '../../../Shared/Icon';
@@ -22,7 +22,7 @@ import { AdmissionsContext, crest } from '../admissions.store';
  */
 @Component({
   selector: 'rp-admissions-frame',
-  imports: [Icon, Mark, OverlayHost, RouterOutlet],
+  imports: [Icon, Mark, OverlayHost, RouterLink, RouterOutlet],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { style: 'display: block; min-height: 100%' },
   // Not encapsulated: the prototype's `.x > .ic` rules, restated for an icon inside its rp-icon host.
@@ -86,6 +86,13 @@ import { AdmissionsContext, crest } from '../admissions.store';
           </div>
         }
         <div class="pub-top-trust">
+          <a
+            routerLink="/admissions/brochure"
+            class="pub-trust-pill"
+            style="text-decoration: none; cursor: pointer; color: #EA580C; font-weight: 700; background: rgba(234, 88, 12, 0.1); border: 1px solid rgba(234, 88, 12, 0.25)"
+          >
+            <rp-icon name="book" [size]="13" /> College Brochure & Courses
+          </a>
           <span class="pub-trust-pill">
             <rp-icon name="lock" [size]="13" /> 256-Bit SSL Encrypted
           </span>

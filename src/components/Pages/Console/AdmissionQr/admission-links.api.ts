@@ -15,6 +15,10 @@ export interface AdmissionLink {
   readonly url: string | null;
   /** The QR as SVG markup from our API (current link only; trusted). */
   readonly qrSvg: string | null;
+  /** The public brochure address (current link only). */
+  readonly brochureUrl?: string | null;
+  /** The brochure QR as SVG markup from our API (current link only; trusted). */
+  readonly brochureQrSvg?: string | null;
   /** The academic year the form opens on, when one was chosen. */
   readonly year: string | null;
   readonly expiresAt: string | null;
