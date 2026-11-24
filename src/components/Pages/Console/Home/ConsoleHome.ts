@@ -6,13 +6,10 @@ import {
   signal,
   type OnInit,
 } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { SessionContext } from '../../../../Context/SessionContext';
 import { Empty, PageHead } from '../../../Shared/Blocks';
 import { Icon } from '../../../Shared/Icon';
-import { TaskLauncher } from '../../../Shared/TaskLauncher';
-import { longDate } from '../../../Utils/dates';
-import { greeting } from '../../../Utils/greeting';
 import type { IconName } from '../../../Utils/icons';
 import { ownHome } from '../../../Utils/navigation';
 import { problemText } from '../Structure/academic-format';
@@ -119,24 +116,14 @@ const ACTIONS: Readonly<Record<HomeVariant, readonly HeadAction[]>> = {
     HomeGrievance,
     HomeManagement,
     HomeTransport,
-    Icon,
     PageHead,
-    RouterLink,
-    TaskLauncher,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="c-page" [attr.data-home]="view()?.variant">
-      <rp-page-head [title]="title()" [sub]="sub()">
-        @for (a of actions(); track a.path) {
-          <a [class]="'btn btn-' + a.kind" [routerLink]="a.path"
-            ><rp-icon [name]="a.icon" [size]="17" /><span>{{ a.l }}</span></a
-          >
-        }
-      </rp-page-head>
+      <rp-page-head [title]="title()" [sub]="sub()" />
 
-      <!-- The key tasks as cards (prototype v4), then the role's figures under "Today at a glance". -->
-      <rp-task-launcher surface="console" />
+      <!-- Task launcher cards removed as requested -->
 
       @if (loading() && !view()) {
         <div class="stack g16" aria-busy="true" aria-label="Loading">
@@ -198,12 +185,8 @@ export class ConsoleHome implements OnInit {
   protected readonly loading = signal(true);
   protected readonly error = signal('');
 
-  protected readonly title = computed(() => greeting(this.session()?.name ?? ''));
-  protected readonly sub = computed(() => {
-    const s = this.session();
-    if (!s) return '';
-    return `${s.institution.name} · ${longDate()} · ${s.roles.map((r) => r.name).join(', ')}`;
-  });
+  protected readonly title = computed(() => 'Dashboard');
+  protected readonly sub = computed(() => '');
   protected readonly actions = computed(() => {
     const tasks = this.session()?.subTasks ?? [];
     const v = this.view()?.variant;

@@ -4,6 +4,7 @@ import { Empty, PageHead } from '../../../Shared/Blocks';
 import { Dropdown } from '../../../Shared/Dropdown';
 import { Icon } from '../../../Shared/Icon';
 import { Modal, Overlays } from '../../../Shared/Overlays';
+import { type IconName } from '../../../Utils/icons';
 import { PATTERNS } from '../../../Utils/patterns';
 import { ApiProblem } from '../../../Utils/problem';
 import { translate } from '../../../Utils/translate';
@@ -109,23 +110,45 @@ interface Draft {
         @if (list().length) {
           <div class="cp-uts">
             @for (t of list(); track t.id) {
-              <div class="card cp-ut">
-                <div class="row between g8">
-                  <div>
-                    <b class="t-h4">{{ t.name }}</b>
-                    <div class="t-xs t-muted">{{ plural(t.members, 'member') }}</div>
+              @let meta = categoryMeta(t.category);
+              <div class="card cp-ut-card" [class]="meta.tone">
+                <!-- Card Header -->
+                <div class="cp-ut-head">
+                  <div class="cp-ut-icon-box" [attr.aria-label]="meta.label">
+                    <rp-icon [name]="meta.icon" [size]="20" />
+                  </div>
+                  <div class="cp-ut-title-area">
+                    <div class="cp-ut-name" [title]="t.name">{{ t.name }}</div>
+                    <div class="cp-ut-badges">
+                      <span class="cp-ut-cat-badge">{{ meta.label }}</span>
+                      <span class="cp-ut-mem-chip">
+                        <rp-icon name="users" [size]="12" />
+                        <span>{{ plural(t.members, 'member') }}</span>
+                      </span>
+                    </div>
                   </div>
                   @if (!readOnly()) {
-                    <button type="button" class="btn btn-ghost btn-sm" (click)="edit(t)">
-                      <rp-icon name="edit" [size]="15" /><span>Edit</span>
+                    <button type="button" class="cp-ut-edit" (click)="edit(t)" title="Edit user type & departments">
+                      <rp-icon name="edit" [size]="14" />
+                      <span>Edit</span>
                     </button>
                   }
                 </div>
-                <div class="cp-depts">
+
+                <!-- Departments Header -->
+                <div class="cp-ut-dept-head">
+                  <span class="cp-ut-dept-label">Departments ({{ t.departments.length }})</span>
+                </div>
+
+                <!-- Departments List -->
+                <div class="cp-depts-list">
                   @for (d of t.departments; track d.id) {
-                    <span class="tag"
-                      >{{ d.name }} <span class="t-faint">{{ d.members }}</span></span
-                    >
+                    <div class="cp-dept-chip">
+                      <span class="cp-dept-name" [title]="d.name">{{ d.name }}</span>
+                      <span class="cp-dept-count" [class.nonzero]="d.members > 0" [title]="plural(d.members, 'member')">{{ d.members }}</span>
+                    </div>
+                  } @empty {
+                    <div class="cp-dept-empty">No departments assigned</div>
                   }
                 </div>
               </div>
@@ -311,6 +334,31 @@ export class ConsoleUserTypes {
   }
   protected plural(n: number, noun: string) {
     return `${n} ${noun}${n === 1 ? '' : 's'}`;
+  }
+  protected categoryMeta(cat: UserTypeCategory | string): { icon: IconName; label: string; tone: string } {
+    switch (cat) {
+      case 'STUDENT':
+        return { icon: 'grad', label: 'Student', tone: 'cat-student' };
+      case 'TEACHER':
+        return { icon: 'school', label: 'Faculty & Teacher', tone: 'cat-teacher' };
+      case 'STAFF':
+        return { icon: 'briefcase', label: 'Staff', tone: 'cat-staff' };
+      case 'PRINCIPAL':
+        return { icon: 'award', label: 'Principal', tone: 'cat-principal' };
+      case 'MANAGEMENT':
+        return { icon: 'building', label: 'Management', tone: 'cat-mgmt' };
+      case 'DEAN':
+      case 'COORDINATOR':
+        return { icon: 'usercheck', label: 'Academic Leadership', tone: 'cat-dean' };
+      case 'PARENT':
+        return { icon: 'heart', label: 'Parent / Guardian', tone: 'cat-parent' };
+      case 'CREW':
+        return { icon: 'bus', label: 'Transport Crew', tone: 'cat-crew' };
+      case 'MERCHANT':
+        return { icon: 'store', label: 'Merchant', tone: 'cat-merchant' };
+      default:
+        return { icon: 'layers', label: 'Member Type', tone: 'cat-other' };
+    }
   }
   protected err(k: string) {
     return this.errors()[k] ?? '';

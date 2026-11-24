@@ -66,11 +66,11 @@ interface Row {
       <div class="card pad"><rp-empty icon="hourglass" title="Loading…" /></div>
     } @else {
       @if (rows().length) {
-        <div class="card pad">
+        <div class="card pad frr-chart" id="frr-chart-card">
           <div class="row between">
             <b class="t-h4">Collected vs billed</b>
             <div class="legend">
-              <span><i style="background: var(--brand-3)"></i>Collection rate</span>
+              <span><i style="background: #EA580C"></i>Collection rate</span>
             </div>
           </div>
           <div class="mt12"><rp-hbars [items]="bars()" [fmt]="pct" /></div>

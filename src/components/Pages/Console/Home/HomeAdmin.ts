@@ -144,7 +144,7 @@ const SETTLE_BAD = new Set(['FAILED', 'REJECTED']);
       <rp-card title="Recent activity" icon="activity">
         @if (can('task.approvals')) {
           <a card-right class="linkbtn" routerLink="/console/approvals"
-            >Approvals<rp-icon name="right" [size]="14"
+            >View all<rp-icon name="right" [size]="14"
           /></a>
         }
         @if (feed() === undefined) {
@@ -166,6 +166,18 @@ const SETTLE_BAD = new Set(['FAILED', 'REJECTED']);
               </div>
             }
           </div>
+          @if ((allFeed()?.length ?? 0) > 5) {
+            <div style="padding: 12px 18px 8px; text-align: center; border-top: 1px solid var(--line, #E2E8F0);">
+              <a
+                class="btn btn-sec btn-sm"
+                routerLink="/console/approvals"
+                style="display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 13px; padding: 6px 18px; border-radius: 10px;"
+              >
+                <span>View all activity ({{ allFeed()?.length }})</span>
+                <rp-icon name="right" [size]="14" />
+              </a>
+            </div>
+          }
         } @else {
           <rp-empty
             icon="activity"
@@ -175,17 +187,17 @@ const SETTLE_BAD = new Set(['FAILED', 'REJECTED']);
         }
       </rp-card>
       <div class="stack g16">
-        <rp-card title="Needs attention" icon="alert">
-          @if (alerts().length) {
+        @if (alerts().length) {
+          <rp-card title="Needs attention" icon="alert">
             <span card-right class="chip" [class]="'chip tone-' + alertTone()">{{
               alerts().length
             }}</span>
-          }
-          <rp-home-alerts [items]="alerts()" />
-        </rp-card>
+            <rp-home-alerts [items]="alerts()" />
+          </rp-card>
+        }
         @if (jobs(); as js) {
-          <rp-card title="Last night's jobs" icon="timer">
-            @if (js.length) {
+          @if (js.length) {
+            <rp-card title="Last night's jobs" icon="timer">
               <div class="cp-jobs" id="home-jobs">
                 @for (j of js; track j.t) {
                   <div class="cp-job">
@@ -198,10 +210,8 @@ const SETTLE_BAD = new Set(['FAILED', 'REJECTED']);
                   </div>
                 }
               </div>
-            } @else {
-              <rp-empty icon="timer" title="No job runs yet" text="Scheduled jobs report here." />
-            }
-          </rp-card>
+            </rp-card>
+          }
         }
         @if (actions().length) {
           <rp-card title="Quick actions" icon="zap">
@@ -255,7 +265,7 @@ export class HomeAdmin implements OnInit {
   });
 
   /** Approvals raised, tickets of the last week and announcements, newest first. */
-  protected readonly feed = computed<readonly FeedItem[] | undefined>(() => {
+  protected readonly allFeed = computed<readonly FeedItem[] | undefined>(() => {
     const a = this.approvals();
     const t = this.tickets();
     const n = this.announcements();
@@ -288,9 +298,11 @@ export class HomeAdmin implements OnInit {
     ];
     return out
       .filter((x) => new Date(x.at).getTime() <= Date.now())
-      .sort((x, y) => y.at.localeCompare(x.at))
-      .slice(0, 11);
+      .sort((x, y) => y.at.localeCompare(x.at));
   });
+
+  /** Show only 5 items on the dashboard */
+  protected readonly feed = computed(() => this.allFeed()?.slice(0, 5));
 
   protected readonly alerts = computed<Alert[]>(() => {
     const out: Alert[] = [];
