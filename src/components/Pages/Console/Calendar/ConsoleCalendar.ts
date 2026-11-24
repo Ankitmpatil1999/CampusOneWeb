@@ -455,10 +455,10 @@ interface Cell {
                         (click)="openEntry(o.e)"
                       >
                         <span class="t-clip">
-                          @if (!o.e.allDay) {
+                          @if (!o.e.allDay && o.e.startTime) {
                             <b>{{ time(o.e.startTime) }}</b>
                           }
-                          {{ o.e.title }}</span
+                          <span>{{ o.e.title }}</span></span
                         >
                       </button>
                     }
