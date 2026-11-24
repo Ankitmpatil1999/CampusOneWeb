@@ -133,23 +133,23 @@ rp-card:nth-child(6n+6)>.card>.card-h{background:linear-gradient(90deg,color-mix
   --sb-ink-2: #64748B;
   --sb-mute: #94A3B8;
   --sb-mark: #EA580C;
-  --sb-line: rgba(226, 218, 205, 0.7);
-  --sb-hover: rgba(245, 239, 230, 0.85);
-  --sb-tile: rgba(241, 235, 224, 0.9);
+  --sb-line: rgba(226, 232, 240, 0.8);
+  --sb-hover: rgba(241, 245, 249, 0.85);
+  --sb-tile: #F8FAFC;
   --sb-on-bg: linear-gradient(135deg, rgba(234, 88, 12, 0.12), rgba(249, 115, 22, 0.18));
   --sb-on-ink: #C2410C;
   --sb-on-tile: rgba(234, 88, 12, 0.15);
   background: rgba(255, 255, 255, 0.88) !important;
   backdrop-filter: blur(28px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
-  border-right: 1px solid rgba(226, 218, 205, 0.75) !important;
-  box-shadow: 4px 0 25px rgba(160, 140, 115, 0.06);
+  border-right: 1px solid rgba(226, 232, 240, 0.85) !important;
+  box-shadow: 4px 0 25px rgba(15, 23, 42, 0.04);
   color: #334155 !important;
   transition: width 0.24s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 :root:not([data-theme="dark"]) .c-side .c-brand {
-  border-bottom: 1px solid rgba(226, 218, 205, 0.65) !important;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.75) !important;
   gap: 12px !important;
   padding: 16px !important;
 }
@@ -168,8 +168,8 @@ rp-card:nth-child(6n+6)>.card>.card-h{background:linear-gradient(90deg,color-mix
   height: 32px !important;
   border-radius: 8px !important;
   color: #64748B !important;
-  background: rgba(245, 239, 230, 0.85) !important;
-  border: 1px solid rgba(226, 218, 205, 0.7) !important;
+  background: #F8FAFC !important;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
   display: none;
   place-items: center;
   cursor: pointer;
@@ -177,7 +177,7 @@ rp-card:nth-child(6n+6)>.card>.card-h{background:linear-gradient(90deg,color-mix
 }
 
 :root:not([data-theme="dark"]) .c-side .nv-x:hover {
-  background: rgba(236, 227, 213, 1) !important;
+  background: #F1F5F9 !important;
   color: #0F172A !important;
 }
 
@@ -192,9 +192,9 @@ rp-card:nth-child(6n+6)>.card>.card-h{background:linear-gradient(90deg,color-mix
 }
 
 :root:not([data-theme="dark"]) .c-side .nv-pic {
-  background: rgba(241, 235, 224, 0.9) !important;
+  background: #F8FAFC !important;
   color: #475569 !important;
-  border: 1px solid rgba(226, 218, 205, 0.7) !important;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
   transition: all 0.2s ease;
   width: 34px !important;
@@ -204,30 +204,30 @@ rp-card:nth-child(6n+6)>.card>.card-h{background:linear-gradient(90deg,color-mix
 
 :root:not([data-theme="dark"]) .c-side .nv-chev {
   color: #64748B !important;
-  background: rgba(235, 228, 217, 0.8) !important;
+  background: #F1F5F9 !important;
   transition: all 0.25s ease;
 }
 
 :root:not([data-theme="dark"]) .c-side .nv-par:hover,
 :root:not([data-theme="dark"]) .c-side .nv-solo:hover {
-  background: rgba(245, 239, 230, 0.9) !important;
+  background: #F8FAFC !important;
   color: #0F172A !important;
 }
 
 :root:not([data-theme="dark"]) .c-side .nv-par:hover .nv-pic,
 :root:not([data-theme="dark"]) .c-side .nv-solo:hover .nv-pic {
-  background: rgba(236, 227, 213, 1) !important;
+  background: #F1F5F9 !important;
   color: #0F172A !important;
   transform: scale(1.05);
 }
 
 :root:not([data-theme="dark"]) .c-side .nv-par:hover .nv-chev {
-  background: rgba(226, 216, 201, 1) !important;
+  background: #E2E8F0 !important;
   color: #0F172A !important;
 }
 
 :root:not([data-theme="dark"]) .c-side .nv-grp.open > .nv-par {
-  background: rgba(243, 236, 224, 0.95) !important;
+  background: #F1F5F9 !important;
   color: #0F172A !important;
 }
 
@@ -236,7 +236,7 @@ rp-card:nth-child(6n+6)>.card>.card-h{background:linear-gradient(90deg,color-mix
 }
 
 :root:not([data-theme="dark"]) .c-side .nv-sub-in::before {
-  background: rgba(214, 203, 187, 0.8) !important;
+  background: #CBD5E1 !important;
 }
 
 :root:not([data-theme="dark"]) .c-side .nv-item {
@@ -247,13 +247,13 @@ rp-card:nth-child(6n+6)>.card>.card-h{background:linear-gradient(90deg,color-mix
 }
 
 :root:not([data-theme="dark"]) .c-side .nv-item:hover {
-  background: rgba(245, 239, 230, 0.9) !important;
+  background: #F8FAFC !important;
   color: #0F172A !important;
   transform: translateX(3px);
 }
 
 :root:not([data-theme="dark"]) .c-side .nv-sep {
-  background: rgba(226, 218, 205, 0.7) !important;
+  background: #E2E8F0 !important;
 }
 
 /* Warm Active Capsule Pill (Amber/Coral Glow) */
@@ -299,7 +299,7 @@ rp-card:nth-child(6n+6)>.card>.card-h{background:linear-gradient(90deg,color-mix
 
 /* Sidebar User Info Footer */
 :root:not([data-theme="dark"]) .c-side .c-user {
-  border-top: 1px solid rgba(226, 218, 205, 0.75) !important;
+  border-top: 1px solid rgba(226, 232, 240, 0.75) !important;
   color: #1E293B !important;
 }
 
@@ -316,7 +316,7 @@ rp-card:nth-child(6n+6)>.card>.card-h{background:linear-gradient(90deg,color-mix
 }
 
 :root:not([data-theme="dark"]) .c-side .c-user .iconbtn:hover {
-  background: rgba(245, 239, 230, 0.85) !important;
+  background: #F8FAFC !important;
   color: #0F172A !important;
 }
 
@@ -325,8 +325,8 @@ rp-card:nth-child(6n+6)>.card>.card-h{background:linear-gradient(90deg,color-mix
   background: rgba(255, 255, 255, 0.85) !important;
   backdrop-filter: blur(24px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
-  border-bottom: 1px solid rgba(226, 218, 205, 0.75) !important;
-  box-shadow: 0 4px 20px rgba(160, 140, 115, 0.05);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.85) !important;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
 }
 
 :root:not([data-theme="dark"]) .c-top .c-top-b {
@@ -338,15 +338,15 @@ rp-card:nth-child(6n+6)>.card>.card-h{background:linear-gradient(90deg,color-mix
 }
 
 :root:not([data-theme="dark"]) .c-top .btn-ghost:hover {
-  background: rgba(245, 239, 230, 0.8) !important;
+  background: #F8FAFC !important;
   color: #0F172A !important;
 }
 
 :root:not([data-theme="dark"]) .c-top input,
 :root:not([data-theme="dark"]) .c-top .fld-in,
 :root:not([data-theme="dark"]) .c-top select {
-  background: rgba(248, 245, 239, 0.85) !important;
-  border-color: rgba(226, 218, 205, 0.85) !important;
+  background: #F8FAFC !important;
+  border-color: rgba(226, 232, 240, 0.85) !important;
   color: #1E293B !important;
 }
 
@@ -424,7 +424,7 @@ rp-card:nth-child(6n+6)>.card>.card-h{background:linear-gradient(90deg,color-mix
   }
   .c-app.nav-open .c-side {
     transform: translateX(0) !important;
-    box-shadow: 0 25px 50px -12px rgba(150, 125, 95, 0.35), 0 0 0 1px rgba(226, 218, 205, 0.8) !important;
+    box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25), 0 0 0 1px rgba(226, 232, 240, 0.85) !important;
   }
   .c-app .c-scrim {
     display: none;
@@ -468,7 +468,7 @@ rp-card:nth-child(6n+6)>.card>.card-h{background:linear-gradient(90deg,color-mix
 /* 4. Warm Frosted Glass KPI & Metric Cards */
 :root:not([data-theme="dark"]) .kpi {
   background: rgba(255, 255, 255, 0.98) !important;
-  border: 1px solid rgba(226, 218, 205, 0.8) !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
   border-top: 1.5px solid rgba(255, 255, 255, 0.95) !important;
   border-radius: 18px !important;
   padding: 20px 22px 18px !important;
@@ -505,7 +505,7 @@ rp-card:nth-child(6n+6)>.card>.card-h{background:linear-gradient(90deg,color-mix
 :root:not([data-theme="dark"]) .kpi:hover {
   transform: translateY(-4px) !important;
   border-color: rgba(234, 88, 12, 0.4) !important;
-  box-shadow: 0 16px 32px -8px rgba(150, 125, 95, 0.14), 0 0 16px rgba(249, 115, 22, 0.08) !important;
+  box-shadow: 0 16px 32px -8px rgba(15, 23, 42, 0.08), 0 0 16px rgba(249, 115, 22, 0.08) !important;
 }
 
 :root:not([data-theme="dark"]) .kpi .k-l {
@@ -594,16 +594,16 @@ rp-card:nth-child(6n+6)>.card>.card-h{background:linear-gradient(90deg,color-mix
 /* 5. Warm Frosted Glass Content Cards (.card) */
 :root:not([data-theme="dark"]) .card {
   background: rgba(255, 255, 255, 0.98) !important;
-  border: 1px solid rgba(226, 218, 205, 0.75) !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
   border-top: 1.5px solid rgba(255, 255, 255, 0.95) !important;
   border-radius: 18px !important;
-  box-shadow: 0 10px 28px -10px rgba(150, 125, 95, 0.08) !important;
+  box-shadow: 0 10px 28px -10px rgba(15, 23, 42, 0.05) !important;
   color: #1E293B !important;
   overflow: visible !important;
 }
 
 :root:not([data-theme="dark"]) .card .card-h {
-  border-bottom: 1px solid rgba(226, 218, 205, 0.6) !important;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.85) !important;
 }
 
 :root:not([data-theme="dark"]) .card .card-h h2,
@@ -614,7 +614,7 @@ rp-card:nth-child(6n+6)>.card>.card-h{background:linear-gradient(90deg,color-mix
 :root:not([data-theme="dark"]) .card.hover:hover {
   transform: translateY(-4px) !important;
   border-color: rgba(234, 88, 12, 0.35) !important;
-  box-shadow: 0 20px 40px -10px rgba(150, 125, 95, 0.14) !important;
+  box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.08) !important;
 }
 
 /* 6. Eye-Soothing Warm Read-Only Banner */
@@ -630,10 +630,10 @@ rp-card:nth-child(6n+6)>.card>.card-h{background:linear-gradient(90deg,color-mix
 /* 7. Executive-Grade Frosted Glass Task Cards (Senior 10-Year Dev UI) */
 :root:not([data-theme="dark"]) .tl-card {
   /* Complete removal of loud candy gradient & neon styling */
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(252, 249, 244, 0.88) 100%) !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, #FFFFFF 100%) !important;
   backdrop-filter: blur(24px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
-  border: 1px solid rgba(226, 218, 205, 0.8) !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
   border-top: 1.5px solid rgba(255, 255, 255, 1) !important;
   border-radius: 20px !important;
   box-shadow: 0 4px 18px -4px rgba(160, 140, 115, 0.08), 0 1px 3px rgba(0, 0, 0, 0.03) !important;
@@ -667,7 +667,7 @@ rp-card:nth-child(6n+6)>.card>.card-h{background:linear-gradient(90deg,color-mix
 :root:not([data-theme="dark"]) .tl-card .tl-ic {
   background: color-mix(in srgb, var(--tc, #D97706) 10%, #FFFFFF) !important;
   color: color-mix(in srgb, var(--tc, #D97706) 88%, #0F172A) !important;
-  border: 1px solid color-mix(in srgb, var(--tc, #D97706) 24%, rgba(226, 218, 205, 0.6)) !important;
+  border: 1px solid color-mix(in srgb, var(--tc, #D97706) 24%, rgba(226, 232, 240, 0.85)) !important;
   box-shadow: 0 2px 6px -2px rgba(160, 140, 115, 0.12) !important;
   border-radius: 13px !important;
   width: 42px !important;
@@ -679,7 +679,7 @@ rp-card:nth-child(6n+6)>.card>.card-h{background:linear-gradient(90deg,color-mix
 :root:not([data-theme="dark"]) .tl-card .tl-n {
   background: rgba(245, 240, 232, 0.85) !important;
   color: #475569 !important;
-  border: 1px solid rgba(226, 218, 205, 0.8) !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
   box-shadow: none !important;
   font-size: 12px !important;
   font-weight: 600 !important;
@@ -690,7 +690,7 @@ rp-card:nth-child(6n+6)>.card>.card-h{background:linear-gradient(90deg,color-mix
 :root:not([data-theme="dark"]) .tl-card .tl-go {
   background: rgba(245, 240, 232, 0.9) !important;
   color: #64748B !important;
-  border: 1px solid rgba(226, 218, 205, 0.8) !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
   width: 30px !important;
   height: 30px !important;
@@ -735,7 +735,7 @@ rp-card:nth-child(6n+6)>.card>.card-h{background:linear-gradient(90deg,color-mix
   background: rgba(255, 255, 255, 0.95) !important;
   backdrop-filter: blur(28px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
-  border: 1px solid rgba(226, 218, 205, 0.85) !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
   border-radius: 22px !important;
   box-shadow: 0 20px 42px -12px rgba(160, 140, 115, 0.14) !important;
   color: #1E293B !important;
@@ -743,7 +743,7 @@ rp-card:nth-child(6n+6)>.card>.card-h{background:linear-gradient(90deg,color-mix
 
 :root:not([data-theme="dark"]) .tl-panel::before {
   background: #FFFFFF !important;
-  border-color: rgba(226, 218, 205, 0.85) !important;
+  border-color: rgba(226, 232, 240, 0.85) !important;
 }
 
 :root:not([data-theme="dark"]) .tl-panel .tl-ph h3 {
@@ -757,13 +757,13 @@ rp-card:nth-child(6n+6)>.card>.card-h{background:linear-gradient(90deg,color-mix
 :root:not([data-theme="dark"]) .tl-panel .tl-pic {
   background: rgba(245, 240, 232, 0.95) !important;
   color: #EA580C !important;
-  border: 1px solid rgba(226, 218, 205, 0.8) !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
   box-shadow: 0 2px 6px -2px rgba(160, 140, 115, 0.12) !important;
 }
 
 :root:not([data-theme="dark"]) .tl-subs .tl-sub {
   background: rgba(250, 247, 242, 0.75) !important;
-  border: 1px solid rgba(226, 218, 205, 0.7) !important;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
   border-radius: 14px !important;
   color: #0F172A !important;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
@@ -787,7 +787,7 @@ rp-card:nth-child(6n+6)>.card>.card-h{background:linear-gradient(90deg,color-mix
 :root:not([data-theme="dark"]) .tl-sic {
   background: rgba(243, 238, 229, 0.9) !important;
   color: #475569 !important;
-  border: 1px solid rgba(226, 218, 205, 0.7) !important;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
 }
 
 :root:not([data-theme="dark"]) .tl-arrow {
@@ -801,7 +801,7 @@ rp-card:nth-child(6n+6)>.card>.card-h{background:linear-gradient(90deg,color-mix
 
 :root:not([data-theme="dark"]) .tl-chip {
   background: rgba(245, 240, 232, 0.8) !important;
-  border: 1px solid rgba(226, 218, 205, 0.75) !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
   color: #475569 !important;
   border-radius: 999px !important;
 }
@@ -2329,10 +2329,10 @@ select:focus,
   height: auto !important;
   min-height: unset !important;
   background: rgba(255, 255, 255, 0.98) !important;
-  border: 1px solid rgba(226, 218, 205, 0.75) !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
   border-top: 1.5px solid rgba(255, 255, 255, 0.95) !important;
   border-radius: 18px !important;
-  box-shadow: 0 10px 28px -10px rgba(150, 125, 95, 0.08) !important;
+  box-shadow: 0 10px 28px -10px rgba(15, 23, 42, 0.05) !important;
   overflow: hidden !important;
   width: 100% !important;
 }
@@ -2340,7 +2340,7 @@ select:focus,
 /* Card Header Polish */
 .card .card-h {
   padding: 16px 20px !important;
-  border-bottom: 1px solid rgba(226, 218, 205, 0.6) !important;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.85) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
@@ -2358,9 +2358,9 @@ select:focus,
   width: 32px !important;
   height: 32px !important;
   border-radius: 9px !important;
-  background: rgba(241, 235, 224, 0.9) !important;
+  background: #F8FAFC !important;
   color: #C2410C !important;
-  border: 1px solid rgba(226, 218, 205, 0.75) !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
   display: grid !important;
   place-items: center !important;
 }
@@ -2379,7 +2379,7 @@ select:focus,
   padding: 13px 12px !important;
   border-radius: 12px !important;
   border-top: none !important;
-  border-bottom: 1px solid rgba(226, 218, 205, 0.5) !important;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.85) !important;
   transition: background 0.15s ease !important;
 }
 
@@ -2388,7 +2388,7 @@ select:focus,
 }
 
 .cp-fi:hover {
-  background: rgba(245, 239, 230, 0.55) !important;
+  background: #F8FAFC !important;
 }
 
 .cp-fi .t-sm {
@@ -2413,9 +2413,9 @@ select:focus,
   font-size: 11.5px !important;
   font-weight: 500 !important;
   padding: 3px 8px !important;
-  background: rgba(245, 239, 230, 0.85) !important;
+  background: #F8FAFC !important;
   border-radius: 6px !important;
-  border: 1px solid rgba(226, 218, 205, 0.75) !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
   white-space: nowrap !important;
 }
 
@@ -2434,7 +2434,7 @@ select:focus,
   gap: 12px !important;
   padding: 16px 14px !important;
   border-radius: 14px !important;
-  border: 1px solid rgba(226, 218, 205, 0.8) !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
   border-top: 1.5px solid rgba(255, 255, 255, 1) !important;
   background: rgba(255, 255, 255, 0.95) !important;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
@@ -2446,9 +2446,9 @@ select:focus,
 
 .cp-qa button:hover {
   transform: translateY(-3px) !important;
-  background: rgba(245, 239, 230, 0.9) !important;
+  background: #F8FAFC !important;
   border-color: rgba(234, 88, 12, 0.35) !important;
-  box-shadow: 0 10px 20px -4px rgba(150, 125, 95, 0.12), 0 2px 6px -1px rgba(0, 0, 0, 0.03) !important;
+  box-shadow: 0 10px 20px -4px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.03) !important;
 }
 
 .cp-qa button span:last-child {
@@ -2464,9 +2464,9 @@ select:focus,
   border-radius: 10px !important;
   display: grid !important;
   place-items: center !important;
-  background: rgba(241, 235, 224, 0.9) !important;
+  background: #F8FAFC !important;
   color: #C2410C !important;
-  border: 1px solid rgba(226, 218, 205, 0.75) !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
   transition: transform 0.15s ease !important;
 }
 
@@ -2563,12 +2563,12 @@ select:focus,
 
 /* User Type Card */
 .cp-ut-card {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(252, 249, 244, 0.92) 100%) !important;
-  border: 1px solid rgba(226, 218, 205, 0.8) !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, #FFFFFF 100%) !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
   border-top: 1.5px solid rgba(255, 255, 255, 1) !important;
   border-radius: 18px !important;
   padding: 18px 20px !important;
-  box-shadow: 0 8px 24px -6px rgba(150, 125, 95, 0.08) !important;
+  box-shadow: 0 8px 24px -6px rgba(15, 23, 42, 0.05) !important;
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease !important;
   display: flex !important;
   flex-direction: column !important;
@@ -2580,7 +2580,7 @@ select:focus,
 .cp-ut-card:hover {
   transform: translateY(-3px) !important;
   border-color: rgba(234, 88, 12, 0.35) !important;
-  box-shadow: 0 16px 36px -8px rgba(150, 125, 95, 0.14) !important;
+  box-shadow: 0 16px 36px -8px rgba(15, 23, 42, 0.08) !important;
 }
 
 /* Header: Icon, Titles, Badges, Edit Button */
@@ -2600,7 +2600,7 @@ select:focus,
   flex: none !important;
   background: rgba(241, 235, 224, 0.9);
   color: #475569;
-  border: 1px solid rgba(226, 218, 205, 0.7);
+  border: 1px solid rgba(226, 232, 240, 0.85);
   transition: transform 0.2s ease !important;
 }
 
@@ -2684,8 +2684,8 @@ select:focus,
   font-size: 11px !important;
   font-weight: 600 !important;
   color: #475569 !important;
-  background: rgba(245, 239, 230, 0.9) !important;
-  border: 1px solid rgba(226, 218, 205, 0.7) !important;
+  background: #F8FAFC !important;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
   padding: 1px 7px !important;
   border-radius: 6px !important;
 }
@@ -2702,8 +2702,8 @@ select:focus,
 /* Edit Button */
 .cp-ut-edit {
   color: #475569 !important;
-  background: rgba(245, 239, 230, 0.85) !important;
-  border: 1px solid rgba(226, 218, 205, 0.75) !important;
+  background: #F8FAFC !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
   border-radius: 8px !important;
   padding: 5px 11px !important;
   font-size: 12.5px !important;
@@ -2728,7 +2728,7 @@ select:focus,
   align-items: center !important;
   justify-content: space-between !important;
   padding-top: 10px !important;
-  border-top: 1px solid rgba(226, 218, 205, 0.6) !important;
+  border-top: 1px solid rgba(226, 232, 240, 0.85) !important;
 }
 
 .cp-ut-dept-label {
@@ -2748,14 +2748,14 @@ select:focus,
   overflow-y: auto !important;
   padding-right: 4px !important;
   scrollbar-width: thin !important;
-  scrollbar-color: rgba(214, 203, 187, 0.8) transparent !important;
+  scrollbar-color: #CBD5E1 transparent !important;
 }
 
 .cp-depts-list::-webkit-scrollbar {
   width: 4px;
 }
 .cp-depts-list::-webkit-scrollbar-thumb {
-  background: rgba(214, 203, 187, 0.8);
+  background: #CBD5E1;
   border-radius: 999px;
 }
 
@@ -2766,15 +2766,15 @@ select:focus,
   justify-content: space-between !important;
   gap: 8px !important;
   padding: 7px 10px !important;
-  background: rgba(245, 239, 230, 0.8) !important;
-  border: 1px solid rgba(226, 218, 205, 0.75) !important;
+  background: #F8FAFC !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
   border-radius: 8px !important;
   transition: background 0.15s ease, border-color 0.15s ease !important;
 }
 
 .cp-dept-chip:hover {
-  background: rgba(236, 227, 213, 0.95) !important;
-  border-color: rgba(214, 203, 187, 0.9) !important;
+  background: #F1F5F9 !important;
+  border-color: #CBD5E1 !important;
 }
 
 .cp-dept-name {
@@ -2791,7 +2791,7 @@ select:focus,
   font-size: 11px !important;
   font-weight: 700 !important;
   color: #94A3B8 !important;
-  background: rgba(226, 218, 205, 0.6) !important;
+  background: rgba(226, 232, 240, 0.85) !important;
   padding: 2px 7px !important;
   border-radius: 999px !important;
   flex: none !important;
@@ -2825,8 +2825,8 @@ select:focus,
 .c-filters .search {
   flex: 1 1 260px !important;
   max-width: 360px !important;
-  background: rgba(248, 245, 239, 0.85) !important;
-  border: 1px solid rgba(226, 218, 205, 0.85) !important;
+  background: #F8FAFC !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
   border-radius: 10px !important;
   padding: 2px 10px !important;
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
@@ -2836,38 +2836,128 @@ select:focus,
   font-size: 13px !important;
   font-weight: 600 !important;
   color: #64748B !important;
-  background: rgba(245, 239, 230, 0.85) !important;
-  border: 1px solid rgba(226, 218, 205, 0.75) !important;
+  background: #F8FAFC !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
   padding: 5px 12px !important;
   border-radius: 8px !important;
 }
 
 /* ==========================================================================
-   GLOBAL WARM & LIGHT LUXE THEME (APPLIED ACROSS ALL SCREENS)
-   Cohesive buttons, status pills, tables, form inputs, chips & dialogs.
+   GLOBAL NEXT-GEN UNIFIED THEME SYSTEM (APPLIED ACROSS ALL SCREENS & MODULES)
+   Single unified design language: Sunset Warm Brand Accents, Deep Slate Ink,
+   Pure White Frosted Cards, Modern Sticky Tables, Sleek KPI Cards,
+   Segmented Controls, Modals, Drawers, Chips & Micro-Interactions.
    ========================================================================== */
 
-/* 1. Global Primary Action Buttons (.btn-pri) */
+/* --------------------------------------------------------------------------
+   0. MASTER GLOBAL CSS VARIABLES OVERRIDE (:root)
+   Enforces uniform warm sunset brand, deep slate ink, clean surface, and rings.
+   -------------------------------------------------------------------------- */
+:root,
+:root:not([data-theme="dark"]) {
+  /* Brand Primary Sunset Colors */
+  --brand: #EA580C !important;
+  --brand-2: #F97316 !important;
+  --brand-3: #FB923C !important;
+  --brand-soft: #FFF7ED !important;
+  --brand-soft-2: #FFEDD5 !important;
+  --brand-line: #FED7AA !important;
+  --on-brand: #FFFFFF !important;
+
+  /* Accent Glow */
+  --accent: #F97316 !important;
+  --accent-2: #EA580C !important;
+  --accent-soft: #FFF7ED !important;
+  --accent-ink: #9A3412 !important;
+  --on-accent: #FFFFFF !important;
+
+  /* Surfaces & Backgrounds (Eye-soothing soft pearl + pure white) */
+  --bg: #FAF9F6 !important;
+  --bg-2: #F1F5F9 !important;
+  --surface: #FFFFFF !important;
+  --surface-2: #F8FAFC !important;
+  --surface-3: #F1F5F9 !important;
+  --surface-inv: #0F172A !important;
+
+  /* Borders & Lines (Crisp modern slate) */
+  --line: #E2E8F0 !important;
+  --line-2: #CBD5E1 !important;
+  --line-3: #94A3B8 !important;
+
+  /* Typography Inks (High-contrast deep slate) */
+  --ink: #0F172A !important;
+  --ink-2: #334155 !important;
+  --ink-3: #64748B !important;
+  --ink-4: #94A3B8 !important;
+  --ink-inv: #F8FAFC !important;
+
+  /* Focus Ring */
+  --focus: 0 0 0 3px rgba(249, 115, 22, 0.22) !important;
+
+  /* Semantic Palettes */
+  --ok: #10B981 !important;
+  --ok-soft: #ECFDF5 !important;
+  --ok-line: #A7F3D0 !important;
+
+  --warn: #F59E0B !important;
+  --warn-soft: #FFFBEB !important;
+  --warn-line: #FDE68A !important;
+
+  --bad: #EF4444 !important;
+  --bad-soft: #FEF2F2 !important;
+  --bad-line: #FECACA !important;
+
+  --info: #0284C7 !important;
+  --info-soft: #F0F9FF !important;
+  --info-line: #BAE6FD !important;
+
+  --violet: #8B5CF6 !important;
+  --violet-soft: #F5F3FF !important;
+  --violet-line: #DDD6FE !important;
+
+  /* Ambient Shadows */
+  --shadow-1: 0 1px 3px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02) !important;
+  --shadow-2: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.03) !important;
+  --shadow-3: 0 25px 60px -15px rgba(15, 23, 42, 0.18), 0 8px 20px -6px rgba(15, 23, 42, 0.08) !important;
+}
+
+/* --------------------------------------------------------------------------
+   1. GLOBAL PRIMARY ACTION BUTTONS (.btn-pri)
+   -------------------------------------------------------------------------- */
 :root:not([data-theme="dark"]) .btn-pri,
 :root:not([data-theme="dark"]) .btn.btn-pri,
 :root:not([data-theme="dark"]) button[class*="btn-pri"],
-:root:not([data-theme="dark"]) #fs-new {
+:root:not([data-theme="dark"]) #fs-new,
+:root:not([data-theme="dark"]) #aq-open-brochure,
+:root:not([data-theme="dark"]) #aq-gen {
   background: linear-gradient(135deg, #F97316 0%, #EA580C 50%, #C2410C 100%) !important;
   color: #FFFFFF !important;
   border: 1px solid rgba(234, 88, 12, 0.45) !important;
   border-radius: 10px !important;
   box-shadow: 0 4px 14px rgba(234, 88, 12, 0.28) !important;
-  font-weight: 600 !important;
+  font-weight: 650 !important;
   letter-spacing: -0.01em !important;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
 }
 
 :root:not([data-theme="dark"]) .btn-pri:hover:not([disabled]),
 :root:not([data-theme="dark"]) .btn.btn-pri:hover:not([disabled]),
-:root:not([data-theme="dark"]) #fs-new:hover:not([disabled]) {
+:root:not([data-theme="dark"]) button[class*="btn-pri"]:hover:not([disabled]),
+:root:not([data-theme="dark"]) #fs-new:hover:not([disabled]),
+:root:not([data-theme="dark"]) #aq-open-brochure:hover:not([disabled]),
+:root:not([data-theme="dark"]) #aq-gen:hover:not([disabled]) {
   background: linear-gradient(135deg, #FB923C 0%, #F97316 50%, #EA580C 100%) !important;
   box-shadow: 0 6px 20px rgba(234, 88, 12, 0.38) !important;
   transform: translateY(-1.5px) !important;
+}
+
+:root:not([data-theme="dark"]) .btn-pri:active:not([disabled]),
+:root:not([data-theme="dark"]) .btn.btn-pri:active:not([disabled]) {
+  transform: translateY(0) !important;
 }
 
 :root:not([data-theme="dark"]) .btn-pri[disabled],
@@ -2878,43 +2968,401 @@ select:focus,
   transform: none !important;
 }
 
-/* 2. Global Secondary & Ghost Buttons */
+/* --------------------------------------------------------------------------
+   2. GLOBAL SECONDARY, GHOST & SOFT ACTION BUTTONS
+   -------------------------------------------------------------------------- */
 :root:not([data-theme="dark"]) .btn-sec,
-:root:not([data-theme="dark"]) .btn.btn-sec {
-  background: rgba(245, 239, 230, 0.9) !important;
-  border: 1px solid rgba(226, 218, 205, 0.85) !important;
+:root:not([data-theme="dark"]) .btn.btn-sec,
+:root:not([data-theme="dark"]) button[class*="btn-sec"] {
+  background: #FFFFFF !important;
+  border: 1px solid #CBD5E1 !important;
   color: #334155 !important;
   border-radius: 10px !important;
-  font-weight: 550 !important;
-  transition: all 0.15s ease !important;
+  font-weight: 600 !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
 }
 
 :root:not([data-theme="dark"]) .btn-sec:hover:not([disabled]),
-:root:not([data-theme="dark"]) .btn.btn-sec:hover:not([disabled]) {
-  background: rgba(236, 227, 213, 1) !important;
+:root:not([data-theme="dark"]) .btn.btn-sec:hover:not([disabled]),
+:root:not([data-theme="dark"]) button[class*="btn-sec"]:hover:not([disabled]) {
+  background: #F8FAFC !important;
   color: #0F172A !important;
-  border-color: rgba(214, 203, 187, 1) !important;
+  border-color: #94A3B8 !important;
+  transform: translateY(-0.5px) !important;
+  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.06) !important;
 }
 
-:root:not([data-theme="dark"]) .btn-ghost {
+:root:not([data-theme="dark"]) .btn-ghost,
+:root:not([data-theme="dark"]) .btn.btn-ghost {
   color: #475569 !important;
   border-radius: 8px !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
   transition: all 0.15s ease !important;
 }
 
-:root:not([data-theme="dark"]) .btn-ghost:hover:not([disabled]) {
-  background: rgba(245, 239, 230, 0.9) !important;
+:root:not([data-theme="dark"]) .btn-ghost:hover:not([disabled]),
+:root:not([data-theme="dark"]) .btn.btn-ghost:hover:not([disabled]) {
+  background: #F1F5F9 !important;
   color: #0F172A !important;
 }
 
-/* 3. Global Filter Pills, Tabs & Segmented Controls */
+/* Soft Accent Button (Used for Collect Fee in tables & drawers) */
+:root:not([data-theme="dark"]) .btn-soft,
+:root:not([data-theme="dark"]) .fc-collect .btn,
+:root:not([data-theme="dark"]) .af-fee button {
+  background: #FFF7ED !important;
+  color: #EA580C !important;
+  border: 1px solid #FED7AA !important;
+  border-radius: 8px !important;
+  font-weight: 650 !important;
+  font-size: 12.5px !important;
+  padding: 4px 11px !important;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+:root:not([data-theme="dark"]) .btn-soft:hover:not([disabled]),
+:root:not([data-theme="dark"]) .fc-collect .btn:hover:not([disabled]),
+:root:not([data-theme="dark"]) .af-fee button:hover:not([disabled]) {
+  background: #FFEDD5 !important;
+  color: #C2410C !important;
+  border-color: #FDBA74 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 3px 8px rgba(234, 88, 12, 0.16) !important;
+}
+
+/* Danger Button */
+:root:not([data-theme="dark"]) .btn-danger,
+:root:not([data-theme="dark"]) .btn.btn-danger {
+  background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(220, 38, 38, 0.45) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25) !important;
+  font-weight: 650 !important;
+}
+
+:root:not([data-theme="dark"]) .btn-danger:hover:not([disabled]) {
+  background: linear-gradient(135deg, #F87171 0%, #EF4444 100%) !important;
+  box-shadow: 0 6px 16px rgba(220, 38, 38, 0.35) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* --------------------------------------------------------------------------
+   3. UNIVERSAL KPI STAT CARDS (.kpi, rp-kpi, .card-kpi, #fc-cards, #af-cards)
+   -------------------------------------------------------------------------- */
+:root:not([data-theme="dark"]) .kpi,
+:root:not([data-theme="dark"]) rp-kpi > .kpi,
+:root:not([data-theme="dark"]) .card-kpi {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
+  border-radius: 18px !important;
+  padding: 16px 18px !important;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.02) !important;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease !important;
+  position: relative !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  min-width: 0 !important;
+}
+
+:root:not([data-theme="dark"]) .kpi::before,
+:root:not([data-theme="dark"]) rp-kpi > .kpi::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 3px !important;
+  background: linear-gradient(90deg, #F97316, #EA580C) !important;
+  opacity: 0.8 !important;
+  transition: opacity 0.2s ease, height 0.2s ease !important;
+}
+
+:root:not([data-theme="dark"]) .kpi:hover,
+:root:not([data-theme="dark"]) rp-kpi > .kpi:hover,
+:root:not([data-theme="dark"]) .card-kpi:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 12px 28px -4px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.03) !important;
+  border-color: rgba(249, 115, 22, 0.3) !important;
+}
+
+:root:not([data-theme="dark"]) .kpi:hover::before,
+:root:not([data-theme="dark"]) rp-kpi > .kpi:hover::before {
+  height: 3.5px !important;
+  opacity: 1 !important;
+}
+
+/* KPI Value */
+:root:not([data-theme="dark"]) .kpi .k-v,
+:root:not([data-theme="dark"]) rp-kpi .k-v {
+  font-family: var(--f-display) !important;
+  font-size: 26px !important;
+  font-weight: 800 !important;
+  color: #0F172A !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.15 !important;
+  margin-top: 3px !important;
+}
+
+/* KPI Label */
+:root:not([data-theme="dark"]) .kpi .k-l,
+:root:not([data-theme="dark"]) rp-kpi .k-l {
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: #64748B !important;
+  display: block !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* KPI Icon Badge (.k-ic) */
+:root:not([data-theme="dark"]) .kpi .k-ic,
+:root:not([data-theme="dark"]) rp-kpi .k-ic {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 10px !important;
+  display: grid !important;
+  place-items: center !important;
+  background: #FFF7ED !important;
+  color: #EA580C !important;
+  border: 1px solid #FED7AA !important;
+  box-shadow: 0 1px 3px rgba(234, 88, 12, 0.08) !important;
+  transition: transform 0.2s ease !important;
+  margin-bottom: 2px !important;
+}
+
+:root:not([data-theme="dark"]) .kpi:hover .k-ic,
+:root:not([data-theme="dark"]) rp-kpi:hover .k-ic {
+  transform: scale(1.06) !important;
+}
+
+/* Contextual KPI icon tones when explicit tone is applied */
+:root:not([data-theme="dark"]) .kpi .k-ic[style*="ok"],
+:root:not([data-theme="dark"]) rp-kpi .k-ic[style*="ok"] {
+  background: #ECFDF5 !important;
+  color: #059669 !important;
+  border-color: #A7F3D0 !important;
+  box-shadow: 0 1px 3px rgba(5, 150, 105, 0.1) !important;
+}
+
+:root:not([data-theme="dark"]) .kpi .k-ic[style*="warn"],
+:root:not([data-theme="dark"]) rp-kpi .k-ic[style*="warn"] {
+  background: #FFFBEB !important;
+  color: #D97706 !important;
+  border-color: #FDE68A !important;
+  box-shadow: 0 1px 3px rgba(217, 119, 6, 0.1) !important;
+}
+
+:root:not([data-theme="dark"]) .kpi .k-ic[style*="bad"],
+:root:not([data-theme="dark"]) rp-kpi .k-ic[style*="bad"] {
+  background: #FEF2F2 !important;
+  color: #DC2626 !important;
+  border-color: #FECACA !important;
+  box-shadow: 0 1px 3px rgba(220, 38, 38, 0.1) !important;
+}
+
+:root:not([data-theme="dark"]) .kpi .k-ic[style*="violet"],
+:root:not([data-theme="dark"]) rp-kpi .k-ic[style*="violet"] {
+  background: #F5F3FF !important;
+  color: #7C3AED !important;
+  border-color: #DDD6FE !important;
+  box-shadow: 0 1px 3px rgba(124, 58, 237, 0.1) !important;
+}
+
+/* Alternating KPI Badges in Fee Collection Grid */
+#fc-cards rp-kpi:nth-child(2) .k-ic {
+  background: #F5F3FF !important;
+  color: #7C3AED !important;
+  border-color: #DDD6FE !important;
+}
+#fc-cards rp-kpi:nth-child(3) .k-ic {
+  background: #FFF7ED !important;
+  color: #EA580C !important;
+  border-color: #FED7AA !important;
+}
+#fc-cards rp-kpi:nth-child(4) .k-ic {
+  background: #F5F3FF !important;
+  color: #7C3AED !important;
+  border-color: #DDD6FE !important;
+}
+#fc-cards rp-kpi:nth-child(5) .k-ic {
+  background: #FFF7ED !important;
+  color: #EA580C !important;
+  border-color: #FED7AA !important;
+}
+#fc-cards rp-kpi:nth-child(6) .k-ic {
+  background: #FFF7ED !important;
+  color: #EA580C !important;
+  border-color: #FED7AA !important;
+}
+#fc-cards rp-kpi:nth-child(7) .k-ic {
+  background: #FFF7ED !important;
+  color: #EA580C !important;
+  border-color: #FED7AA !important;
+}
+#fc-cards rp-kpi:nth-child(8) .k-ic {
+  background: #FFF7ED !important;
+  color: #EA580C !important;
+  border-color: #FED7AA !important;
+}
+#fc-cards rp-kpi:nth-child(9) .k-ic {
+  background: #FFFBEB !important;
+  color: #D97706 !important;
+  border-color: #FDE68A !important;
+}
+
+/* --------------------------------------------------------------------------
+   4. UNIVERSAL DATA TABLES (.tbl-wrap, .tbl, table, #fc-table, #af-fees, #aq-table)
+   -------------------------------------------------------------------------- */
+:root:not([data-theme="dark"]) .tbl-wrap {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.02) !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+:root:not([data-theme="dark"]) .tbl {
+  width: 100% !important;
+  border-collapse: collapse !important;
+}
+
+:root:not([data-theme="dark"]) .tbl th,
+:root:not([data-theme="dark"]) .tbl-wrap table th {
+  background: #F8FAFC !important;
+  color: #475569 !important;
+  font-size: 11.5px !important;
+  font-weight: 750 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  padding: 13px 16px !important;
+  border-bottom: 1.5px solid #E2E8F0 !important;
+  white-space: nowrap !important;
+}
+
+:root:not([data-theme="dark"]) .tbl th .cp-th {
+  font-size: 11.5px !important;
+  font-weight: 750 !important;
+  color: #475569 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+:root:not([data-theme="dark"]) .tbl td,
+:root:not([data-theme="dark"]) .tbl-wrap table td {
+  padding: 13px 16px !important;
+  border-bottom: 1px solid #F1F5F9 !important;
+  color: #1E293B !important;
+  font-size: 13.5px !important;
+  vertical-align: middle !important;
+}
+
+:root:not([data-theme="dark"]) .tbl tbody tr,
+:root:not([data-theme="dark"]) .tbl-wrap table tbody tr {
+  transition: background 0.15s ease !important;
+}
+
+:root:not([data-theme="dark"]) .tbl tbody tr:hover,
+:root:not([data-theme="dark"]) .tbl-wrap table tbody tr:hover {
+  background: #FFF7ED !important;
+}
+
+:root:not([data-theme="dark"]) .tbl .cell-t {
+  font-size: 14px !important;
+  font-weight: 650 !important;
+  color: #0F172A !important;
+}
+
+:root:not([data-theme="dark"]) .tbl .cell-s {
+  font-size: 12px !important;
+  color: #64748B !important;
+  margin-top: 2px !important;
+}
+
+/* Sticky First Column Styling in Horizontal Scroll Tables (#fc-table, #af-fees) */
+:root:not([data-theme="dark"]) #fc-table th:first-child,
+:root:not([data-theme="dark"]) #af-fees th:first-child {
+  position: sticky !important;
+  left: 0 !important;
+  z-index: 3 !important;
+  background: #F8FAFC !important;
+  box-shadow: 4px 0 10px -2px rgba(15, 23, 42, 0.06) !important;
+}
+
+:root:not([data-theme="dark"]) #fc-table td:first-child,
+:root:not([data-theme="dark"]) #af-fees td:first-child {
+  position: sticky !important;
+  left: 0 !important;
+  z-index: 2 !important;
+  background: #FFFFFF !important;
+  box-shadow: 4px 0 10px -2px rgba(15, 23, 42, 0.06) !important;
+}
+
+:root:not([data-theme="dark"]) #fc-table tbody tr:hover td:first-child,
+:root:not([data-theme="dark"]) #af-fees tbody tr:hover td:first-child {
+  background: #FFF7ED !important;
+}
+
+/* Total Column Accent in Fee Collection Table */
+:root:not([data-theme="dark"]) #fc-table .fc-total {
+  background: rgba(249, 115, 22, 0.04) !important;
+  border-left: 1px dashed #CBD5E1 !important;
+  font-weight: 700 !important;
+}
+
+:root:not([data-theme="dark"]) #fc-table th.fc-total {
+  background: #F1F5F9 !important;
+  border-left: 1px dashed #CBD5E1 !important;
+}
+
+/* Sleek Horizontal Scrollbar */
+.tbl-wrap::-webkit-scrollbar,
+:root:not([data-theme="dark"]) .tbl-wrap::-webkit-scrollbar {
+  height: 8px !important;
+  width: 8px !important;
+}
+
+.tbl-wrap::-webkit-scrollbar-track,
+:root:not([data-theme="dark"]) .tbl-wrap::-webkit-scrollbar-track {
+  background: #F8FAFC !important;
+  border-radius: 8px !important;
+}
+
+.tbl-wrap::-webkit-scrollbar-thumb,
+:root:not([data-theme="dark"]) .tbl-wrap::-webkit-scrollbar-thumb {
+  background: #CBD5E1 !important;
+  border-radius: 8px !important;
+}
+
+.tbl-wrap::-webkit-scrollbar-thumb:hover,
+:root:not([data-theme="dark"]) .tbl-wrap::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8 !important;
+}
+
+/* --------------------------------------------------------------------------
+   5. UNIVERSAL FILTER PILLS, TABS & SEGMENTED CONTROLS
+   -------------------------------------------------------------------------- */
+/* Filter Pills */
 :root:not([data-theme="dark"]) .pills .pill,
 :root:not([data-theme="dark"]) .pill {
   height: 32px !important;
   padding: 0 14px !important;
   border-radius: 999px !important;
-  border: 1px solid rgba(226, 218, 205, 0.75) !important;
-  background: rgba(245, 239, 230, 0.8) !important;
+  border: 1px solid #E2E8F0 !important;
+  background: #FFFFFF !important;
   font-size: 12.5px !important;
   font-weight: 550 !important;
   color: #475569 !important;
@@ -2926,25 +3374,25 @@ select:focus,
 
 :root:not([data-theme="dark"]) .pills .pill:hover,
 :root:not([data-theme="dark"]) .pill:hover {
-  background: rgba(236, 227, 213, 0.95) !important;
+  background: #F8FAFC !important;
   color: #0F172A !important;
-  border-color: rgba(214, 203, 187, 0.9) !important;
+  border-color: #CBD5E1 !important;
 }
 
 :root:not([data-theme="dark"]) .pills .pill.on,
 :root:not([data-theme="dark"]) .pill.on,
 :root:not([data-theme="dark"]) .tabs .tab.on {
-  background: linear-gradient(135deg, rgba(234, 88, 12, 0.14), rgba(249, 115, 22, 0.2)) !important;
+  background: linear-gradient(135deg, rgba(234, 88, 12, 0.12), rgba(249, 115, 22, 0.18)) !important;
   border: 1px solid rgba(234, 88, 12, 0.4) !important;
   color: #C2410C !important;
-  font-weight: 650 !important;
+  font-weight: 700 !important;
   box-shadow: 0 2px 8px rgba(234, 88, 12, 0.12) !important;
 }
 
-/* Tab and Pill Count Badges */
+/* Tab and Pill Count Badges (.n) */
 :root:not([data-theme="dark"]) .tab .n,
 :root:not([data-theme="dark"]) .pill .n {
-  background: rgba(236, 227, 213, 0.8) !important;
+  background: #F1F5F9 !important;
   color: #64748B !important;
   font-weight: 600 !important;
   border-radius: 999px !important;
@@ -2958,18 +3406,18 @@ select:focus,
   font-weight: 700 !important;
 }
 
-/* Segmented Control / Toggle Buttons (.seg, .pa-seg) */
+/* Segmented Control / Toggle Switcher (.seg, .pa-seg) */
 :root:not([data-theme="dark"]) .seg,
 :root:not([data-theme="dark"]) .pa-seg {
-  background: rgba(236, 227, 213, 0.7) !important;
-  border: 1px solid rgba(226, 218, 205, 0.95) !important;
+  background: #F1F5F9 !important;
+  border: 1px solid #E2E8F0 !important;
   border-radius: 12px !important;
   padding: 3px !important;
   gap: 2px !important;
   display: inline-flex !important;
   align-items: center !important;
   position: relative !important;
-  box-shadow: inset 0 1px 3px rgba(150, 125, 95, 0.08) !important;
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04) !important;
 }
 
 :root:not([data-theme="dark"]) .seg .seg-ind,
@@ -2979,8 +3427,8 @@ select:focus,
   bottom: 3px !important;
   border-radius: 9px !important;
   background: #FFFFFF !important;
-  border: 1px solid rgba(234, 88, 12, 0.35) !important;
-  box-shadow: 0 2px 8px rgba(150, 125, 95, 0.14), 0 1px 2px rgba(234, 88, 12, 0.08) !important;
+  border: 1px solid rgba(234, 88, 12, 0.3) !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08) !important;
   transition: left 0.22s cubic-bezier(0.2, 0, 0, 1), width 0.22s cubic-bezier(0.2, 0, 0, 1) !important;
   z-index: 0 !important;
 }
@@ -3007,29 +3455,15 @@ select:focus,
 
 :root:not([data-theme="dark"]) .seg button:hover,
 :root:not([data-theme="dark"]) .pa-seg button:hover {
-  color: #1E293B !important;
+  color: #0F172A !important;
   background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
 }
 
 :root:not([data-theme="dark"]) .seg button.on,
 :root:not([data-theme="dark"]) .pa-seg button.on {
   color: #C2410C !important;
-  font-weight: 700 !important;
+  font-weight: 750 !important;
   background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-:root:not([data-theme="dark"]) .seg button .af-wait {
-  background: #EA580C !important;
-  color: #FFFFFF !important;
-  border-radius: 999px !important;
-  padding: 0 6px !important;
-  font-size: 11px !important;
-  font-weight: 700 !important;
-  margin-left: 6px !important;
 }
 
 /* Toggle Switch (.toggle) */
@@ -3037,8 +3471,8 @@ select:focus,
   width: 40px !important;
   height: 23px !important;
   border-radius: 12px !important;
-  background: rgba(226, 218, 205, 0.9) !important;
-  border: 1px solid rgba(214, 203, 187, 0.8) !important;
+  background: #CBD5E1 !important;
+  border: 1px solid #94A3B8 !important;
   position: relative !important;
   flex: none !important;
   transition: background 0.2s ease, border-color 0.2s ease !important;
@@ -3054,7 +3488,7 @@ select:focus,
   height: 19px !important;
   border-radius: 50% !important;
   background: #FFFFFF !important;
-  box-shadow: 0 1px 4px rgba(150, 125, 95, 0.25) !important;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.15) !important;
   transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
 }
 
@@ -3068,122 +3502,18 @@ select:focus,
   transform: translateX(17px) !important;
 }
 
-/* 4. Global Tables (.tbl-wrap, .tbl) */
-:root:not([data-theme="dark"]) .tbl-wrap {
-  background: rgba(255, 255, 255, 0.98) !important;
-  border: 1px solid rgba(226, 218, 205, 0.75) !important;
-  border-radius: 16px !important;
-  box-shadow: 0 10px 28px -10px rgba(150, 125, 95, 0.08) !important;
-  overflow-x: auto !important;
-  overflow-y: hidden !important;
-  -webkit-overflow-scrolling: touch;
-}
-
-:root:not([data-theme="dark"]) .tbl {
-  width: 100% !important;
-  border-collapse: collapse !important;
-}
-
-:root:not([data-theme="dark"]) .tbl th {
-  background: rgba(245, 239, 230, 0.9) !important;
-  color: #475569 !important;
-  font-size: 11.5px !important;
-  font-weight: 700 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.05em !important;
-  padding: 12px 16px !important;
-  border-bottom: 1px solid rgba(226, 218, 205, 0.8) !important;
-}
-
-:root:not([data-theme="dark"]) .tbl th .cp-th {
-  font-size: 11.5px !important;
-  font-weight: 700 !important;
-  color: #475569 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.05em !important;
-}
-
-:root:not([data-theme="dark"]) .tbl td {
-  padding: 13px 16px !important;
-  border-bottom: 1px solid rgba(226, 218, 205, 0.5) !important;
-  color: #1E293B !important;
-  font-size: 13.5px !important;
-}
-
-:root:not([data-theme="dark"]) .tbl tbody tr {
-  transition: background 0.15s ease !important;
-}
-
-:root:not([data-theme="dark"]) .tbl tbody tr:hover {
-  background: rgba(245, 239, 230, 0.55) !important;
-}
-
-:root:not([data-theme="dark"]) .tbl .cell-t {
-  font-size: 14px !important;
-  font-weight: 650 !important;
-  color: #0F172A !important;
-}
-
-:root:not([data-theme="dark"]) .tbl .cell-s {
-  font-size: 12px !important;
-  color: #64748B !important;
-  margin-top: 2px !important;
-}
-
-/* 5. Global Chips & Status Badges */
-:root:not([data-theme="dark"]) .chip {
-  padding: 3px 10px !important;
-  font-size: 12px !important;
-  font-weight: 600 !important;
-  border-radius: 999px !important;
-}
-
-:root:not([data-theme="dark"]) .chip.tone-brand {
-  background: rgba(234, 88, 12, 0.12) !important;
-  color: #C2410C !important;
-  border: 1px solid rgba(234, 88, 12, 0.25) !important;
-}
-
-:root:not([data-theme="dark"]) .chip.tone-ok {
-  background: rgba(16, 185, 129, 0.12) !important;
-  color: #047857 !important;
-  border: 1px solid rgba(16, 185, 129, 0.25) !important;
-}
-
-:root:not([data-theme="dark"]) .chip.tone-bad {
-  background: rgba(239, 68, 68, 0.12) !important;
-  color: #B91C1C !important;
-  border: 1px solid rgba(239, 68, 68, 0.25) !important;
-}
-
-:root:not([data-theme="dark"]) .chip.tone-warn {
-  background: rgba(245, 158, 11, 0.14) !important;
-  color: #B45309 !important;
-  border: 1px solid rgba(245, 158, 11, 0.3) !important;
-}
-
-:root:not([data-theme="dark"]) .chip.tone-info {
-  background: rgba(2, 132, 199, 0.12) !important;
-  color: #0369A1 !important;
-  border: 1px solid rgba(2, 132, 199, 0.25) !important;
-}
-
-:root:not([data-theme="dark"]) .chip.dot::before {
-  width: 6px !important;
-  height: 6px !important;
-  margin-right: 5px !important;
-  border-radius: 50% !important;
-}
-
-/* 6. Global Form Controls (Inputs, Selects, Dropdowns) */
+/* --------------------------------------------------------------------------
+   6. UNIVERSAL FORM CONTROLS (Inputs, Selects, Dropdowns, Search)
+   -------------------------------------------------------------------------- */
 :root:not([data-theme="dark"]) input:not([type="checkbox"]):not([type="radio"]),
 :root:not([data-theme="dark"]) select,
 :root:not([data-theme="dark"]) textarea,
 :root:not([data-theme="dark"]) .fld-in {
-  background: rgba(248, 245, 239, 0.9) !important;
-  border: 1px solid rgba(226, 218, 205, 0.85) !important;
+  background: #FFFFFF !important;
+  border: 1px solid #CBD5E1 !important;
   border-radius: 10px !important;
   color: #0F172A !important;
+  font-size: 13.5px !important;
   transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
 }
 
@@ -3191,38 +3521,281 @@ select:focus,
 :root:not([data-theme="dark"]) select:focus,
 :root:not([data-theme="dark"]) textarea:focus {
   border-color: #EA580C !important;
-  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.18) !important;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2) !important;
   outline: none !important;
 }
 
-/* 7. Global Modals & Drawers */
+:root:not([data-theme="dark"]) .c-filters .search,
+:root:not([data-theme="dark"]) .search {
+  background: #FFFFFF !important;
+  border: 1px solid #CBD5E1 !important;
+  border-radius: 10px !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+}
+
+:root:not([data-theme="dark"]) .c-filters .search:focus-within,
+:root:not([data-theme="dark"]) .search:focus-within {
+  border-color: #EA580C !important;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2) !important;
+}
+
+:root:not([data-theme="dark"]) .fld-l {
+  font-size: 12.5px !important;
+  font-weight: 650 !important;
+  color: #334155 !important;
+  margin-bottom: 5px !important;
+}
+
+/* --------------------------------------------------------------------------
+   7. UNIVERSAL MODALS, DRAWERS & DIALOGS (.modal, .drawer, rp-modal, .ov)
+   -------------------------------------------------------------------------- */
+:root:not([data-theme="dark"]) .ov.fixed {
+  background: rgba(15, 23, 42, 0.45) !important;
+  backdrop-filter: blur(8px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(8px) saturate(140%) !important;
+}
+
 :root:not([data-theme="dark"]) .modal,
 :root:not([data-theme="dark"]) .drawer,
 :root:not([data-theme="dark"]) rp-modal .m-card {
-  background: rgba(255, 255, 255, 0.98) !important;
-  backdrop-filter: blur(28px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
-  border: 1px solid rgba(226, 218, 205, 0.85) !important;
-  box-shadow: 0 25px 60px -15px rgba(150, 125, 95, 0.3) !important;
+  background: #FFFFFF !important;
+  border: 1px solid rgba(226, 232, 240, 0.95) !important;
+  box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.2) !important;
   border-radius: 20px !important;
 }
 
+/* Drawer Header with Warm Icon Badge */
+:root:not([data-theme="dark"]) .sh-h,
 :root:not([data-theme="dark"]) .modal-h,
 :root:not([data-theme="dark"]) .drawer-h {
-  border-bottom: 1px solid rgba(226, 218, 205, 0.65) !important;
+  border-bottom: 1px solid #F1F5F9 !important;
+  padding: 18px 22px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
 }
 
+:root:not([data-theme="dark"]) .sh-h .li-ic {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 11px !important;
+  background: #FFF7ED !important;
+  color: #EA580C !important;
+  border: 1px solid #FED7AA !important;
+  display: grid !important;
+  place-items: center !important;
+  box-shadow: 0 1px 3px rgba(234, 88, 12, 0.08) !important;
+  flex: none !important;
+}
+
+:root:not([data-theme="dark"]) .sh-h .sh-t h3,
+:root:not([data-theme="dark"]) .modal-h h3 {
+  font-size: 18px !important;
+  font-weight: 750 !important;
+  color: #0F172A !important;
+  letter-spacing: -0.015em !important;
+  margin: 0 !important;
+}
+
+:root:not([data-theme="dark"]) .sh-h .sh-t p,
+:root:not([data-theme="dark"]) .modal-h p {
+  font-size: 12.5px !important;
+  color: #64748B !important;
+  margin: 3px 0 0 !important;
+}
+
+:root:not([data-theme="dark"]) .sh-f,
 :root:not([data-theme="dark"]) .modal-f,
 :root:not([data-theme="dark"]) .drawer-f {
-  border-top: 1px solid rgba(226, 218, 205, 0.65) !important;
-  background: rgba(253, 250, 246, 0.8) !important;
+  border-top: 1px solid #F1F5F9 !important;
+  background: #F8FAFC !important;
+  padding: 16px 22px !important;
+  border-bottom-left-radius: 20px !important;
+  border-bottom-right-radius: 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
 }
 
-/* ==========================================================================
-   FEE STRUCTURES SCREEN POLISH (/console/fees)
-   ========================================================================== */
+/* --------------------------------------------------------------------------
+   8. UNIVERSAL STATUS CHIPS & BADGES (.chip)
+   -------------------------------------------------------------------------- */
+:root:not([data-theme="dark"]) .chip {
+  padding: 3px 10px !important;
+  font-size: 12px !important;
+  font-weight: 650 !important;
+  border-radius: 999px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
 
-/* Prevent Card 3 (Classes covered) from distorting KPI row height */
+:root:not([data-theme="dark"]) .chip.tone-brand,
+:root:not([data-theme="dark"]) .chip.brand {
+  background: rgba(234, 88, 12, 0.12) !important;
+  color: #C2410C !important;
+  border: 1px solid rgba(234, 88, 12, 0.25) !important;
+}
+
+:root:not([data-theme="dark"]) .chip.tone-ok,
+:root:not([data-theme="dark"]) .chip.ok {
+  background: rgba(16, 185, 129, 0.12) !important;
+  color: #047857 !important;
+  border: 1px solid rgba(16, 185, 129, 0.25) !important;
+}
+
+:root:not([data-theme="dark"]) .chip.tone-bad,
+:root:not([data-theme="dark"]) .chip.bad {
+  background: rgba(239, 68, 68, 0.12) !important;
+  color: #B91C1C !important;
+  border: 1px solid rgba(239, 68, 68, 0.25) !important;
+}
+
+:root:not([data-theme="dark"]) .chip.tone-warn,
+:root:not([data-theme="dark"]) .chip.warn {
+  background: rgba(245, 158, 11, 0.14) !important;
+  color: #B45309 !important;
+  border: 1px solid rgba(245, 158, 11, 0.3) !important;
+}
+
+:root:not([data-theme="dark"]) .chip.tone-info,
+:root:not([data-theme="dark"]) .chip.info {
+  background: rgba(2, 132, 199, 0.12) !important;
+  color: #0369A1 !important;
+  border: 1px solid rgba(2, 132, 199, 0.25) !important;
+}
+
+:root:not([data-theme="dark"]) .chip.tone-violet,
+:root:not([data-theme="dark"]) .chip.violet {
+  background: rgba(139, 92, 246, 0.12) !important;
+  color: #6D28D9 !important;
+  border: 1px solid rgba(139, 92, 246, 0.25) !important;
+}
+
+:root:not([data-theme="dark"]) .chip.dot::before {
+  width: 6px !important;
+  height: 6px !important;
+  margin-right: 5px !important;
+  border-radius: 50% !important;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.8) !important;
+}
+
+/* --------------------------------------------------------------------------
+   9. ADMISSION LINK & QR CARD (.cp-aq, #aq-current)
+   -------------------------------------------------------------------------- */
+#aq-current,
+.cp-aq {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
+  border-radius: 20px !important;
+  padding: 22px 24px !important;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.02) !important;
+  display: flex !important;
+  gap: 24px !important;
+  align-items: flex-start !important;
+}
+
+.cp-aq-qr .qr {
+  background: #FFFFFF !important;
+  border: 1.5px solid #E2E8F0 !important;
+  border-radius: 16px !important;
+  padding: 14px !important;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04) !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+.cp-link {
+  background: #F8FAFC !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 10px !important;
+  padding: 6px 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  color: #0F172A !important;
+}
+
+.cp-aqk {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+}
+
+.cp-aqk > div {
+  background: #F8FAFC !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  padding: 10px 14px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  min-width: 0 !important;
+}
+
+.cp-aqk b {
+  font-family: var(--f-display) !important;
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  color: #0F172A !important;
+  line-height: 1.2 !important;
+}
+
+.cp-aqk span {
+  font-size: 11.5px !important;
+  font-weight: 650 !important;
+  color: #64748B !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+}
+
+/* --------------------------------------------------------------------------
+   10. UNIVERSAL PAGINATION CONTROLS (.pager, rp-pager, .pgr)
+   -------------------------------------------------------------------------- */
+:root:not([data-theme="dark"]) .pager,
+:root:not([data-theme="dark"]) rp-pager .pgr {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 6px !important;
+  margin-top: 16px !important;
+}
+
+:root:not([data-theme="dark"]) rp-pager button,
+:root:not([data-theme="dark"]) .pager button {
+  min-width: 34px !important;
+  height: 34px !important;
+  border-radius: 9px !important;
+  border: 1px solid #CBD5E1 !important;
+  background: #FFFFFF !important;
+  color: #334155 !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+:root:not([data-theme="dark"]) rp-pager button:hover:not([disabled]),
+:root:not([data-theme="dark"]) .pager button:hover:not([disabled]) {
+  background: #F8FAFC !important;
+  color: #0F172A !important;
+  border-color: #94A3B8 !important;
+}
+
+:root:not([data-theme="dark"]) rp-pager button.on,
+:root:not([data-theme="dark"]) .pager button.on {
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+  border-color: #0F172A !important;
+  font-weight: 750 !important;
+}
+
+/* --------------------------------------------------------------------------
+   11. FEE STRUCTURES & FEE RECORDS ANALYTICS CARD
+   -------------------------------------------------------------------------- */
 #fs-covered .k-d {
   display: -webkit-box !important;
   -webkit-line-clamp: 2 !important;
@@ -3234,109 +3807,17 @@ select:focus,
   color: #64748B !important;
 }
 
-/* Distinct Contextual Icon Badges on Fee Structures KPI */
-.c-page .c-grid.k4 rp-kpi:nth-child(1) .k-ic {
-  background: rgba(234, 88, 12, 0.12) !important;
-  color: #EA580C !important;
-  border: 1px solid rgba(234, 88, 12, 0.25) !important;
-}
-.c-page .c-grid.k4 rp-kpi:nth-child(2) .k-ic {
-  background: rgba(124, 58, 237, 0.1) !important;
-  color: #7C3AED !important;
-  border: 1px solid rgba(124, 58, 237, 0.25) !important;
-}
-#fs-covered .k-ic {
-  background: rgba(16, 185, 129, 0.12) !important;
-  color: #059669 !important;
-  border: 1px solid rgba(16, 185, 129, 0.25) !important;
-}
-.c-page .c-grid.k4 rp-kpi:nth-child(4) .k-ic {
-  background: rgba(79, 70, 229, 0.1) !important;
-  color: #4F46E5 !important;
-  border: 1px solid rgba(79, 70, 229, 0.25) !important;
-}
-
-/* Entry Fees & Fee Heads Cards */
-#ef-card,
-#fh-card {
-  min-height: 0 !important;
-}
-
-.cm-entry {
-  background: rgba(252, 249, 244, 0.9) !important;
-  border: 1px solid rgba(226, 218, 205, 0.75) !important;
-  border-radius: 12px !important;
-  padding: 12px 14px !important;
-  transition: all 0.15s ease !important;
-}
-
-.cm-entry.cur {
-  border-color: rgba(234, 88, 12, 0.4) !important;
-  background: rgba(234, 88, 12, 0.04) !important;
-}
-
-.cm-entry-g {
-  font-size: 12.5px !important;
-  color: #475569 !important;
-}
-
-.cm-head {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 6px !important;
-  height: auto !important;
-  padding: 6px 11px !important;
-  border-radius: 8px !important;
-  background: rgba(245, 239, 230, 0.85) !important;
-  border: 1px solid rgba(226, 218, 205, 0.75) !important;
-  font-size: 13px !important;
-  font-weight: 550 !important;
-  color: #334155 !important;
-  transition: all 0.15s ease !important;
-}
-
-.cm-head:hover {
-  background: rgba(236, 227, 213, 0.95) !important;
-  border-color: rgba(214, 203, 187, 0.9) !important;
-}
-
-.cm-head small {
-  font-size: 11px !important;
-  font-weight: 700 !important;
-  color: #C2410C !important;
-  background: rgba(234, 88, 12, 0.12) !important;
-  padding: 2px 7px !important;
-  border-radius: 999px !important;
-  margin-left: 4px !important;
-}
-
-#fh-new {
-  background: rgba(248, 245, 239, 0.9) !important;
-  border: 1px solid rgba(226, 218, 205, 0.85) !important;
-}
-
-#fh-add {
-  background: rgba(245, 239, 230, 0.9) !important;
-  border: 1px solid rgba(226, 218, 205, 0.8) !important;
-  color: #334155 !important;
-}
-
-/* ==========================================================================
-   FEE RECORDS: FULL SCREEN "COLLECTED VS BILLED" ANALYTICS CARD
-   Spans 100% full width with a luxurious 2-column responsive grid for classes
-   ========================================================================== */
 #frr-chart-card,
 .frr-chart,
 .card.pad.frr-chart {
   width: 100% !important;
   max-width: 100% !important;
   align-self: stretch !important;
-  background: rgba(255, 255, 255, 0.98) !important;
-  border: 1px solid rgba(226, 218, 205, 0.8) !important;
-  border-top: 1.5px solid rgba(255, 255, 255, 1) !important;
+  background: #FFFFFF !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
   border-radius: 18px !important;
   padding: 22px 26px !important;
-  box-shadow: 0 8px 24px -6px rgba(150, 125, 95, 0.08) !important;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04) !important;
   margin-bottom: 20px !important;
   box-sizing: border-box !important;
 }
@@ -3346,7 +3827,7 @@ select:focus,
   align-items: center !important;
   justify-content: space-between !important;
   padding-bottom: 16px !important;
-  border-bottom: 1px solid rgba(226, 218, 205, 0.6) !important;
+  border-bottom: 1px solid #F1F5F9 !important;
   margin-bottom: 16px !important;
 }
 
@@ -3364,10 +3845,10 @@ select:focus,
   font-size: 12px !important;
   font-weight: 600 !important;
   color: #64748B !important;
-  background: rgba(245, 239, 230, 0.85) !important;
+  background: #F8FAFC !important;
   padding: 4px 12px !important;
   border-radius: 999px !important;
-  border: 1px solid rgba(226, 218, 205, 0.75) !important;
+  border: 1px solid #E2E8F0 !important;
 }
 
 #frr-chart-card .legend i {
@@ -3379,7 +3860,6 @@ select:focus,
   box-shadow: 0 0 0 2px rgba(234, 88, 12, 0.2) !important;
 }
 
-/* 2-Column Responsive Grid across Full Screen for Collection Rate Bars */
 #frr-chart-card rp-hbars .stack.g8 {
   display: grid !important;
   grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
@@ -3395,19 +3875,19 @@ select:focus,
 }
 
 #frr-chart-card rp-hbars .stack.g4 {
-  background: rgba(252, 249, 244, 0.7) !important;
+  background: #F8FAFC !important;
   padding: 10px 14px !important;
   border-radius: 12px !important;
-  border: 1px solid rgba(226, 218, 205, 0.65) !important;
+  border: 1px solid #E2E8F0 !important;
   transition: all 0.15s ease !important;
   box-sizing: border-box !important;
 }
 
 #frr-chart-card rp-hbars .stack.g4:hover {
-  background: rgba(245, 239, 230, 0.95) !important;
+  background: #FFF7ED !important;
   border-color: rgba(234, 88, 12, 0.35) !important;
   transform: translateY(-1px) !important;
-  box-shadow: 0 4px 12px -2px rgba(150, 125, 95, 0.08) !important;
+  box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.06) !important;
 }
 
 #frr-chart-card rp-hbars .stack.g4 .row.between {
@@ -3431,7 +3911,7 @@ select:focus,
 #frr-chart-card rp-hbars .bar {
   height: 8px !important;
   border-radius: 999px !important;
-  background: rgba(226, 218, 205, 0.6) !important;
+  background: #E2E8F0 !important;
   overflow: hidden !important;
 }
 
@@ -3440,179 +3920,6 @@ select:focus,
   border-radius: 999px !important;
   background: linear-gradient(90deg, #F97316 0%, #EA580C 100%) !important;
   box-shadow: 0 1px 4px rgba(234, 88, 12, 0.25) !important;
-}
-
-/* -------------------------------------------------------------
-   Custom Scrollbar & Responsive Table Polish
-   ------------------------------------------------------------- */
-.tbl-wrap::-webkit-scrollbar,
-:root:not([data-theme="dark"]) .tbl-wrap::-webkit-scrollbar {
-  height: 8px !important;
-  width: 8px !important;
-}
-
-.tbl-wrap::-webkit-scrollbar-track,
-:root:not([data-theme="dark"]) .tbl-wrap::-webkit-scrollbar-track {
-  background: rgba(245, 239, 230, 0.6) !important;
-  border-radius: 8px !important;
-}
-
-.tbl-wrap::-webkit-scrollbar-thumb,
-:root:not([data-theme="dark"]) .tbl-wrap::-webkit-scrollbar-thumb {
-  background: rgba(217, 119, 6, 0.35) !important;
-  border-radius: 8px !important;
-}
-
-.tbl-wrap::-webkit-scrollbar-thumb:hover,
-:root:not([data-theme="dark"]) .tbl-wrap::-webkit-scrollbar-thumb:hover {
-  background: rgba(217, 119, 6, 0.65) !important;
-}
-
-/* Fee Collection Details Table Polish */
-#fc-table {
-  min-width: 1400px !important;
-  width: 100% !important;
-}
-
-#fc-table th,
-#fc-table td {
-  white-space: nowrap !important;
-}
-
-#fc-table th:first-child,
-#fc-table td:first-child {
-  position: sticky !important;
-  left: 0 !important;
-  z-index: 2 !important;
-  background: #FFFFFF !important;
-  min-width: 270px !important;
-  max-width: 320px !important;
-  box-shadow: 4px 0 10px -2px rgba(150, 125, 95, 0.12) !important;
-}
-
-#fc-table th:first-child {
-  z-index: 3 !important;
-  background: rgba(245, 239, 230, 0.98) !important;
-}
-
-#fc-table tbody tr:hover td:first-child {
-  background: rgba(245, 239, 230, 0.75) !important;
-}
-
-#fc-table th.r,
-#fc-table td.r {
-  text-align: right !important;
-  min-width: 135px !important;
-  padding-left: 14px !important;
-  padding-right: 18px !important;
-}
-
-#fc-table .fc-total {
-  min-width: 155px !important;
-  background: rgba(249, 115, 22, 0.04) !important;
-  border-left: 1px dashed rgba(226, 218, 205, 0.8) !important;
-}
-
-#fc-table th.fc-total {
-  min-width: 155px !important;
-  background: rgba(245, 239, 230, 0.95) !important;
-  border-left: 1px dashed rgba(226, 218, 205, 0.8) !important;
-}
-
-#fc-table .fc-collect {
-  white-space: nowrap !important;
-  padding: 6px 14px !important;
-}
-
-#fc-table .fc-nodue {
-  white-space: nowrap !important;
-}
-
-#fc-rcpt {
-  min-width: 900px !important;
-  width: 100% !important;
-}
-
-/* Admission Fees Page Polish & Responsive Table */
-#af-head {
-  display: flex !important;
-  align-items: center !important;
-  gap: 14px !important;
-  margin-bottom: 20px !important;
-}
-
-#af-fees {
-  min-width: 1050px !important;
-  width: 100% !important;
-}
-
-#af-fees th,
-#af-fees td {
-  padding: 13px 16px !important;
-  vertical-align: top !important;
-}
-
-#af-fees th:first-child,
-#af-fees td:first-child {
-  position: sticky !important;
-  left: 0 !important;
-  z-index: 2 !important;
-  background: #FFFFFF !important;
-  min-width: 210px !important;
-  max-width: 250px !important;
-  box-shadow: 4px 0 10px -2px rgba(150, 125, 95, 0.1) !important;
-}
-
-#af-fees th:first-child {
-  z-index: 3 !important;
-  background: rgba(245, 239, 230, 0.98) !important;
-}
-
-#af-fees tbody tr:hover td:first-child {
-  background: rgba(245, 239, 230, 0.7) !important;
-}
-
-#af-fees th:nth-child(2),
-#af-fees td:nth-child(2) {
-  min-width: 140px !important;
-}
-
-#af-fees th:nth-child(3),
-#af-fees td:nth-child(3) {
-  min-width: 230px !important;
-}
-
-#af-fees th:nth-child(4),
-#af-fees td:nth-child(4) {
-  min-width: 260px !important;
-}
-
-#af-fees th:nth-child(5),
-#af-fees td:nth-child(5) {
-  min-width: 180px !important;
-}
-
-#af-fees .af-fee {
-  min-width: 0 !important;
-  width: 100% !important;
-}
-
-#af-fees .af-fee .cell-s {
-  white-space: normal !important;
-  line-height: 1.4 !important;
-  font-size: 11.5px !important;
-  color: #64748B !important;
-  max-width: 260px !important;
-}
-
-#af-fees .cell-s {
-  white-space: normal !important;
-  line-height: 1.35 !important;
-}
-
-#af-rcpt {
-  min-width: 950px !important;
-  width: 100% !important;
 }
 
 /* ==========================================================================
