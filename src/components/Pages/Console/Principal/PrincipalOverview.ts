@@ -16,7 +16,6 @@ import { RouterLink } from '@angular/router';
 import { SessionContext } from '../../../../Context/SessionContext';
 import { Card, Kpi, PageHead } from '../../../Shared/Blocks';
 import { Icon } from '../../../Shared/Icon';
-import { TaskLauncher } from '../../../Shared/TaskLauncher';
 import { formatDate } from '../../../Utils/format';
 import { greeting } from '../../../Utils/greeting';
 import { ownHome } from '../../../Utils/navigation';
@@ -25,7 +24,7 @@ import { PrincipalApi, type DayCount, type Overview } from './principal.api';
 
 @Component({
   selector: 'rp-principal-overview',
-  imports: [Card, Icon, Kpi, PageHead, RouterLink, TaskLauncher],
+  imports: [Card, Icon, Kpi, PageHead, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div class="c-page">
     <rp-page-head
@@ -36,10 +35,6 @@ import { PrincipalApi, type DayCount, type Overview } from './principal.api';
         <rp-icon name="refresh" [size]="17" /><span>Refresh</span>
       </button>
     </rp-page-head>
-    <!-- The principal / dean's dashboard: the task cards under the greeting. -->
-    @if (home()) {
-      <rp-task-launcher surface="console" />
-    }
 
     @if (error()) {
       <div class="note tone-bad" role="alert" id="po-error">
