@@ -320,9 +320,9 @@ const LINE_STATUS: Readonly<Record<LineStatus, { l: () => string; tone: string }
                   }
                   <th class="r">Application fee</th>
                   <th class="r">Admission fee</th>
-                  <th class="r">Total fee collected</th>
+                  <th class="r fc-total">Total fee collected</th>
                   @if (canCollect()) {
-                    <th><span class="sr">Collect</span></th>
+                    <th class="r"><span class="sr">Collect</span></th>
                   }
                 </tr>
               </thead>
